@@ -1,0 +1,41 @@
+# Automated Checklist Evaluation Test Cases
+cases:
+  - id: "first-time-domicile-applicant"
+    service_slug: "domicile_prc"
+    answers:
+      applicant_age_group: true
+      district: "karachi_south"
+      application_goal: "university_admission"
+      has_father_domicile: true
+    expected_requirements:
+      - "REQ_CNIC_COPY"
+      - "REQ_FATHER_DOCS"
+      - "REQ_PRC_FORM_C"
+      - "REQ_UTILITY_BILL_ILLUSTRATIVE"
+      - "REQ_PASSPORT_PHOTOS"
+    expected_verified_count: 3
+    expected_unverified_count: 2
+
+  - id: "first-time-cnic-standard"
+    service_slug: "first_cnic"
+    answers:
+      applicant_has_bform: true
+      parent_available: true
+    expected_requirements:
+      - "REQ_ORIGINAL_BFORM"
+      - "REQ_PARENT_BIOMETRIC"
+    expected_verified_count: 2
+    expected_unverified_count: 0
+
+  - id: "domicile-different-district-east"
+    service_slug: "domicile_prc"
+    answers:
+      applicant_age_group: true
+      district: "karachi_east"
+      application_goal: "general_record"
+      has_father_domicile: false
+    expected_requirements:
+      - "REQ_CNIC_COPY"
+      - "REQ_PASSPORT_PHOTOS"
+    expected_verified_count: 1
+    expected_unverified_count: 1

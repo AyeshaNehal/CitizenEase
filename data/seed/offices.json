@@ -1,0 +1,62 @@
+[
+  {
+    "id": "off-dc-south",
+    "name": "Deputy Commissioner Office - Karachi South",
+    "office_type": "dc_office",
+    "district": "karachi_south",
+    "address": "DC Office Complex, Club Road, Civil Lines, Karachi South",
+    "lat": 24.8475,
+    "lng": 67.0289,
+    "services": ["domicile_prc"],
+    "source_id": "SRC-DC-SOUTH-SAMPLE",
+    "verification_status": "unverified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Monday to Friday, 9:00 AM - 1:00 PM for public submission (subject to official schedule)",
+    "notes": "Citizens should verify public dealing counter timings prior to visiting."
+  },
+  {
+    "id": "off-dc-east",
+    "name": "Deputy Commissioner Office - Karachi East",
+    "office_type": "dc_office",
+    "district": "karachi_east",
+    "address": "DC East Office, Block 14, Gulshan-e-Iqbal, Karachi",
+    "lat": 24.9180,
+    "lng": 67.0971,
+    "services": ["domicile_prc"],
+    "source_id": "SRC-DC-SOUTH-SAMPLE",
+    "verification_status": "unverified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Weekdays during official government office hours",
+    "notes": "Handles residents of Gulshan, Jamshed Town, and surrounding eastern subdivisions."
+  },
+  {
+    "id": "off-nadra-mega-dh",
+    "name": "NADRA Mega Centre DHA Defence",
+    "office_type": "nadra_mega",
+    "district": "karachi_south",
+    "address": "Commercial Area Phase 2 Extension, DHA, Karachi",
+    "lat": 24.8387,
+    "lng": 67.0673,
+    "services": ["first_cnic"],
+    "source_id": "SRC-NADRA-PAKID",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Operates 24/7 round-the-clock for biometric and CNIC issuance services",
+    "notes": "Verified from NADRA official site. Token wait times may peak during evening hours."
+  },
+  {
+    "id": "off-nadra-mega-nazimabad",
+    "name": "NADRA Mega Centre North Nazimabad",
+    "office_type": "nadra_mega",
+    "district": "karachi_central",
+    "address": "Block L, North Nazimabad, Karachi Central",
+    "lat": 24.9381,
+    "lng": 67.0425,
+    "services": ["first_cnic"],
+    "source_id": "SRC-NADRA-PAKID",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "24/7 service center with separate priority counters for senior citizens and women",
+    "notes": "Full biometric capture facility."
+  }
+]

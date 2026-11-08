@@ -1,0 +1,24 @@
+[
+  {
+    "id": "faq-1",
+    "service_id": "s-domicile-prc",
+    "question_en": "What is the legal difference between Domicile and PRC in Sindh?",
+    "question_ur": "سندھ میں ڈومیسائل اور پی آر سی میں قانونی فرق کیا ہے؟",
+    "answer_en": "A Domicile is issued under the Pakistan Citizenship Act 1951 and Citizenship Rules 1952 establishing general permanent citizenship status. A PRC (Permanent Residence Certificate) in Sindh is issued specifically under the Sindh Permanent Residence Certificate Rules 1971 and is strictly required for Sindh provincial job quotas and educational institutional admissions.",
+    "answer_ur": "ڈومیسائل پاکستان سٹیزن شپ ایکٹ 1951 کے تحت جاری کیا جاتا ہے جو شہریت کی حیثیت ثابت کرتا ہے۔ جبکہ سندھ میں پی آر سی سندھ پرماننٹ ریذیڈنس سرٹیفکیٹ رولز 1971 کے تحت صوبائی تعلیمی داخلوں اور سرکاری ملازمتوں کے کوٹہ کے لیے خصوصی طور پر جاری کیا جاتا ہے۔",
+    "source_id": "SRC-SHC-1971",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08"
+  },
+  {
+    "id": "faq-2",
+    "service_id": "s-first-cnic",
+    "question_en": "Can I apply for my first CNIC entirely online via the PakID mobile app?",
+    "question_ur": "کیا میں اپنا پہلا شناختی کارڈ پاک آئی ڈی ایپ سے آن لائن بنوا سکتا ہوں؟",
+    "answer_en": "Online first-time CNIC processing is only possible if your biometrics and photographs are already linked to an updated NADRA B-Form record. Otherwise, first-time applicants must visit an official NADRA Registration Centre accompanied by a parent or blood relative for live biometric verification.",
+    "answer_ur": "پہلا شناختی کارڈ آن لائن صرف اسی صورت میں ممکن ہے جب آپ کے فنگر پرنٹس اور بائیو میٹرک پہلے سے تصدیق شدہ ب فارم میں درج ہوں۔ ورنہ پہلی بار نادرا سینٹر جانا اور والدین کی بائیو میٹرک تصدیق لازمی ہے۔",
+    "source_id": "SRC-NADRA-PAKID",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08"
+  }
+]

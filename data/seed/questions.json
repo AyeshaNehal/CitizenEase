@@ -1,0 +1,86 @@
+[
+  {
+    "id": "q-dom-1",
+    "service_id": "s-domicile-prc",
+    "key": "applicant_age_group",
+    "text_en": "Is the applicant 18 years of age or older?",
+    "text_ur": "کیا درخواست دہندہ کی عمر 18 سال یا اس سے زیادہ ہے؟",
+    "input_type": "boolean",
+    "order_index": 1,
+    "required": true,
+    "options": [],
+    "conditions": null
+  },
+  {
+    "id": "q-dom-2",
+    "service_id": "s-domicile-prc",
+    "key": "district",
+    "text_en": "Which Karachi district does your address belong to?",
+    "text_ur": "آپ کا رہائشی پتہ کراچی کے کس ضلع سے تعلق رکھتا ہے؟",
+    "input_type": "district",
+    "order_index": 2,
+    "required": true,
+    "options": [
+      {"value": "karachi_south", "label_en": "Karachi South", "label_ur": "کراچی جنوبی"},
+      {"value": "karachi_east", "label_en": "Karachi East", "label_ur": "کراچی شرقی"},
+      {"value": "karachi_central", "label_en": "Karachi Central", "label_ur": "کراچی وسطی"},
+      {"value": "karachi_west", "label_en": "Karachi West", "label_ur": "کراچی غربی"},
+      {"value": "malir", "label_en": "Malir", "label_ur": "ملیر"},
+      {"value": "korangi", "label_en": "Korangi", "label_ur": "کورنگی"},
+      {"value": "keamari", "label_en": "Keamari", "label_ur": "کیماڑی"}
+    ],
+    "conditions": null
+  },
+  {
+    "id": "q-dom-3",
+    "service_id": "s-domicile-prc",
+    "key": "application_goal",
+    "text_en": "What is the primary purpose of obtaining this document?",
+    "text_ur": "یہ دستاویز حاصل کرنے کا بنیادی مقصد کیا ہے؟",
+    "input_type": "single_choice",
+    "order_index": 3,
+    "required": true,
+    "options": [
+      {"value": "job_quota", "label_en": "Government / Provincial Job Quota", "label_ur": "سرکاری ملازمت کوٹہ"},
+      {"value": "university_admission", "label_en": "College / University Admission", "label_ur": "کالج یا یونیورسٹی میں داخلہ"},
+      {"value": "general_record", "label_en": "General Proof of Residence", "label_ur": "عام رہائشی ثبوت"}
+    ],
+    "conditions": null
+  },
+  {
+    "id": "q-dom-4",
+    "service_id": "s-domicile-prc",
+    "key": "has_father_domicile",
+    "text_en": "Does your father or guardian already hold a verified Sindh Domicile?",
+    "text_ur": "کیا آپ کے والد یا سرپرست کے پاس سندھ کا تصدیق شدہ ڈومیسائل موجود ہے؟",
+    "input_type": "boolean",
+    "order_index": 4,
+    "required": true,
+    "options": [],
+    "conditions": null
+  },
+  {
+    "id": "q-cnic-1",
+    "service_id": "s-first-cnic",
+    "key": "applicant_has_bform",
+    "text_en": "Do you possess an official NADRA Child Registration Certificate (B-Form)?",
+    "text_ur": "کیا آپ کے پاس نادرا کا جاری کردہ ب فارم موجود ہے؟",
+    "input_type": "boolean",
+    "order_index": 1,
+    "required": true,
+    "options": [],
+    "conditions": null
+  },
+  {
+    "id": "q-cnic-2",
+    "service_id": "s-first-cnic",
+    "key": "parent_available",
+    "text_en": "Can one of your parents (with a valid CNIC) accompany you to the NADRA centre?",
+    "text_ur": "کیا آپ کے والدین میں سے کوئی ایک نادرا سینٹر ہمراہ جا سکتا ہے؟",
+    "input_type": "boolean",
+    "order_index": 2,
+    "required": true,
+    "options": [],
+    "conditions": null
+  }
+]

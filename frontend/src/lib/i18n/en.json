@@ -1,0 +1,18 @@
+{
+  "appName": "CitizenEase",
+  "tagline": "Karachi Citizen Preparation Layer",
+  "subtitle": "Know exactly what to bring, what is missing, and where to go before you queue.",
+  "disclaimer": "Guidance only. Not an official government service.",
+  "trustBadge": "Source & verification verified",
+  "startGuidance": "Start Preparation",
+  "have": "Have",
+  "missing": "Missing",
+  "notSure": "Not sure",
+  "verified": "Verified",
+  "unverified": "Not yet verified",
+  "confirmWithOffice": "Confirm with office",
+  "readinessScore": "Readiness Score",
+  "askAssistant": "Ask Assistant",
+  "whereToSubmit": "Where to submit",
+  "searchPlaceholder": "Tell us what you need (e.g. 'I need proof I belong to Karachi')..."
+}

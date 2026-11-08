@@ -1,0 +1,16 @@
+[
+  {
+    "id": "s-domicile-prc",
+    "slug": "domicile_prc",
+    "title": "Domicile & PRC (Karachi)",
+    "description": "Prepare required documents, application forms, and district DC office requirements before you queue.",
+    "icon": "FileCheck2"
+  },
+  {
+    "id": "s-first-cnic",
+    "slug": "first_cnic",
+    "title": "First-Time CNIC (NADRA)",
+    "description": "Requirements and step-by-step checklist for turning 18 and obtaining your first Computerized National Identity Card.",
+    "icon": "CreditCard"
+  }
+]

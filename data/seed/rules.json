@@ -1,0 +1,94 @@
+[
+  {
+    "id": "rule-cnic-copy-all",
+    "requirement_id": "req-cnic-copy",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "applicant_age_group", "op": "in", "value": [true, false]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-father-docs",
+    "requirement_id": "req-father-cnic-domicile",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "has_father_domicile", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-prc-form-c",
+    "requirement_id": "req-prc-form-c",
+    "applicability": "mandatory",
+    "condition": {
+      "any": [
+        {"key": "application_goal", "op": "eq", "value": "job_quota"},
+        {"key": "application_goal", "op": "eq", "value": "university_admission"}
+      ]
+    },
+    "district": null,
+    "priority": 20,
+    "is_active": true
+  },
+  {
+    "id": "rule-utility-bill-south",
+    "requirement_id": "req-utility-bill",
+    "applicability": "conditional",
+    "condition": {
+      "all": [
+        {"key": "district", "op": "eq", "value": "karachi_south"}
+      ]
+    },
+    "district": "karachi_south",
+    "priority": 30,
+    "is_active": true
+  },
+  {
+    "id": "rule-photos-general",
+    "requirement_id": "req-photos-domicile",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "applicant_age_group", "op": "in", "value": [true, false]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-cnic-bform",
+    "requirement_id": "req-bform-original",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "applicant_has_bform", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-cnic-parent",
+    "requirement_id": "req-parent-presence",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "parent_available", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  }
+]

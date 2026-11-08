@@ -1,0 +1,24 @@
+[
+  {
+    "id": "s-domicile-prc",
+    "slug": "domicile_prc",
+    "title_en": "Domicile & PRC (Karachi)",
+    "title_ur": "ڈومیسائل اور پی آر سی (کراچی)",
+    "description_en": "Prepare your required documents, application forms, and district DC office requirements before you queue.",
+    "description_ur": "قطار میں لگنے سے پہلے اپنی مطلوبہ دستاویزات، فارم اور متعلقہ ڈی سی آفس کی شرائط کی مکمل تیاری کریں۔",
+    "icon": "FileCheck2",
+    "keywords": ["domicile", "prc", "residence", "karachi", "admission", "job quota", "sindh", "dc office"],
+    "is_active": true
+  },
+  {
+    "id": "s-first-cnic",
+    "slug": "first_cnic",
+    "title_en": "First-Time CNIC (NADRA)",
+    "title_ur": "پہلی بار شناختی کارڈ (نادرا)",
+    "description_en": "Requirements and step-by-step checklist for turning 18 and obtaining your first Computerized National Identity Card.",
+    "description_ur": "18 سال کی عمر میں پہلا قومی شناختی کارڈ بنوانے کے لیے نادرا کی لازمی شرائط اور رہنمائی۔",
+    "icon": "CreditCard",
+    "keywords": ["cnic", "smart card", "nadra", "b-form", "first time", "18 years", "identity"],
+    "is_active": true
+  }
+]

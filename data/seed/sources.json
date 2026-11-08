@@ -1,0 +1,44 @@
+[
+  {
+    "id": "SRC-SHC-1971",
+    "title": "Sindh High Court Judgment on Domicile vs PRC",
+    "url": "https://caselaw.shc.gov.pk",
+    "issuing_authority": "Sindh High Court",
+    "source_type": "court_ruling",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "Legal Research Team",
+    "applicable_district": null,
+    "service_id": "s-domicile-prc",
+    "notes": "Clarifies that Domicile is governed by Pakistan Citizenship Act 1951, while PRC is governed by Sindh PRC Rules 1971.",
+    "limitations": "Pertains to constitutional and administrative definitions in Sindh."
+  },
+  {
+    "id": "SRC-NADRA-PAKID",
+    "title": "NADRA PakID Official Portal",
+    "url": "https://id.nadra.gov.pk",
+    "issuing_authority": "NADRA",
+    "source_type": "official_web",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "NADRA Portal Review",
+    "applicable_district": null,
+    "service_id": "s-first-cnic",
+    "notes": "Official citizen registration procedures for adults turning 18.",
+    "limitations": "First-time applicants without biometric B-Form must appear in person."
+  },
+  {
+    "id": "SRC-DC-SOUTH-SAMPLE",
+    "title": "DC Office Karachi South Citizen Notice Board (ILLUSTRATIVE)",
+    "url": "https://karachisouth.sindh.gov.pk",
+    "issuing_authority": "Deputy Commissioner Karachi South",
+    "source_type": "office_visit",
+    "verification_status": "unverified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "Pending Member 4 Visit",
+    "applicable_district": "karachi_south",
+    "service_id": "s-domicile-prc",
+    "notes": "Illustrative document list gathered from administrative notices.",
+    "limitations": "Must be re-verified against physical notice board."
+  }
+]

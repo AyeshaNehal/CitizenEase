@@ -1,0 +1,60 @@
+{
+  "checklist_id": "mock-chk-001",
+  "items": [
+    {
+      "item_id": "item-1",
+      "code": "REQ_CNIC_COPY",
+      "title": "Copy of Applicant CNIC / Smart Card",
+      "why_needed": "Required by Deputy Commissioner Office to prove national identity under Pakistan Citizenship Rules.",
+      "applicability": "mandatory",
+      "verification_status": "verified",
+      "user_status": "have",
+      "source": {
+        "title": "Sindh High Court Judgment on Domicile vs PRC",
+        "url": "https://caselaw.shc.gov.pk",
+        "last_verified_on": "2026-11-08"
+      }
+    },
+    {
+      "item_id": "item-2",
+      "code": "REQ_FATHER_DOCS",
+      "title": "Father's CNIC and Domicile Copy",
+      "why_needed": "Demonstrates parental lineage and permanent ties to Sindh province.",
+      "applicability": "mandatory",
+      "verification_status": "verified",
+      "user_status": "missing",
+      "source": {
+        "title": "Sindh High Court Judgment on Domicile vs PRC",
+        "url": "https://caselaw.shc.gov.pk",
+        "last_verified_on": "2026-11-08"
+      }
+    },
+    {
+      "item_id": "item-3",
+      "code": "REQ_UTILITY_BILL_ILLUSTRATIVE",
+      "title": "Recent Utility Bill (Electricity/Gas) (ILLUSTRATIVE)",
+      "why_needed": "Proves physical residing address matches the claimed district.",
+      "applicability": "conditional",
+      "verification_status": "unverified",
+      "user_status": "missing",
+      "source": {
+        "title": "DC Office Notice Board (ILLUSTRATIVE)",
+        "url": "https://karachisouth.sindh.gov.pk",
+        "last_verified_on": "2026-11-08"
+      }
+    }
+  ],
+  "readiness": {
+    "score": 50,
+    "ready": 1,
+    "total": 2,
+    "missing": ["Father's CNIC and Domicile Copy"],
+    "conditional": ["Recent Utility Bill (Electricity/Gas) (ILLUSTRATIVE)"],
+    "unverified": ["Recent Utility Bill (Electricity/Gas) (ILLUSTRATIVE)"],
+    "explanation": "1 of 2 verified required items ready.",
+    "is_guarantee": false
+  },
+  "disclaimers": [
+    "Guidance only. This is preparation, not official government approval."
+  ]
+}
