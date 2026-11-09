@@ -117,18 +117,18 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
 
   return (
     <section id="assistant" className="space-y-6 scroll-mt-24">
-      <div className="bg-white rounded-3xl border border-stone-200/80 shadow-xs overflow-hidden">
+      <div className="bg-white dark:bg-[#102019] rounded-3xl border border-stone-200/80 dark:border-stone-800 shadow-xs overflow-hidden transition-colors">
         {/* Panel Header */}
-        <div className="p-6 bg-gradient-to-r from-[#0C3E2E]/10 via-[#0C3E2E]/5 to-transparent border-b border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-6 bg-gradient-to-r from-[#0C3E2E]/10 via-[#0C3E2E]/5 to-transparent dark:from-emerald-950/60 dark:via-emerald-950/20 border-b border-stone-100 dark:border-stone-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 text-emerald-900 text-xs font-semibold">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100/70 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-300 text-xs font-semibold">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
               <span>{isUrdu ? 'مصدقہ حکومتی قانونی اے آئی اسسٹنٹ' : 'Grounded Legal Assistant'}</span>
             </div>
-            <h2 className="text-2xl font-extrabold text-stone-900">
+            <h2 className="text-2xl font-extrabold text-stone-900 dark:text-stone-100">
               {isUrdu ? 'سٹیزن ایز اے آئی رہنمائی' : 'CitizenEase Grounded Assistant'}
             </h2>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-stone-500 dark:text-stone-400">
               {isUrdu
                 ? 'صفر پی آئی آئی کی ضمانت: نادرا، پاسپورٹ اور سندھ ہائی کورٹ کے ریکارڈ کی روشنی میں بلا تاخیر جواب حاصل کریں۔'
                 : 'Zero PII Guarantee: Instant grounded responses backed by official Sindh, NADRA, and DGI&P regulations.'}
@@ -136,13 +136,13 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 text-xs font-semibold border border-emerald-200 dark:border-emerald-800">
+              <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               Zero-PII Active
             </span>
             <button
               onClick={() => setMessages(messages.slice(0, 1))}
-              className="p-2 text-stone-400 hover:text-stone-700 hover:bg-stone-100 rounded-xl transition-colors text-xs flex items-center gap-1 cursor-pointer"
+              className="p-2 text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-xl transition-colors text-xs flex items-center gap-1 cursor-pointer"
               title="Clear conversation"
             >
               <Trash2 className="w-3.5 h-3.5" />
@@ -151,8 +151,8 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
         </div>
 
         {/* Quick Suggestion Chips */}
-        <div className="px-6 py-3 bg-stone-50/70 border-b border-stone-100 flex flex-wrap gap-2 items-center">
-          <span className="text-[11px] font-semibold text-stone-400 uppercase tracking-wider mr-1">
+        <div className="px-6 py-3 bg-stone-50/70 dark:bg-[#0c1813] border-b border-stone-100 dark:border-stone-800 flex flex-wrap gap-2 items-center transition-colors">
+          <span className="text-[11px] font-semibold text-stone-400 dark:text-stone-500 uppercase tracking-wider mr-1">
             {isUrdu ? 'اکثر پوچھے گئے سوالات:' : 'Quick Questions:'}
           </span>
           {quickPrompts.map((prompt, idx) => (
@@ -160,7 +160,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
               key={idx}
               onClick={() => handleSend(prompt)}
               disabled={isLoading}
-              className="text-xs bg-white hover:bg-emerald-50 text-stone-700 hover:text-emerald-900 px-3 py-1.5 rounded-full border border-stone-200 transition-colors text-left cursor-pointer disabled:opacity-50"
+              className="text-xs bg-white dark:bg-stone-800 hover:bg-emerald-50 dark:hover:bg-emerald-950 text-stone-700 dark:text-stone-300 hover:text-emerald-900 dark:hover:text-emerald-300 px-3 py-1.5 rounded-full border border-stone-200 dark:border-stone-700 transition-colors text-left cursor-pointer disabled:opacity-50"
             >
               {prompt}
             </button>
@@ -168,7 +168,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
         </div>
 
         {/* Chat History Box */}
-        <div className="h-80 overflow-y-auto p-6 space-y-4 bg-stone-50/30">
+        <div className="h-80 overflow-y-auto p-6 space-y-4 bg-stone-50/30 dark:bg-[#08120e] transition-colors">
           {messages.map((msg) => {
             const isUser = msg.sender === 'user';
 
@@ -181,8 +181,8 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
               >
                 {/* PII Alert Banner if redacted */}
                 {msg.piiDetected && (
-                  <div className="mb-1.5 flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs font-medium">
-                    <ShieldAlert className="w-3.5 h-3.5 shrink-0 text-amber-600" />
+                  <div className="mb-1.5 flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 text-xs font-medium">
+                    <ShieldAlert className="w-3.5 h-3.5 shrink-0 text-amber-600 dark:text-amber-400" />
                     <span>
                       {isUrdu
                         ? 'رازداری کا تحفظ: 13 ہندسوں کا شناختی کارڈ خودکار طور پر حذف کر دیا گیا۔'
@@ -194,24 +194,24 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
                 <div
                   className={`p-4 rounded-2xl text-sm leading-relaxed ${
                     isUser
-                      ? 'bg-[#0C3E2E] text-white rounded-br-xs shadow-xs'
-                      : 'bg-white text-stone-800 border border-stone-200/80 rounded-bl-xs shadow-xs'
+                      ? 'bg-[#0C3E2E] dark:bg-emerald-700 text-white rounded-br-xs shadow-xs'
+                      : 'bg-white dark:bg-[#13261e] text-stone-800 dark:text-stone-100 border border-stone-200/80 dark:border-stone-700/80 rounded-bl-xs shadow-xs'
                   }`}
                 >
                   <p className="whitespace-pre-wrap">{msg.text}</p>
 
                   {/* Citations / Source Badges for assistant */}
                   {!isUser && msg.citations && msg.citations.length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-stone-100 flex flex-wrap gap-1.5 items-center">
-                      <span className="text-[10px] uppercase font-bold text-stone-400">
+                    <div className="mt-3 pt-3 border-t border-stone-100 dark:border-stone-800 flex flex-wrap gap-1.5 items-center">
+                      <span className="text-[10px] uppercase font-bold text-stone-400 dark:text-stone-500">
                         {isUrdu ? 'مآخذ:' : 'Cited Sources:'}
                       </span>
                       {msg.citations.map((src, i) => (
                         <span
                           key={i}
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-semibold"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-[11px] font-semibold"
                         >
-                          <Building2 className="w-3 h-3 text-emerald-600" />
+                          <Building2 className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
                           {src.issuing_authority || src.title}
                         </span>
                       ))}
@@ -219,7 +219,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
                   )}
                 </div>
 
-                <span className="text-[10px] text-stone-400 mt-1 px-1">
+                <span className="text-[10px] text-stone-400 dark:text-stone-500 mt-1 px-1">
                   {msg.timestamp}
                 </span>
               </div>
@@ -227,8 +227,8 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
           })}
 
           {isLoading && (
-            <div className="flex items-center gap-2 p-3 bg-white rounded-xl border border-stone-200 max-w-xs text-xs text-stone-500">
-              <Sparkles className="w-4 h-4 text-emerald-600 animate-spin" />
+            <div className="flex items-center gap-2 p-3 bg-white dark:bg-[#13261e] rounded-xl border border-stone-200 dark:border-stone-700 max-w-xs text-xs text-stone-500 dark:text-stone-400">
+              <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 animate-spin" />
               <span>{isUrdu ? 'مصدقہ ڈیٹا بیس سے تلاش جاری ہے...' : 'Grounded verification in progress...'}</span>
             </div>
           )}
@@ -237,7 +237,7 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
         </div>
 
         {/* Chat Input Bar */}
-        <div className="p-4 bg-white border-t border-stone-200">
+        <div className="p-4 bg-white dark:bg-[#102019] border-t border-stone-200 dark:border-stone-800 transition-colors">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -255,18 +255,18 @@ export const AssistantPanel: React.FC<AssistantPanelProps> = ({
                   : 'Ask about Passport renewal, FRC categories, Domicile vs PRC...'
               }
               disabled={isLoading}
-              className="flex-1 bg-stone-50 border border-stone-200 focus:border-[#0C3E2E] focus:bg-white focus:outline-none rounded-xl px-4 py-3 text-sm text-stone-900 transition-colors disabled:opacity-50"
+              className="flex-1 bg-stone-50 dark:bg-[#162c22] border border-stone-200 dark:border-stone-700 focus:border-[#0C3E2E] dark:focus:border-emerald-500 focus:bg-white dark:focus:bg-[#1a3429] focus:outline-none rounded-xl px-4 py-3 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 transition-colors disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={!inputMessage.trim() || isLoading}
-              className="bg-[#0C3E2E] hover:bg-[#082b20] disabled:opacity-40 text-white px-5 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 transition-all shadow-xs cursor-pointer"
+              className="bg-[#0C3E2E] hover:bg-[#082b20] dark:bg-emerald-600 dark:hover:bg-emerald-500 disabled:opacity-40 text-white px-5 py-3 rounded-xl font-semibold text-sm flex items-center gap-2 transition-all shadow-xs cursor-pointer"
             >
               <span>{isUrdu ? 'ارسال کریں' : 'Send'}</span>
               <Send className="w-4 h-4" />
             </button>
           </form>
-          <p className="text-[11px] text-stone-400 mt-2 text-center">
+          <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-2 text-center">
             {isUrdu
               ? 'مستقل صفر پی آئی آئی پالیسی: کوئی ذاتی معلومات یا نجی شناختی کوائف سرور پر محفوظ نہیں کیے جاتے۔'
               : 'Zero PII Policy: No private identity data or CNIC numbers are ever logged or retained.'}

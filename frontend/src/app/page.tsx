@@ -35,6 +35,7 @@ import {
 
 const STORAGE_KEY = 'citizenease_saved_checklist_v1';
 const LANG_STORAGE_KEY = 'citizenease_lang_pref';
+const THEME_STORAGE_KEY = 'citizenease_theme_pref';
 
 type ServiceSlug = 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
 
@@ -88,6 +89,35 @@ function CitizenEaseMain() {
       return 'en';
     }
   });
+
+  // Dark / Light Theme state
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      if (saved === 'dark' || saved === 'light') {
+        setTheme(saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {}
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   // Default to 'all' for single-link all-in-one experience
   const [activeView, setActiveView] = useState<ActiveNavView>(
@@ -193,11 +223,13 @@ function CitizenEaseMain() {
   const t = I18N[language];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-emerald-200">
-      {/* Top Bar with Combined Navigation */}
+    <div className="min-h-screen flex flex-col bg-[#FAF8F5] dark:bg-[#09130f] text-stone-900 dark:text-stone-100 selection:bg-emerald-200 dark:selection:bg-emerald-950 transition-colors">
+      {/* Top Bar with Combined Navigation & Theme Toggle */}
       <Navbar
         language={language}
         onToggleLanguage={toggleLanguage}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         activeView={activeView}
         onNavigate={(view) => setActiveView(view)}
         hasActiveChecklist={!!checklist}
@@ -205,7 +237,7 @@ function CitizenEaseMain() {
       />
 
       {/* Unified Link Header / Mode Pill Banner */}
-      <div className="bg-emerald-900 text-white py-2 px-4 text-xs font-medium">
+      <div className="bg-emerald-900 dark:bg-[#0a2219] text-white py-2 px-4 text-xs font-medium border-b border-emerald-800/40 dark:border-emerald-800/20">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -221,8 +253,8 @@ function CitizenEaseMain() {
               onClick={() => setActiveView('all')}
               className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors cursor-pointer ${
                 activeView === 'all'
-                  ? 'bg-white text-emerald-950 font-bold'
-                  : 'bg-emerald-800 text-emerald-200 hover:bg-emerald-700'
+                  ? 'bg-white dark:bg-emerald-400 text-emerald-950 dark:text-stone-950 font-bold'
+                  : 'bg-emerald-800 dark:bg-emerald-950/70 text-emerald-200 hover:bg-emerald-700 dark:hover:bg-emerald-900'
               }`}
             >
               {isUrdu ? 'تمام فیچرز (یکجا صفحہ)' : 'All-in-One Page'}
@@ -232,7 +264,7 @@ function CitizenEaseMain() {
                 const el = document.getElementById('checklist');
                 el?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-800 text-emerald-200 hover:bg-emerald-700 transition-colors cursor-pointer hidden sm:inline-block"
+              className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-800 dark:bg-emerald-950/70 text-emerald-200 hover:bg-emerald-700 dark:hover:bg-emerald-900 transition-colors cursor-pointer hidden sm:inline-block"
             >
               {isUrdu ? 'چیک لسٹ پر جائیں' : 'Jump to Checklist'}
             </button>
@@ -262,14 +294,14 @@ function CitizenEaseMain() {
         {(activeView === 'all' || activeView === 'checklist') && (
           <section id="checklist" className="scroll-mt-20 space-y-4">
             {/* Quick Service Switcher Bar */}
-            <div className="bg-white rounded-2xl p-4 border border-stone-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="bg-white dark:bg-[#11221b] rounded-2xl p-4 border border-stone-200/80 dark:border-stone-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors">
               <div className="flex items-center gap-2">
-                <FileCheck2 className="w-5 h-5 text-emerald-700" />
+                <FileCheck2 className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
                 <div>
-                  <h3 className="text-sm font-bold text-stone-900">
+                  <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100">
                     {isUrdu ? 'سروس کا انتخاب کریں اور فوری چیک لسٹ دیکھیں:' : 'Select Service for Interactive Checklist:'}
                   </h3>
-                  <p className="text-xs text-stone-500">
+                  <p className="text-xs text-stone-500 dark:text-stone-400">
                     {isUrdu ? 'کسی بھی سروس پر کلک کر کے فوری تقاضے اور تیاری کا اسکور حاصل کریں' : 'Switch service to instantly calculate requirements & readiness score'}
                   </p>
                 </div>
@@ -287,11 +319,11 @@ function CitizenEaseMain() {
                       onClick={() => handleQuickSwitchService(slug)}
                       className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
                         isActive
-                          ? 'bg-[#0C3E2E] text-white shadow-sm ring-2 ring-emerald-600/30'
-                          : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                          ? 'bg-[#0C3E2E] dark:bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-600/30 dark:ring-emerald-400/40'
+                          : 'bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700'
                       }`}
                     >
-                      {isActive && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />}
+                      {isActive && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300 dark:text-emerald-200" />}
                       <span>{isUrdu ? s.title_ur : s.title_en}</span>
                     </button>
                   );
@@ -399,7 +431,7 @@ function CitizenEaseMain() {
 
 export default function HomePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-sm text-stone-500">Loading CitizenEase Unified Hub...</div>}>
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-sm text-stone-500 dark:text-stone-400 bg-[#FAF8F5] dark:bg-[#09130f]">Loading CitizenEase Unified Hub...</div>}>
       <CitizenEaseMain />
     </Suspense>
   );

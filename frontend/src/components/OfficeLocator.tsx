@@ -145,36 +145,36 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="p-6 rounded-3xl bg-white border border-stone-200/90 shadow-xs">
+      <div className="p-6 rounded-3xl bg-white dark:bg-[#102019] border border-stone-200/90 dark:border-stone-800 shadow-xs transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800 tracking-wide uppercase">
-              <MapPin className="w-4 h-4 text-emerald-700" />
+            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-800 dark:text-emerald-400 tracking-wide uppercase">
+              <MapPin className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
               <span>{isUrdu ? 'کراچی دفتری پتہ و نقشہ' : 'Verified Karachi Office Directory'}</span>
             </div>
-            <h1 className="text-2xl font-bold text-stone-900 mt-1">
+            <h1 className="text-2xl font-bold text-stone-900 dark:text-stone-100 mt-1">
               {t.offices_heading}
             </h1>
-            <p className="text-xs sm:text-sm text-stone-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-0.5">
               {t.offices_subheading}
             </p>
           </div>
 
-          <div className="text-xs text-stone-500">
+          <div className="text-xs text-stone-500 dark:text-stone-400">
             {filteredOffices.length} {isUrdu ? 'دفاتر دستیاب ہیں' : 'offices located'}
           </div>
         </div>
 
         {/* Filters Strip */}
-        <div className="mt-6 pt-5 border-t border-stone-100 flex flex-wrap items-center gap-3">
+        <div className="mt-6 pt-5 border-t border-stone-100 dark:border-stone-800 flex flex-wrap items-center gap-3">
           {/* Service Segmented Control */}
-          <div className="flex items-center gap-1 p-1 bg-stone-100 rounded-xl">
+          <div className="flex items-center gap-1 p-1 bg-stone-100 dark:bg-stone-800/90 rounded-xl transition-colors">
             <button
               onClick={() => setServiceFilter('all')}
               className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                 serviceFilter === 'all'
-                  ? 'bg-white text-stone-900 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
+                  ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-white shadow-xs'
+                  : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
               }`}
             >
               {t.filter_all}
@@ -183,8 +183,8 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
               onClick={() => setServiceFilter('domicile_prc')}
               className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                 serviceFilter === 'domicile_prc'
-                  ? 'bg-white text-stone-900 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
+                  ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-white shadow-xs'
+                  : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
               }`}
             >
               {isUrdu ? 'ڈی سی آفسز (ڈومیسائل)' : 'DC Offices (Domicile/PRC)'}
@@ -193,8 +193,8 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
               onClick={() => setServiceFilter('first_cnic')}
               className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                 serviceFilter === 'first_cnic'
-                  ? 'bg-white text-stone-900 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
+                  ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-white shadow-xs'
+                  : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
               }`}
             >
               {isUrdu ? 'نادرا سینٹرز (شناختی کارڈ و ایف آر سی)' : 'NADRA Centres (CNIC & FRC)'}
@@ -203,8 +203,8 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
               onClick={() => setServiceFilter('passport')}
               className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                 serviceFilter === 'passport'
-                  ? 'bg-white text-stone-900 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900'
+                  ? 'bg-white dark:bg-stone-700 text-stone-900 dark:text-white shadow-xs'
+                  : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
               }`}
             >
               {isUrdu ? 'پاسپورٹ آفسز (RPO)' : 'Passport Offices (RPO)'}
@@ -215,7 +215,7 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
           <select
             value={districtFilter}
             onChange={(e) => setDistrictFilter(e.target.value)}
-            className="px-3 py-2 text-xs font-semibold text-stone-700 bg-white border border-stone-200 rounded-xl focus:outline-none cursor-pointer"
+            className="px-3 py-2 text-xs font-semibold text-stone-700 dark:text-stone-200 bg-white dark:bg-[#142820] border border-stone-200 dark:border-stone-700 rounded-xl focus:outline-none cursor-pointer"
           >
             <option value="all">All Karachi Districts</option>
             {KARACHI_DISTRICTS.map(d => (
@@ -227,13 +227,13 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
 
           {/* Search Input */}
           <div className="relative flex-1 min-w-[200px]">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5 pointer-events-none" />
+            <Search className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3 top-2.5 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t.search_offices}
-              className="w-full pl-9 pr-3 py-2 text-xs text-stone-900 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none"
+              className="w-full pl-9 pr-3 py-2 text-xs text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 bg-stone-50 dark:bg-[#142820] border border-stone-200 dark:border-stone-700 rounded-xl focus:outline-none"
             />
           </div>
         </div>
@@ -242,10 +242,10 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
       {/* Main Grid: Interactive Map + Curated List Fallback */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Interactive Map Container (7 cols) */}
-        <div className="lg:col-span-7 flex flex-col rounded-3xl bg-white border border-stone-200/90 overflow-hidden shadow-xs">
-          <div className="p-4 border-b border-stone-100 flex items-center justify-between text-xs text-stone-500">
-            <span className="font-semibold text-stone-700 flex items-center gap-1.5">
-              <Navigation className="w-4 h-4 text-[#0C3E2E]" />
+        <div className="lg:col-span-7 flex flex-col rounded-3xl bg-white dark:bg-[#102019] border border-stone-200/90 dark:border-stone-800 overflow-hidden shadow-xs transition-colors">
+          <div className="p-4 border-b border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
+            <span className="font-semibold text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
+              <Navigation className="w-4 h-4 text-[#0C3E2E] dark:text-emerald-400" />
               <span>{isUrdu ? 'کراچی انٹرایکٹو نقشہ' : 'Karachi District Coordinates'}</span>
             </span>
             <span>{isUrdu ? 'اوپن اسٹریٹ میپ' : 'OpenStreetMap Engine'}</span>
@@ -254,13 +254,13 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
           {/* Map canvas */}
           <div
             ref={mapContainerRef}
-            className="w-full h-80 sm:h-96 min-h-[320px] bg-stone-100 relative z-0"
+            className="w-full h-80 sm:h-96 min-h-[320px] bg-stone-100 dark:bg-stone-900 relative z-0"
           >
             {mapError && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-stone-50 text-stone-600">
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-stone-50 dark:bg-[#0d1c16] text-stone-600 dark:text-stone-300">
                 <AlertCircle className="w-8 h-8 text-amber-500 mb-2" />
                 <p className="font-semibold text-sm">Offline Map Mode Active</p>
-                <p className="text-xs text-stone-400 mt-1 max-w-sm">
+                <p className="text-xs text-stone-400 dark:text-stone-500 mt-1 max-w-sm">
                   Interactive tiles unavailable in sandbox. The complete verified address list and direct Google Maps links below remain fully functional.
                 </p>
               </div>
@@ -269,17 +269,17 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
 
           {/* Selected Office Spotlight Panel */}
           {selectedOffice && (
-            <div className="p-5 bg-stone-50/70 border-t border-stone-200 space-y-3">
+            <div className="p-5 bg-stone-50/70 dark:bg-[#13261e] border-t border-stone-200 dark:border-stone-800 space-y-3 transition-colors">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <div className="flex items-center gap-2 text-[11px] font-semibold text-emerald-800">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <div className="flex items-center gap-2 text-[11px] font-semibold text-emerald-800 dark:text-emerald-400">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                     <span>Verified {selectedOffice.verification_status} · Audited {selectedOffice.last_verified_on}</span>
                   </div>
-                  <h3 className="text-base font-bold text-stone-900 mt-0.5">
+                  <h3 className="text-base font-bold text-stone-900 dark:text-stone-100 mt-0.5">
                     {isUrdu ? selectedOffice.name_ur : selectedOffice.name_en}
                   </h3>
-                  <p className="text-xs text-stone-600 mt-0.5">
+                  <p className="text-xs text-stone-600 dark:text-stone-400 mt-0.5">
                     {isUrdu ? selectedOffice.address_ur : selectedOffice.address_en}
                   </p>
                 </div>
@@ -289,7 +289,7 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
                   href={`https://www.google.com/maps/dir/?api=1&destination=${selectedOffice.lat},${selectedOffice.lng}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3.5 py-2 bg-[#0C3E2E] hover:bg-[#0A3426] text-white text-xs font-semibold rounded-xl transition-all shadow-xs flex items-center gap-1.5 shrink-0 whitespace-nowrap min-h-[40px]"
+                  className="px-3.5 py-2 bg-[#0C3E2E] hover:bg-[#0A3426] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl transition-all shadow-xs flex items-center gap-1.5 shrink-0 whitespace-nowrap min-h-[40px]"
                 >
                   <Navigation className="w-3.5 h-3.5" />
                   <span>{isUrdu ? 'راستہ دیکھیں' : 'Get Directions'}</span>
@@ -297,12 +297,12 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
                 </a>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-stone-500 pt-2 border-t border-stone-200/80">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs text-stone-500 dark:text-stone-400 pt-2 border-t border-stone-200/80 dark:border-stone-800">
                 <div className="flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-stone-400" />
+                  <Clock className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
                   <span>{isUrdu ? selectedOffice.hours_note_ur : selectedOffice.hours_note_en}</span>
                 </div>
-                <div className="text-stone-400">
+                <div className="text-stone-400 dark:text-stone-500">
                   {selectedOffice.district}
                 </div>
               </div>
@@ -313,12 +313,12 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
         {/* Right: Bulletproof List Fallback (5 cols) */}
         <div className="lg:col-span-5 space-y-3 max-h-[640px] overflow-y-auto pr-1">
           {filteredOffices.length === 0 ? (
-            <div className="p-8 text-center bg-white rounded-3xl border border-stone-200 text-stone-500">
+            <div className="p-8 text-center bg-white dark:bg-[#102019] rounded-3xl border border-stone-200 dark:border-stone-800 text-stone-500 dark:text-stone-400">
               <Building2 className="w-8 h-8 text-stone-400 mx-auto mb-2" />
               <p className="font-semibold text-sm">
                 {isUrdu ? 'کوئی مصدقہ دفتر نہیں ملا' : 'No verified office found'}
               </p>
-              <p className="text-xs text-stone-400 mt-1">
+              <p className="text-xs text-stone-400 dark:text-stone-500 mt-1">
                 {isUrdu
                   ? 'براہِ کرم سرکاری پورٹل nadra.gov.pk یا سندھ ہوم ڈیپارٹمنٹ سے تصدیق کریں۔'
                   : 'Please check official sites or reset your filters.'}
@@ -333,21 +333,21 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
                   onClick={() => handleSelectOffice(office)}
                   className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                     isSelected
-                      ? 'border-[#0C3E2E] bg-emerald-50/40 ring-2 ring-[#0C3E2E]/10'
-                      : 'border-stone-200 hover:border-stone-300 bg-white'
+                      ? 'border-[#0C3E2E] dark:border-emerald-500 bg-emerald-50/40 dark:bg-emerald-950/40 ring-2 ring-[#0C3E2E]/10 dark:ring-emerald-400/20'
+                      : 'border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 bg-white dark:bg-[#102019]'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <div className="flex items-center gap-1.5 text-[11px] font-semibold text-stone-500">
+                      <div className="flex items-center gap-1.5 text-[11px] font-semibold text-stone-500 dark:text-stone-400">
                         <span>{office.district}</span>
                         <span aria-hidden="true">·</span>
                         <span className="capitalize">{office.office_type.replace('_', ' ')}</span>
                       </div>
-                      <h4 className="text-sm font-bold text-stone-900 mt-0.5">
+                      <h4 className="text-sm font-bold text-stone-900 dark:text-stone-100 mt-0.5">
                         {isUrdu ? office.name_ur : office.name_en}
                       </h4>
-                      <p className="text-xs text-stone-600 mt-1 line-clamp-2">
+                      <p className="text-xs text-stone-600 dark:text-stone-400 mt-1 line-clamp-2">
                         {isUrdu ? office.address_ur : office.address_en}
                       </p>
                     </div>
@@ -357,18 +357,18 @@ export const OfficeLocator: React.FC<OfficeLocatorProps> = ({
                       target="_blank"
                       rel="noreferrer"
                       onClick={(e) => e.stopPropagation()}
-                      className="p-2 text-stone-400 hover:text-[#0C3E2E] hover:bg-stone-100 rounded-lg transition-colors shrink-0"
+                      className="p-2 text-stone-400 dark:text-stone-500 hover:text-[#0C3E2E] dark:hover:text-emerald-400 hover:bg-stone-100 dark:hover:bg-stone-800 rounded-lg transition-colors shrink-0"
                       title="Open Directions in Google Maps"
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   </div>
 
-                  <div className="mt-3 pt-2 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400">
+                  <div className="mt-3 pt-2 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-[11px] text-stone-400 dark:text-stone-500">
                     <span className="truncate max-w-[200px]">
                       {isUrdu ? office.hours_note_ur : office.hours_note_en}
                     </span>
-                    <span className="text-emerald-700 font-medium">
+                    <span className="text-emerald-700 dark:text-emerald-400 font-medium">
                       Audited {office.last_verified_on}
                     </span>
                   </div>

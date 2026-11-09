@@ -16,6 +16,11 @@
     margin: 0;
   }
 
+  html.dark body {
+    background-color: #09130f;
+    color: #f1f5f9;
+  }
+
   /* Urdu language specific styling for comfortable reading */
   [dir="rtl"], .font-urdu {
     font-family: var(--font-urdu);
