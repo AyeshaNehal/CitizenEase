@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import List, Optional
-from backend.app.schemas.catalog import ServiceListItem, ServiceDetailResponse
-from backend.app.modules.catalog.service import CatalogService
+from app.schemas.catalog import ServiceListItem, ServiceDetailResponse
+from app.modules.catalog.service import CatalogService
 
 router = APIRouter(tags=["services"])
 

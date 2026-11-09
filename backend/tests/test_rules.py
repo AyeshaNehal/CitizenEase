@@ -1,5 +1,5 @@
 import pytest
-from backend.app.modules.rules.evaluator import evaluate_condition, evaluate_rules, compute_rules_version
+from app.modules.rules.evaluator import evaluate_condition, evaluate_rules, compute_rules_version
 
 def test_evaluate_condition():
     # eq operator

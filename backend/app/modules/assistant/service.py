@@ -1,8 +1,8 @@
 import re
 import os
 from typing import Dict, Any, List, Optional
-from backend.app.modules.catalog.service import load_json_seed
-from backend.app.modules.checklist.service import CHECKLISTS
+from app.modules.catalog.service import load_json_seed
+from app.modules.checklist.service import CHECKLISTS
 
 CNIC_REGEX = re.compile(r'\b\d{5}[- ]?\d{7}[- ]?\d\b|\b\d{13}\b')
 

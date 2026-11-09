@@ -86,16 +86,18 @@ citizenease/
 
 ## 🚀 Quickstart
 
-### Backend (FastAPI + Python 3.11+)
+### Backend (FastAPI + Python 3.10+)
 ```bash
 cd backend
 python -m venv venv
 # On Windows:
-.\venv\Scripts\activate
+.\venv\Scripts\Activate.ps1
+# Or without activating the environment:
+# .\venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8000
 # On Linux/macOS:
 # source venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+python -m uvicorn app.main:app --reload --port 8000
 ```
 Open [http://localhost:8000/docs](http://localhost:8000/docs) for the interactive Swagger documentation.
 

@@ -1,6 +1,6 @@
 import os
 from typing import Optional
-from backend.app.config import settings
+from app.config import settings
 
 try:
     from supabase import create_client, Client

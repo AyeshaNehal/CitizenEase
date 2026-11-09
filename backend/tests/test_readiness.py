@@ -1,5 +1,5 @@
 import pytest
-from backend.app.modules.readiness.calculator import calculate_readiness
+from app.modules.readiness.calculator import calculate_readiness
 
 def test_readiness_score_calculation():
     # 2 verified mandatory (1 have, 1 missing) -> 50%

@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException
-from backend.app.schemas.checklist import (
+from app.schemas.checklist import (
     ChecklistGenerateRequest,
     ChecklistResponse,
     ChecklistBatchUpdateRequest,
     ChecklistUpdateResponse
 )
-from backend.app.modules.checklist.service import ChecklistService
+from app.modules.checklist.service import ChecklistService
 
 router = APIRouter(prefix="/checklist", tags=["checklist"])
 

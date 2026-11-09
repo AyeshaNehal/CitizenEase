@@ -1,6 +1,6 @@
 import uuid
 from typing import Dict, Any, List, Optional
-from backend.app.modules.catalog.service import load_json_seed, CatalogService
+from app.modules.catalog.service import load_json_seed, CatalogService
 
 # In-memory session store for MVP runtime (persists across requests during server run)
 # Can be synced to Supabase when DATABASE_URL is configured

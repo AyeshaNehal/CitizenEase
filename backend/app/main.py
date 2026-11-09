@@ -4,8 +4,8 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from backend.app.config import settings
-from backend.app.routers import (
+from app.config import settings
+from app.routers import (
     services,
     questionnaire,
     checklist,
@@ -99,4 +99,4 @@ app.include_router(discover.router, prefix=api_prefix)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("backend.app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from backend.app.schemas.assistant import ChatRequest, ChatResponse
-from backend.app.modules.assistant.service import AssistantService
+from app.schemas.assistant import ChatRequest, ChatResponse
+from app.modules.assistant.service import AssistantService
 
 router = APIRouter(prefix="/assistant", tags=["assistant"])
 

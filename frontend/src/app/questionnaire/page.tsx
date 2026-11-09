@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { api } from '@/lib/api';
 import { Question, Progress } from '@/lib/types';
 import Link from 'next/link';
 
-export default function QuestionnairePage() {
+function QuestionnaireContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const serviceSlug = searchParams.get('service') || 'domicile_prc';
@@ -187,5 +187,13 @@ export default function QuestionnairePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function QuestionnairePage() {
+  return (
+    <Suspense fallback={<div className="text-center py-16 text-sm text-gray-500">Starting guided questionnaire...</div>}>
+      <QuestionnaireContent />
+    </Suspense>
   );
 }
