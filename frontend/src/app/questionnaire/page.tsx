@@ -1,6 +1,10 @@
 'use client';
 
+<<<<<<< Updated upstream
 import { Suspense, useEffect, useState } from 'react';
+=======
+import { useEffect, useState, Suspense } from 'react';
+>>>>>>> Stashed changes
 import { useRouter, useSearchParams } from 'next/navigation';
 import { api } from '@/lib/api';
 import { Question, Progress } from '@/lib/types';
@@ -192,7 +196,11 @@ function QuestionnaireContent() {
 
 export default function QuestionnairePage() {
   return (
+<<<<<<< Updated upstream
     <Suspense fallback={<div className="text-center py-16 text-sm text-gray-500">Starting guided questionnaire...</div>}>
+=======
+    <Suspense fallback={<div className="text-center py-16 text-sm text-gray-500">Loading questionnaire...</div>}>
+>>>>>>> Stashed changes
       <QuestionnaireContent />
     </Suspense>
   );
