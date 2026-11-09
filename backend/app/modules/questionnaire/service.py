@@ -1,9 +1,9 @@
 import uuid
 from typing import Dict, Any, List, Optional
 from backend.app.modules.catalog.service import load_json_seed, CatalogService
+from backend.app.db.storage import DatabaseStorage
 
-# In-memory session store for MVP runtime (persists across requests during server run)
-# Can be synced to Supabase when DATABASE_URL is configured
+# Fast in-memory cache synchronized with persistent DatabaseStorage
 SESSIONS: Dict[str, Dict[str, Any]] = {}
 
 class QuestionnaireService:
@@ -18,13 +18,19 @@ class QuestionnaireService:
         questions.sort(key=lambda q: q.get("order_index", 0))
 
         session_id = str(uuid.uuid4())
-        SESSIONS[session_id] = {
+        session_data = {
             "session_id": session_id,
             "service_slug": service_slug,
             "service_id": service_id,
             "language": language,
-            "answers": {}
+            "answers": {},
+            "message_count": 0
         }
+        SESSIONS[session_id] = session_data
+        try:
+            DatabaseStorage.save_session(session_id, session_data)
+        except Exception as e:
+            print(f"Session DB sync note: {e}")
 
         first_q = questions[0] if questions else None
         return {
@@ -38,11 +44,16 @@ class QuestionnaireService:
 
     @classmethod
     def answer_question(cls, session_id: str, question_key: str, answer: Any) -> Dict[str, Any]:
-        if session_id not in SESSIONS:
+        session = cls.get_session(session_id)
+        if not session:
             raise KeyError(f"Session {session_id} not found")
 
-        session = SESSIONS[session_id]
         session["answers"][question_key] = answer
+        SESSIONS[session_id] = session
+        try:
+            DatabaseStorage.save_session(session_id, session)
+        except Exception as e:
+            print(f"Session DB sync note: {e}")
 
         # Load service questions
         service_id = session["service_id"]
@@ -73,4 +84,13 @@ class QuestionnaireService:
 
     @classmethod
     def get_session(cls, session_id: str) -> Optional[Dict[str, Any]]:
-        return SESSIONS.get(session_id)
+        if session_id in SESSIONS:
+            return SESSIONS[session_id]
+        try:
+            stored = DatabaseStorage.get_session(session_id)
+            if stored:
+                SESSIONS[session_id] = stored
+                return stored
+        except Exception:
+            pass
+        return None

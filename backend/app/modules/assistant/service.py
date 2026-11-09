@@ -1,8 +1,10 @@
 import re
 import os
 from typing import Dict, Any, List, Optional
+from fastapi import HTTPException
 from backend.app.modules.catalog.service import load_json_seed
 from backend.app.modules.checklist.service import CHECKLISTS
+from backend.app.db.storage import DatabaseStorage
 
 CNIC_REGEX = re.compile(r'\b\d{5}[- ]?\d{7}[- ]?\d\b|\b\d{13}\b')
 
@@ -85,6 +87,17 @@ class AssistantService:
         language: str = "en",
         checklist_items: Optional[List[Any]] = None
     ) -> Dict[str, Any]:
+        if len(message) > 500:
+            raise HTTPException(status_code=400, detail="Message exceeds maximum allowed length of 500 characters.")
+
+        if session_id and session_id != "anonymous":
+            msg_count = DatabaseStorage.increment_session_messages(session_id)
+            if msg_count > 20:
+                raise HTTPException(
+                    status_code=429,
+                    detail="Per-session limit of 20 messages reached. Please consult your verified checklist or start a fresh session."
+                )
+
         cleaned_msg = cls.sanitize_input(message)
         contains_cnic = "[REDACTED_CNIC]" in cleaned_msg
 

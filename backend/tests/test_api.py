@@ -103,3 +103,19 @@ def test_frc_questionnaire_flow():
     assert "REQ_FRC_ORIG_CNIC" in codes
     assert "REQ_FRC_FAMILY_NUMBERS" in codes
     assert "REQ_FRC_MARRIAGE_RECORD" in codes
+
+def test_sources_and_stale_detection():
+    # 1. Full sources list
+    resp = client.get("/api/v1/sources")
+    assert resp.status_code == 200
+    sources = resp.json()
+    assert len(sources) >= 5
+
+    # 2. Staleness audit endpoint
+    stale_resp = client.get("/api/v1/sources/stale?threshold_days=30")
+    assert stale_resp.status_code == 200
+    stale_data = stale_resp.json()
+    assert "threshold_days" in stale_data
+    assert "stale_count" in stale_data
+    assert "stale_sources" in stale_data
+

@@ -99,6 +99,24 @@ class CatalogService:
         return [src for src in sources if src.get("service_id") == svc_id or src.get("service_id") is None]
 
     @classmethod
+    def get_stale_sources(cls, threshold_days: int = 90) -> List[Dict[str, Any]]:
+        from datetime import datetime, date
+        sources = load_json_seed("sources.json")
+        stale = []
+        today = date.today()
+        for src in sources:
+            d_str = src.get("last_verified_on")
+            if d_str:
+                try:
+                    d = datetime.strptime(d_str, "%Y-%m-%d").date()
+                    delta = (today - d).days
+                    if delta > threshold_days:
+                        stale.append({**src, "days_since_verified": delta, "is_stale": True})
+                except Exception:
+                    pass
+        return stale
+
+    @classmethod
     def get_fees(cls, service_slug: str) -> List[Dict[str, Any]]:
         if service_slug == "passport":
             return [
