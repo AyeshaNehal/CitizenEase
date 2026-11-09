@@ -45,13 +45,27 @@ class CatalogService:
         dates = [src.get("last_verified_on") for src in service_sources if src.get("last_verified_on")]
         latest_date = max(dates) if dates else "2026-11-08"
 
-        app_types = [
-            {"id": "app-both", "slug": "both", "title_en": "Both Domicile & PRC", "title_ur": "ڈومیسائل اور پی آر سی دونوں"},
-            {"id": "app-dom-only", "slug": "domicile_only", "title_en": "Domicile Only", "title_ur": "صرف ڈومیسائل"},
-            {"id": "app-prc-only", "slug": "prc_only", "title_en": "PRC Only", "title_ur": "صرف پی آر سی"}
-        ] if slug == "domicile_prc" else [
-            {"id": "app-cnic-reg", "slug": "standard", "title_en": "Standard First-Time Adult CNIC", "title_ur": "پہلا شناختی کارڈ (معیاری)"}
-        ]
+        if slug == "domicile_prc":
+            app_types = [
+                {"id": "app-both", "slug": "both", "title_en": "Both Domicile & PRC", "title_ur": "ڈومیسائل اور پی آر سی دونوں"},
+                {"id": "app-dom-only", "slug": "domicile_only", "title_en": "Domicile Only", "title_ur": "صرف ڈومیسائل"},
+                {"id": "app-prc-only", "slug": "prc_only", "title_en": "PRC Only", "title_ur": "صرف پی آر سی"}
+            ]
+        elif slug == "passport":
+            app_types = [
+                {"id": "app-pass-fresh", "slug": "fresh", "title_en": "Fresh / New Passport", "title_ur": "نیا پاسپورٹ"},
+                {"id": "app-pass-renewal", "slug": "renewal", "title_en": "Passport Renewal", "title_ur": "پاسپورٹ تجدید"},
+                {"id": "app-pass-lost", "slug": "lost", "title_en": "Lost Passport Replacement", "title_ur": "گمشدہ پاسپورٹ"}
+            ]
+        elif slug == "frc":
+            app_types = [
+                {"id": "app-frc-birth", "slug": "by_birth", "title_en": "FRC By Birth (Parents & Siblings)", "title_ur": "پیدائشی خاندانی شجرہ"},
+                {"id": "app-frc-marriage", "slug": "by_marriage", "title_en": "FRC By Marriage (Spouse & Children)", "title_ur": "ازدواجی خاندانی شجرہ"}
+            ]
+        else:
+            app_types = [
+                {"id": "app-cnic-reg", "slug": "standard", "title_en": "Standard First-Time Adult CNIC", "title_ur": "پہلا شناختی کارڈ (معیاری)"}
+            ]
 
         return {
             "service": svc,
@@ -86,11 +100,28 @@ class CatalogService:
 
     @classmethod
     def get_fees(cls, service_slug: str) -> List[Dict[str, Any]]:
-        # Per spec: A null amount means unknown; UI shows "Confirm with office".
-        if service_slug == "first_cnic":
+        if service_slug == "passport":
             return [
                 {
-                    "label": "NADRA Normal Issuance (Subject to periodic revision)",
+                    "label": "MRP Standard 36 Pages (5 Years) - Payable via National Bank / Asaan App",
+                    "amount_pkr": None,
+                    "verification_status": "unverified",
+                    "source": "DGI&P Official Fee Schedule"
+                }
+            ]
+        elif service_slug == "frc":
+            return [
+                {
+                    "label": "NADRA Family Registration Certificate Standard Issuance",
+                    "amount_pkr": None,
+                    "verification_status": "unverified",
+                    "source": "NADRA Schedule of Charges"
+                }
+            ]
+        elif service_slug == "first_cnic":
+            return [
+                {
+                    "label": "NADRA Normal Issuance (Free standard track)",
                     "amount_pkr": None,
                     "verification_status": "unverified",
                     "source": "NADRA Schedule of Charges"

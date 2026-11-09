@@ -1,0 +1,6 @@
+{
+  "name": "CitizenEase",
+  "description": "Karachi citizen preparation layer for Domicile, PRC, and CNIC applications with verified checklists, readiness scoring, and grounded AI guidance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

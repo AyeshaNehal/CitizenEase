@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException
-from app.schemas.questionnaire import (
+from backend.app.schemas.questionnaire import (
     StartQuestionnaireRequest,
     StartQuestionnaireResponse,
     AnswerQuestionnaireRequest,
     AnswerQuestionnaireResponse
 )
-from app.modules.questionnaire.service import QuestionnaireService
+from backend.app.modules.questionnaire.service import QuestionnaireService
 
 router = APIRouter(prefix="/questionnaire", tags=["questionnaire"])
 

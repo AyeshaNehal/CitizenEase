@@ -40,5 +40,33 @@
     "service_id": "s-domicile-prc",
     "notes": "Illustrative document list gathered from administrative notices.",
     "limitations": "Must be re-verified against physical notice board."
+  },
+  {
+    "id": "SRC-DGIP-OFFICIAL",
+    "title": "Directorate General Immigration & Passports Official Guidelines",
+    "url": "https://passport.gov.pk",
+    "issuing_authority": "Directorate General Immigration & Passports (DGI&P)",
+    "source_type": "official_web",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "DGI&P Portal Verification",
+    "applicable_district": null,
+    "service_id": "s-passport",
+    "notes": "Official statutory guidelines for Machine Readable Passport (MRP) and e-Passport issuance in Pakistan.",
+    "limitations": "Urgent and Fast Track delivery timelines subject to executive printing backlog."
+  },
+  {
+    "id": "SRC-NADRA-FRC-RULES",
+    "title": "NADRA Family Registration Certificate (FRC) Citizen Regulations",
+    "url": "https://www.nadra.gov.pk",
+    "issuing_authority": "National Database & Registration Authority (NADRA)",
+    "source_type": "official_web",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "NADRA Registration Review",
+    "applicable_district": null,
+    "service_id": "s-frc",
+    "notes": "Official guidelines governing Family Registration Certificates (By Birth vs By Marriage) and computerized Union Council records.",
+    "limitations": "Marriage certificate must be registered in NADRA database prior to FRC By Marriage application."
   }
 ]

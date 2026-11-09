@@ -20,5 +20,27 @@
     "icon": "CreditCard",
     "keywords": ["cnic", "smart card", "nadra", "b-form", "first time", "18 years", "identity"],
     "is_active": true
+  },
+  {
+    "id": "s-passport",
+    "slug": "passport",
+    "title_en": "Machine Readable Passport (DGI&P)",
+    "title_ur": "مشین ریڈ ایبل پاسپورٹ (امیگریشن و پاسپورٹ)",
+    "description_en": "Checklist and procedural guide for fresh passport issuance, renewal, and lost passport processing at Karachi RPOs.",
+    "description_ur": "کراچی ریجنل پاسپورٹ آفسز کے ذریعے نیا پاسپورٹ، تجدید اور گمشدہ پاسپورٹ کے لیے مکمل مصدقہ رہنمائی۔",
+    "icon": "BookOpen",
+    "keywords": ["passport", "mrp", "epassport", "immigration", "dgip", "travel", "visa", "renewal"],
+    "is_active": true
+  },
+  {
+    "id": "s-frc",
+    "slug": "frc",
+    "title_en": "Family Registration Certificate (FRC)",
+    "title_ur": "فیملی رجسٹریشن سرٹیفکیٹ (نادرا ایف آر سی)",
+    "description_en": "Verified documentation for NADRA Family Registration Certificate: By Birth (parents & siblings) or By Marriage (spouse & children).",
+    "description_ur": "نادرا سے خاندانی شجرہ اور رجسٹریشن سرٹیفکیٹ (پیدائشی یا ازدواجی فیملی) حاصل کرنے کی شرائط۔",
+    "icon": "Users",
+    "keywords": ["frc", "family registration", "nadra", "family tree", "by birth", "by marriage", "visa"],
+    "is_active": true
   }
 ]

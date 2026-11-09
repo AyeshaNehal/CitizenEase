@@ -1,10 +1,6 @@
 'use client';
 
-<<<<<<< Updated upstream
 import { Suspense, useEffect, useState } from 'react';
-=======
-import { useEffect, useState, Suspense } from 'react';
->>>>>>> Stashed changes
 import { useRouter, useSearchParams } from 'next/navigation';
 import { api } from '@/lib/api';
 import { Question, Progress } from '@/lib/types';
@@ -147,7 +143,7 @@ function QuestionnaireContent() {
             <div className="space-y-2">
               {currentQuestion.options.map((opt) => (
                 <button
-                  key={opt.value}
+                  key={String(opt.value)}
                   type="button"
                   onClick={() => setAnswer(opt.value)}
                   className={`w-full text-left p-4 rounded-xl border text-sm transition-all flex items-center justify-between ${
@@ -196,11 +192,7 @@ function QuestionnaireContent() {
 
 export default function QuestionnairePage() {
   return (
-<<<<<<< Updated upstream
     <Suspense fallback={<div className="text-center py-16 text-sm text-gray-500">Starting guided questionnaire...</div>}>
-=======
-    <Suspense fallback={<div className="text-center py-16 text-sm text-gray-500">Loading questionnaire...</div>}>
->>>>>>> Stashed changes
       <QuestionnaireContent />
     </Suspense>
   );

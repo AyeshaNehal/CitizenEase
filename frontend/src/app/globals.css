@@ -2,25 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 30, 58, 47;
-  --background-rgb: 250, 248, 245;
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-urdu: 'Noto Nastaliq Urdu', 'Noto Sans Arabic', serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #FAF8F5;
+    color: #1A202C;
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  /* Urdu language specific styling for comfortable reading */
+  [dir="rtl"], .font-urdu {
+    font-family: var(--font-urdu);
+    line-height: 1.95;
+    letter-spacing: normal;
+  }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-rgb));
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  min-height: 100vh;
-  margin: 0;
+/* Custom scrollbars for drawers and lists */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
-[dir="rtl"] {
-  font-family: 'Noto Nastaliq Urdu', serif;
-  line-height: 2.0;
+/* Print stylesheet for instant clean PDF export */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+  }
+  .print-page {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+  .print-break-inside-avoid {
+    break-inside: avoid;
+  }
 }
 
-/* Touch targets at least 44px for accessibility */
+/* Touch targets at least 44px for mobile accessibility */
 button, a {
   min-height: 44px;
 }

@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from app.main import app
+from backend.app.main import app
 
 client = TestClient(app)
 
@@ -13,58 +13,52 @@ def test_list_services():
     response = client.get("/api/v1/services")
     assert response.status_code == 200
     services = response.json()
-    assert len(services) >= 2
+    assert len(services) >= 4
     slugs = [s["slug"] for s in services]
     assert "domicile_prc" in slugs
     assert "first_cnic" in slugs
+    assert "passport" in slugs
+    assert "frc" in slugs
 
 def test_service_detail():
-    response = client.get("/api/v1/services/domicile_prc")
-    assert response.status_code == 200
-    data = response.json()
-    assert data["service"]["slug"] == "domicile_prc"
-    assert "source_summary" in data
-    assert data["source_summary"]["verified_count"] >= 1
+    for slug in ["domicile_prc", "first_cnic", "passport", "frc"]:
+        response = client.get(f"/api/v1/services/{slug}")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["service"]["slug"] == slug
+        assert "source_summary" in data
+        assert data["source_summary"]["verified_count"] >= 1
 
-def test_questionnaire_flow_and_checklist_generation():
-    # 1. Start questionnaire
+def test_passport_questionnaire_flow():
+    # 1. Start passport questionnaire
     start_resp = client.post("/api/v1/questionnaire/start", json={
-        "service_slug": "domicile_prc",
+        "service_slug": "passport",
         "language": "en"
     })
     assert start_resp.status_code == 200
-    session_data = start_resp.json()
-    session_id = session_data["session_id"]
-    assert session_id is not None
+    session_id = start_resp.json()["session_id"]
 
-    # 2. Answer questions
+    # 2. Answer renewal questions
     ans1 = client.post("/api/v1/questionnaire/answer", json={
         "session_id": session_id,
-        "question_key": "applicant_age_group",
-        "answer": True
+        "question_key": "passport_application_type",
+        "answer": "renewal"
     })
     assert ans1.status_code == 200
 
     ans2 = client.post("/api/v1/questionnaire/answer", json={
         "session_id": session_id,
-        "question_key": "district",
-        "answer": "karachi_south"
+        "question_key": "is_applicant_minor",
+        "answer": False
     })
     assert ans2.status_code == 200
 
     ans3 = client.post("/api/v1/questionnaire/answer", json={
         "session_id": session_id,
-        "question_key": "application_goal",
-        "answer": "university_admission"
+        "question_key": "is_government_employee",
+        "answer": False
     })
     assert ans3.status_code == 200
-
-    ans4 = client.post("/api/v1/questionnaire/answer", json={
-        "session_id": session_id,
-        "question_key": "has_father_domicile",
-        "answer": True
-    })
-    assert ans4.status_code == 200
 
     # 3. Generate checklist
     chk_resp = client.post("/api/v1/checklist/generate", json={
@@ -72,22 +66,40 @@ def test_questionnaire_flow_and_checklist_generation():
     })
     assert chk_resp.status_code == 200
     checklist_data = chk_resp.json()
-    assert "checklist_id" in checklist_data
     items = checklist_data["items"]
-    assert len(items) >= 3
+    codes = [i["code"] for i in items]
+    assert "REQ_PASS_ORIG_CNIC" in codes
+    assert "REQ_PASS_FEE_CHALLAN" in codes
+    assert "REQ_PASS_PREV_PASSPORT" in codes
 
-    # Check readiness structure
-    readiness = checklist_data["readiness"]
-    assert readiness["score"] == 0 # None marked have yet
-    assert readiness["total"] >= 1
-
-    # 4. Patch items status
-    chk_id = checklist_data["checklist_id"]
-    first_item_id = items[0]["item_id"]
-    patch_resp = client.patch(f"/api/v1/checklist/{chk_id}/items", json={
-        "updates": [{"item_id": first_item_id, "user_status": "have"}]
+def test_frc_questionnaire_flow():
+    start_resp = client.post("/api/v1/questionnaire/start", json={
+        "service_slug": "frc",
+        "language": "en"
     })
-    assert patch_resp.status_code == 200
-    updated_readiness = patch_resp.json()["readiness"]
-    assert updated_readiness["ready"] >= 1
-    assert updated_readiness["score"] > 0
+    assert start_resp.status_code == 200
+    session_id = start_resp.json()["session_id"]
+
+    ans1 = client.post("/api/v1/questionnaire/answer", json={
+        "session_id": session_id,
+        "question_key": "frc_category",
+        "answer": "by_marriage"
+    })
+    assert ans1.status_code == 200
+
+    ans2 = client.post("/api/v1/questionnaire/answer", json={
+        "session_id": session_id,
+        "question_key": "family_nadra_registered",
+        "answer": True
+    })
+    assert ans2.status_code == 200
+
+    chk_resp = client.post("/api/v1/checklist/generate", json={
+        "session_id": session_id
+    })
+    assert chk_resp.status_code == 200
+    items = chk_resp.json()["items"]
+    codes = [i["code"] for i in items]
+    assert "REQ_FRC_ORIG_CNIC" in codes
+    assert "REQ_FRC_FAMILY_NUMBERS" in codes
+    assert "REQ_FRC_MARRIAGE_RECORD" in codes

@@ -1,5 +1,5 @@
 import pytest
-from app.modules.assistant.service import AssistantService
+from backend.app.modules.assistant.service import AssistantService
 
 def test_cnic_sanitization():
     raw_1 = "My CNIC is 42101-1234567-1 please assist"

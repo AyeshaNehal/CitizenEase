@@ -20,5 +20,27 @@
     "source_id": "SRC-NADRA-PAKID",
     "verification_status": "verified",
     "last_verified_on": "2026-11-08"
+  },
+  {
+    "id": "faq-3",
+    "service_id": "s-passport",
+    "question_en": "What documents are required for passport renewal if my previous passport is expiring?",
+    "question_ur": "اگر پاسپورٹ کی میعاد ختم ہو رہی ہو تو تجدید کے لیے کیا دستاویزات درکار ہیں؟",
+    "answer_en": "For passport renewal, you must bring your original valid CNIC/Smart Card/NICOP, your previous original passport along with copies of its first four pages, and the paid National Bank challan receipt or Passport Fee Asaan app 1Link token. No photos or attestation forms are needed as live digital photos and biometrics are taken at the RPO counter.",
+    "answer_ur": "پاسپورٹ کی تجدید کے لیے اصل درست شناختی کارڈ، سابقہ اصل پاسپورٹ بمع ابتدائی چار صفحات کی فوٹو کاپیاں، اور فیس کی بینک رسید درکار ہوتی ہے۔ تصاویر لانے کی ضرورت نہیں ہوتی کیونکہ ڈیجیٹل تصویر کاؤنٹر پر لی جاتی ہے۔",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08"
+  },
+  {
+    "id": "faq-4",
+    "service_id": "s-frc",
+    "question_en": "What is the difference between FRC By Birth and FRC By Marriage?",
+    "question_ur": "پیدائشی اور ازدواجی فیملی رجسٹریشن سرٹیفکیٹ (ایف آر سی) میں کیا فرق ہے؟",
+    "answer_en": "FRC By Birth reflects your biological family tree including your parents and siblings. FRC By Marriage reflects your marital family unit including yourself, your spouse, and your registered children. Both are authenticated directly against NADRA's centralized citizen database.",
+    "answer_ur": "پیدائشی ایف آر سی آپ کے والدین اور بہن بھائیوں کا شجرہ ظاہر کرتا ہے۔ جبکہ ازدواجی ایف آر سی آپ کی اہلیہ/شوہر اور بچوں کی تفصیل ظاہر کرتا ہے۔ دونوں نادرا کے مرکزی ڈیٹا بیس سے تصدیق شدہ ہوتے ہیں۔",
+    "source_id": "SRC-NADRA-FRC-RULES",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08"
   }
 ]

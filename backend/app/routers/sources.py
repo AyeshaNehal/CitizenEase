@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import List, Optional
-from app.schemas.catalog import SourceItem
-from app.modules.catalog.service import CatalogService
+from backend.app.schemas.catalog import SourceItem
+from backend.app.modules.catalog.service import CatalogService
 
 router = APIRouter(tags=["sources"])
 

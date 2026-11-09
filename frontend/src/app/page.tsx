@@ -1,173 +1,406 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { api } from '@/lib/api';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Navbar, ActiveNavView } from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
+import { ServiceDiscovery } from '@/components/ServiceDiscovery';
+import { ServiceDetailModal } from '@/components/ServiceDetailModal';
+import { QuestionnaireModal } from '@/components/QuestionnaireModal';
+import { ChecklistHub } from '@/components/ChecklistHub';
+import { AssistantSlideOver } from '@/components/AssistantSlideOver';
+import { AssistantPanel } from '@/components/AssistantPanel';
+import { OfficeLocator } from '@/components/OfficeLocator';
+import { SourcesLedger } from '@/components/SourcesLedger';
+import { SourcesModal } from '@/components/SourcesModal';
+import { Language, I18N } from '@/lib/i18n';
+import { SERVICES } from '@/data/catalog';
+import {
+  generateChecklistFromAnswers,
+  calculateReadinessScore,
+  GeneratedChecklist,
+  UserItemStatus
+} from '@/lib/rulesEngine';
+import {
+  Layers,
+  Sparkles,
+  ShieldCheck,
+  FileCheck2,
+  MapPin,
+  BookOpen,
+  ArrowRight,
+  CheckCircle2,
+  Printer
+} from 'lucide-react';
 
-export default function HomePage() {
-  const router = useRouter();
-  const [query, setQuery] = useState('');
-  const [discovering, setDiscovering] = useState(false);
-  const [discoveryResult, setDiscoveryResult] = useState<any>(null);
+const STORAGE_KEY = 'citizenease_saved_checklist_v1';
+const LANG_STORAGE_KEY = 'citizenease_lang_pref';
 
-  const handleDiscover = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!query.trim()) return;
+type ServiceSlug = 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
 
-    setDiscovering(true);
+const DEFAULT_ANSWERS: Record<ServiceSlug, Record<string, any>> = {
+  domicile_prc: {
+    application_type: 'both',
+    district: 'karachi_south',
+    is_applicant_minor: false,
+    is_student: true,
+    parent_domicile_available: 'yes',
+    is_married_female: false
+  },
+  first_cnic: {
+    age: 18,
+    has_bform: true,
+    is_bform_smart: true,
+    parents_alive: true,
+    parent_cnic_available: true,
+    blood_relative_available: true
+  },
+  passport: {
+    passport_application_type: 'renewal',
+    passport_type: 'renewal',
+    age_group: 'adult_18_plus',
+    validity_duration: '10_years',
+    page_count: '36_pages',
+    delivery_speed: 'urgent',
+    has_previous_passport: true,
+    is_applicant_minor: false,
+    is_government_employee: false
+  },
+  frc: {
+    frc_category: 'by_birth',
+    has_cnic: true,
+    are_parents_registered: true,
+    are_siblings_registered: true,
+    is_marriage_registered: true
+  }
+};
+
+function CitizenEaseMain() {
+  const searchParams = useSearchParams();
+  const initialViewParam = searchParams.get('view') as ActiveNavView | null;
+
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window === 'undefined') return 'en';
     try {
-      const res = await api.discoverIntent(query);
-      setDiscoveryResult(res);
-      if (res.service_slug) {
-        // Auto-suggest navigation
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setDiscovering(false);
+      const saved = localStorage.getItem(LANG_STORAGE_KEY);
+      return saved === 'ur' ? 'ur' : 'en';
+    } catch {
+      return 'en';
     }
+  });
+
+  // Default to 'all' for single-link all-in-one experience
+  const [activeView, setActiveView] = useState<ActiveNavView>(
+    initialViewParam || 'all'
+  );
+  const [activeServiceSlug, setActiveServiceSlug] = useState<ServiceSlug>('domicile_prc');
+
+  // Modals state
+  const [detailModalSlug, setDetailModalSlug] = useState<ServiceSlug | null>(null);
+  const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+  const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
+  const [assistantInitialPrompt, setAssistantInitialPrompt] = useState<string | undefined>(undefined);
+
+  // Active checklist state
+  const [checklist, setChecklist] = useState<GeneratedChecklist>(() => {
+    if (typeof window === 'undefined') {
+      return generateChecklistFromAnswers('domicile_prc', DEFAULT_ANSWERS.domicile_prc);
+    }
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.warn('Storage read failed:', e);
+    }
+    return generateChecklistFromAnswers('domicile_prc', DEFAULT_ANSWERS.domicile_prc);
+  });
+
+  // Sync RTL and language attributes with document root
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ur' ? 'rtl' : 'ltr';
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, language);
+    } catch {}
+  }, [language]);
+
+  // Persist active checklist to localStorage
+  useEffect(() => {
+    if (checklist) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(checklist));
+      } catch (e) {
+        console.warn('Checklist persist failed:', e);
+      }
+    }
+  }, [checklist]);
+
+  const toggleLanguage = () => {
+    setLanguage(prev => (prev === 'en' ? 'ur' : 'en'));
   };
 
+  const handleStartQuestionnaire = (serviceSlug: ServiceSlug) => {
+    setActiveServiceSlug(serviceSlug);
+    setIsQuestionnaireOpen(true);
+  };
+
+  const handleQuickSwitchService = (serviceSlug: ServiceSlug) => {
+    setActiveServiceSlug(serviceSlug);
+    const newChecklist = generateChecklistFromAnswers(serviceSlug, DEFAULT_ANSWERS[serviceSlug]);
+    setChecklist(newChecklist);
+  };
+
+  const handleQuestionnaireComplete = (answers: Record<string, any>) => {
+    setIsQuestionnaireOpen(false);
+    const newChecklist = generateChecklistFromAnswers(activeServiceSlug, answers);
+    setChecklist(newChecklist);
+
+    // Scroll smoothly to checklist section
+    setTimeout(() => {
+      const chkEl = document.getElementById('checklist');
+      if (chkEl) chkEl.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
+  const handleUpdateItemStatus = (itemId: string, newStatus: UserItemStatus) => {
+    if (!checklist) return;
+
+    const updatedItems = checklist.items.map(item => {
+      if (item.requirement_id === itemId) {
+        return { ...item, user_status: newStatus };
+      }
+      return item;
+    });
+
+    const newReadiness = calculateReadinessScore(updatedItems);
+
+    setChecklist({
+      ...checklist,
+      items: updatedItems,
+      readiness: newReadiness
+    });
+  };
+
+  const handleOpenAssistant = (prompt?: string) => {
+    setAssistantInitialPrompt(prompt);
+    setIsAssistantOpen(true);
+  };
+
+  const isUrdu = language === 'ur';
+  const t = I18N[language];
+
   return (
-    <div className="space-y-10 py-4">
-      {/* Hero Section */}
-      <section className="text-center space-y-4 max-w-2xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
-          <span>Karachi, Sindh Edition</span>
-          <span>•</span>
-          <span>Verified Government Checklists</span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight">
-          Never waste a trip to the DC Office or NADRA.
-        </h1>
-        <p className="text-gray-600 text-base sm:text-lg">
-          CitizenEase tells you exactly what to bring, what is missing, and where to go before you queue, in Urdu or English.
-        </p>
+    <div className="min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-emerald-200">
+      {/* Top Bar with Combined Navigation */}
+      <Navbar
+        language={language}
+        onToggleLanguage={toggleLanguage}
+        activeView={activeView}
+        onNavigate={(view) => setActiveView(view)}
+        hasActiveChecklist={!!checklist}
+        onOpenAssistant={() => handleOpenAssistant()}
+      />
 
-        {/* AI Intent Discovery / Search Box */}
-        <form onSubmit={handleDiscover} className="relative mt-4 max-w-xl mx-auto">
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type your need: 'I need proof I belong to Karachi' or 'turning 18'..."
-            className="w-full px-4 py-3.5 pr-28 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
-          />
-          <button
-            type="submit"
-            disabled={discovering}
-            className="absolute right-2 top-2 bottom-2 px-4 bg-primary hover:bg-primary-dark text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center"
-          >
-            {discovering ? 'Analyzing...' : 'Find Guide'}
-          </button>
-        </form>
-
-        {discoveryResult && (
-          <div className="mt-4 p-4 rounded-xl border border-accent/20 bg-accent/5 text-left text-sm space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-primary">Recommendation</span>
-              <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-medium">
-                {Math.round(discoveryResult.confidence * 100)}% match
-              </span>
-            </div>
-            {discoveryResult.clarifying_question && (
-              <p className="text-gray-700">{discoveryResult.clarifying_question}</p>
-            )}
-            {discoveryResult.service_slug && (
-              <div className="pt-2">
-                <Link
-                  href={`/services/${discoveryResult.service_slug}`}
-                  className="inline-block px-4 py-2 bg-primary text-white text-xs font-medium rounded-lg hover:bg-primary-dark transition-colors"
-                >
-                  Start Preparing for {discoveryResult.service_slug === 'domicile_prc' ? 'Domicile & PRC' : 'First CNIC'} →
-                </Link>
-              </div>
-            )}
+      {/* Unified Link Header / Mode Pill Banner */}
+      <div className="bg-emerald-900 text-white py-2 px-4 text-xs font-medium">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>
+              {isUrdu
+                ? 'سٹیزن ایز تمام فیچرز ایک لنک پر دستیاب ہیں — سروسز، چیک لسٹ، کراچی دفاتر، اے آئی گائیڈ اور قانونی ریکارڈ'
+                : 'All CitizenEase features combined into this single link — Services, Checklist, Karachi Offices, AI Guide & Legal Provenance'}
+            </span>
           </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setActiveView('all')}
+              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-colors cursor-pointer ${
+                activeView === 'all'
+                  ? 'bg-white text-emerald-950 font-bold'
+                  : 'bg-emerald-800 text-emerald-200 hover:bg-emerald-700'
+              }`}
+            >
+              {isUrdu ? 'تمام فیچرز (یکجا صفحہ)' : 'All-in-One Page'}
+            </button>
+            <button
+              onClick={() => {
+                const el = document.getElementById('checklist');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-800 text-emerald-200 hover:bg-emerald-700 transition-colors cursor-pointer hidden sm:inline-block"
+            >
+              {isUrdu ? 'چیک لسٹ پر جائیں' : 'Jump to Checklist'}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Container */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+        {/* SECTION 1: SERVICES & HERO */}
+        {(activeView === 'all' || activeView === 'services') && (
+          <section id="services" className="scroll-mt-20">
+            <ServiceDiscovery
+              language={language}
+              onSelectService={handleStartQuestionnaire}
+              onOpenServiceDetail={(slug) => setDetailModalSlug(slug)}
+              onOpenOffices={() => {
+                setActiveView('all');
+                document.getElementById('offices')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              onOpenAssistant={handleOpenAssistant}
+            />
+          </section>
         )}
-      </section>
 
-      {/* Two Core Services Cards */}
-      <section className="space-y-4">
-        <h2 className="text-lg font-bold text-primary">Government Services</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Service 1: Domicile & PRC */}
-          <div className="p-6 rounded-2xl border border-gray-200 bg-white shadow-sm hover:border-primary/50 transition-all flex flex-col justify-between space-y-4">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold uppercase tracking-wider text-accent">Karachi DC Office</span>
-                <span className="text-xs px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-medium">
-                  Stricter Rules Active
-                </span>
+        {/* SECTION 2: REQUIREMENTS CHECKLIST & READINESS */}
+        {(activeView === 'all' || activeView === 'checklist') && (
+          <section id="checklist" className="scroll-mt-20 space-y-4">
+            {/* Quick Service Switcher Bar */}
+            <div className="bg-white rounded-2xl p-4 border border-stone-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <FileCheck2 className="w-5 h-5 text-emerald-700" />
+                <div>
+                  <h3 className="text-sm font-bold text-stone-900">
+                    {isUrdu ? 'سروس کا انتخاب کریں اور فوری چیک لسٹ دیکھیں:' : 'Select Service for Interactive Checklist:'}
+                  </h3>
+                  <p className="text-xs text-stone-500">
+                    {isUrdu ? 'کسی بھی سروس پر کلک کر کے فوری تقاضے اور تیاری کا اسکور حاصل کریں' : 'Switch service to instantly calculate requirements & readiness score'}
+                  </p>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-primary">Domicile & PRC (Karachi)</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Sindh High Court case law distinctions, district-specific document requirements, PRC Form C for admissions and provincial job quotas.
-              </p>
-            </div>
-            <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs text-gray-500">6 questionnaire steps</span>
-              <Link
-                href="/services/domicile_prc"
-                className="px-4 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary-dark transition-colors"
-              >
-                Start Checklist →
-              </Link>
-            </div>
-          </div>
 
-          {/* Service 2: First-Time CNIC */}
-          <div className="p-6 rounded-2xl border border-gray-200 bg-white shadow-sm hover:border-primary/50 transition-all flex flex-col justify-between space-y-4">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold uppercase tracking-wider text-accent">NADRA Pakistan</span>
-                <span className="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">
-                  2026 Biometric Rules
-                </span>
+              {/* 4 Service Pills */}
+              <div className="flex flex-wrap items-center gap-2">
+                {(['domicile_prc', 'first_cnic', 'passport', 'frc'] as ServiceSlug[]).map((slug) => {
+                  const s = SERVICES[slug];
+                  const isActive = checklist.service_slug === slug;
+
+                  return (
+                    <button
+                      key={slug}
+                      onClick={() => handleQuickSwitchService(slug)}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                        isActive
+                          ? 'bg-[#0C3E2E] text-white shadow-sm ring-2 ring-emerald-600/30'
+                          : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                      }`}
+                    >
+                      {isActive && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />}
+                      <span>{isUrdu ? s.title_ur : s.title_en}</span>
+                    </button>
+                  );
+                })}
               </div>
-              <h3 className="text-xl font-bold text-primary">First-Time CNIC (Age 18)</h3>
-              <p className="text-sm text-gray-600 mt-2">
-                Complete preparation for turning 18: B-Form requirements, parent presence protocol, and nearest 24/7 Mega Centre locations in Karachi.
-              </p>
             </div>
-            <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-xs text-gray-500">3 questionnaire steps</span>
-              <Link
-                href="/services/first_cnic"
-                className="px-4 py-2 bg-primary text-white text-xs font-semibold rounded-lg hover:bg-primary-dark transition-colors"
-              >
-                Start Checklist →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* How it Works / Core Values */}
-      <section className="bg-white rounded-2xl p-6 border border-gray-200 space-y-4">
-        <h2 className="text-lg font-bold text-primary">How CitizenEase Works</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-          <div className="space-y-1">
-            <span className="font-bold text-primary">1. Answer 4-6 questions</span>
-            <p className="text-gray-600 text-xs">
-              Tell us your district, purpose (job/admission), and document status. No personal names or CNIC numbers needed.
-            </p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-bold text-primary">2. Get personalized checklist</span>
-            <p className="text-gray-600 text-xs">
-              Our deterministic rules engine builds your exact list with verified source citations and readiness score.
-            </p>
-          </div>
-          <div className="space-y-1">
-            <span className="font-bold text-primary">3. Know where to submit</span>
-            <p className="text-gray-600 text-xs">
-              Find your designated DC or NADRA office with map directions and submission counter hours before leaving home.
-            </p>
-          </div>
-        </div>
-      </section>
+            {/* Render Checklist Hub */}
+            <ChecklistHub
+              checklist={checklist}
+              language={language}
+              onUpdateItemStatus={handleUpdateItemStatus}
+              onOpenAssistant={handleOpenAssistant}
+              onOpenOffices={() => {
+                setActiveView('all');
+                document.getElementById('offices')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              onRestartQuestionnaire={() => handleStartQuestionnaire(checklist.service_slug)}
+              onOpenSources={() => {
+                setActiveView('all');
+                document.getElementById('sources')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            />
+          </section>
+        )}
+
+        {/* SECTION 3: KARACHI OFFICE LOCATOR */}
+        {(activeView === 'all' || activeView === 'offices') && (
+          <section id="offices" className="scroll-mt-20">
+            <OfficeLocator
+              language={language}
+              preselectedDistrict={checklist?.answers_snapshot?.district}
+              preselectedService={checklist?.service_slug}
+            />
+          </section>
+        )}
+
+        {/* SECTION 4: GROUNDED AI CITIZEN ASSISTANT */}
+        {(activeView === 'all' || activeView === 'assistant') && (
+          <section id="assistant" className="scroll-mt-20">
+            <AssistantPanel
+              language={language}
+              checklistItems={checklist?.items}
+            />
+          </section>
+        )}
+
+        {/* SECTION 5: LEGAL PROVENANCE & VERIFICATION LEDGER */}
+        {(activeView === 'all' || activeView === 'sources') && (
+          <section id="sources" className="scroll-mt-20">
+            <SourcesLedger language={language} />
+          </section>
+        )}
+      </main>
+
+      {/* Persistent Legal Boundary Footer */}
+      <Footer
+        language={language}
+        onOpenSources={() => {
+          setActiveView('all');
+          document.getElementById('sources')?.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
+
+      {/* Slide-over Grounded AI Assistant Drawer (Always available as quick side drawer) */}
+      <AssistantSlideOver
+        isOpen={isAssistantOpen}
+        language={language}
+        onClose={() => setIsAssistantOpen(false)}
+        checklistItems={checklist?.items}
+        initialPrompt={assistantInitialPrompt}
+      />
+
+      {/* Service Detail & Court Ruling Modal */}
+      {detailModalSlug && (
+        <ServiceDetailModal
+          serviceSlug={detailModalSlug}
+          language={language}
+          onClose={() => setDetailModalSlug(null)}
+          onStartQuestionnaire={handleStartQuestionnaire}
+        />
+      )}
+
+      {/* Guided Assessment Questionnaire Modal */}
+      {isQuestionnaireOpen && (
+        <QuestionnaireModal
+          serviceSlug={activeServiceSlug}
+          language={language}
+          initialAnswers={checklist?.service_slug === activeServiceSlug ? checklist.answers_snapshot : undefined}
+          onClose={() => setIsQuestionnaireOpen(false)}
+          onComplete={handleQuestionnaireComplete}
+        />
+      )}
+
+      {/* Sources & Transparency Audit Modal */}
+      {isSourcesModalOpen && (
+        <SourcesModal
+          language={language}
+          onClose={() => setIsSourcesModalOpen(false)}
+        />
+      )}
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-sm text-stone-500">Loading CitizenEase Unified Hub...</div>}>
+      <CitizenEaseMain />
+    </Suspense>
   );
 }

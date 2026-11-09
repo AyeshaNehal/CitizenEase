@@ -37,12 +37,12 @@
     "address": "Commercial Area Phase 2 Extension, DHA, Karachi",
     "lat": 24.8387,
     "lng": 67.0673,
-    "services": ["first_cnic"],
+    "services": ["first_cnic", "frc"],
     "source_id": "SRC-NADRA-PAKID",
     "verification_status": "verified",
     "last_verified_on": "2026-11-08",
-    "hours_note": "Operates 24/7 round-the-clock for biometric and CNIC issuance services",
-    "notes": "Verified from NADRA official site. Token wait times may peak during evening hours."
+    "hours_note": "Operates 24/7 round-the-clock for biometric CNIC and FRC issuance",
+    "notes": "Full service center for CNIC conversion, B-Form verification, and Family Registration Certificates."
   },
   {
     "id": "off-nadra-mega-nazimabad",
@@ -52,11 +52,56 @@
     "address": "Block L, North Nazimabad, Karachi Central",
     "lat": 24.9381,
     "lng": 67.0425,
-    "services": ["first_cnic"],
+    "services": ["first_cnic", "frc"],
     "source_id": "SRC-NADRA-PAKID",
     "verification_status": "verified",
     "last_verified_on": "2026-11-08",
-    "hours_note": "24/7 service center with separate priority counters for senior citizens and women",
-    "notes": "Full biometric capture facility."
+    "hours_note": "24/7 round-the-clock service center with separate priority counters",
+    "notes": "Full biometric capture facility for CNIC and computerized FRC processing."
+  },
+  {
+    "id": "off-rpo-saddar",
+    "name": "Regional Passport Office (RPO) Saddar Karachi",
+    "office_type": "passport_office",
+    "district": "karachi_south",
+    "address": "Near Passport Office Saddar, Preedy Street, Karachi South",
+    "lat": 24.8601,
+    "lng": 67.0264,
+    "services": ["passport"],
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Monday to Thursday: 8:00 AM - 1:00 PM, Friday: 8:00 AM - 12:00 PM for public token issuance",
+    "notes": "Primary regional office for fresh passport processing, biometric data capture, and renewal."
+  },
+  {
+    "id": "off-rpo-awami-markaz",
+    "name": "Regional Passport Office Awami Markaz (East)",
+    "office_type": "passport_office",
+    "district": "karachi_east",
+    "address": "Awami Markaz, Main Sharea Faisal, Karachi East",
+    "lat": 24.8698,
+    "lng": 67.0822,
+    "services": ["passport"],
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Weekdays: 8:30 AM - 1:30 PM (Token counter closes at 12:30 PM)",
+    "notes": "Serving eastern Karachi residents for Machine Readable Passport (MRP) and e-Passport issuance."
+  },
+  {
+    "id": "off-epo-clifton",
+    "name": "Executive Passport Office (EPO) Clifton",
+    "office_type": "passport_office",
+    "district": "karachi_south",
+    "address": "Block 4, Clifton, near Bilawal House, Karachi South",
+    "lat": 24.8189,
+    "lng": 67.0321,
+    "services": ["passport"],
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Monday to Friday: 9:00 AM - 2:00 PM (Executive premium processing)",
+    "notes": "Premium executive facility for swift expedited processing."
   }
 ]

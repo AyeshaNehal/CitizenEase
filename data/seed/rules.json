@@ -90,5 +90,135 @@
     "district": null,
     "priority": 10,
     "is_active": true
+  },
+  {
+    "id": "rule-pass-cnic",
+    "requirement_id": "req-pass-cnic",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "is_applicant_minor", "op": "eq", "value": false}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-pass-challan",
+    "requirement_id": "req-pass-challan",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "passport_application_type", "op": "in", "value": ["fresh", "renewal", "lost"]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-pass-renewal",
+    "requirement_id": "req-pass-prev-doc",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "passport_application_type", "op": "eq", "value": "renewal"}
+      ]
+    },
+    "district": null,
+    "priority": 15,
+    "is_active": true
+  },
+  {
+    "id": "rule-pass-minor",
+    "requirement_id": "req-pass-minor-crc",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "is_applicant_minor", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 20,
+    "is_active": true
+  },
+  {
+    "id": "rule-pass-gov-emp",
+    "requirement_id": "req-pass-gov-noc",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "is_government_employee", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 20,
+    "is_active": true
+  },
+  {
+    "id": "rule-pass-lost",
+    "requirement_id": "req-pass-lost-fir",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "passport_application_type", "op": "eq", "value": "lost"}
+      ]
+    },
+    "district": null,
+    "priority": 20,
+    "is_active": true
+  },
+  {
+    "id": "rule-frc-applicant-cnic",
+    "requirement_id": "req-frc-cnic",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "family_nadra_registered", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-frc-family-ids",
+    "requirement_id": "req-frc-family-ids",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "family_nadra_registered", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-frc-marriage",
+    "requirement_id": "req-frc-mrc-nikah",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "frc_category", "op": "eq", "value": "by_marriage"}
+      ]
+    },
+    "district": null,
+    "priority": 20,
+    "is_active": true
+  },
+  {
+    "id": "rule-frc-affidavit",
+    "requirement_id": "req-frc-affidavit",
+    "applicability": "conditional",
+    "condition": {
+      "all": [
+        {"key": "family_nadra_registered", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 5,
+    "is_active": true
   }
 ]

@@ -1,9 +1,9 @@
 import uuid
 from typing import Dict, Any, List, Optional
-from app.modules.catalog.service import load_json_seed
-from app.modules.questionnaire.service import SESSIONS
-from app.modules.rules.evaluator import evaluate_rules
-from app.modules.readiness.calculator import calculate_readiness
+from backend.app.modules.catalog.service import load_json_seed
+from backend.app.modules.questionnaire.service import SESSIONS
+from backend.app.modules.rules.evaluator import evaluate_rules
+from backend.app.modules.readiness.calculator import calculate_readiness
 
 CHECKLISTS: Dict[str, Dict[str, Any]] = {}
 

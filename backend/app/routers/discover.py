@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.schemas.assistant import DiscoverRequest, DiscoverResponse
-from app.modules.assistant.service import AssistantService
+from backend.app.schemas.assistant import DiscoverRequest, DiscoverResponse
+from backend.app.modules.assistant.service import AssistantService
 
 router = APIRouter(tags=["discovery"])
 

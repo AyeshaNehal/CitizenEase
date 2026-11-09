@@ -27,15 +27,29 @@ cases:
     expected_verified_count: 2
     expected_unverified_count: 0
 
-  - id: "domicile-different-district-east"
-    service_slug: "domicile_prc"
+  - id: "passport-renewal-adult"
+    service_slug: "passport"
     answers:
-      applicant_age_group: true
-      district: "karachi_east"
-      application_goal: "general_record"
-      has_father_domicile: false
+      passport_application_type: "renewal"
+      is_applicant_minor: false
+      is_government_employee: false
     expected_requirements:
-      - "REQ_CNIC_COPY"
-      - "REQ_PASSPORT_PHOTOS"
-    expected_verified_count: 1
+      - "REQ_PASS_ORIG_CNIC"
+      - "REQ_PASS_FEE_CHALLAN"
+      - "REQ_PASS_PREV_PASSPORT"
+    expected_verified_count: 3
+    expected_unverified_count: 0
+
+  - id: "frc-by-marriage"
+    service_slug: "frc"
+    answers:
+      frc_category: "by_marriage"
+      family_nadra_registered: true
+      marriage_updated_in_nadra: true
+    expected_requirements:
+      - "REQ_FRC_ORIG_CNIC"
+      - "REQ_FRC_FAMILY_NUMBERS"
+      - "REQ_FRC_MARRIAGE_RECORD"
+      - "REQ_FRC_AFFIDAVIT_DISCREPANCY"
+    expected_verified_count: 3
     expected_unverified_count: 1

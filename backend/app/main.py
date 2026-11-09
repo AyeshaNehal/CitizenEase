@@ -4,8 +4,8 @@ from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app.config import settings
-from app.routers import (
+from backend.app.config import settings
+from backend.app.routers import (
     services,
     questionnaire,
     checklist,
@@ -80,8 +80,9 @@ async def general_exception_handler(request: Request, exc: Exception):
         }
     )
 
-# Health endpoint (both at root and /api/v1/health)
+# Health endpoint (at root, /health, /api/health, and /api/v1/health)
 @app.get("/health", tags=["health"])
+@app.get("/api/health", tags=["health"])
 @app.get("/api/v1/health", tags=["health"])
 def health_check():
     return {"ok": True}
@@ -97,6 +98,10 @@ app.include_router(fees.router, prefix=api_prefix)
 app.include_router(sources.router, prefix=api_prefix)
 app.include_router(discover.router, prefix=api_prefix)
 
+# Also mount discover and assistant at /api for client compatibility
+app.include_router(discover.router, prefix="/api")
+app.include_router(assistant.router, prefix="/api")
+
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("backend.app.main:app", host="0.0.0.0", port=8000, reload=True)
