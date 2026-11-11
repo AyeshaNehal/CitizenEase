@@ -1,0 +1,301 @@
+[
+  {
+    "id": "fee-pass-36-5-normal",
+    "service_slug": "passport",
+    "label_en": "Passport 36 Pages / 5-Year Validity — Normal Delivery",
+    "label_ur": "پاسپورٹ 36 صفحات / 5 سال کی میعاد — نارمل ڈلیوری",
+    "amount_pkr": 4500.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 36},
+        {"key": "validity_years", "op": "eq", "value": 5},
+        {"key": "urgency", "op": "eq", "value": "normal"}
+      ]
+    }
+  },
+  {
+    "id": "fee-pass-36-5-urgent",
+    "service_slug": "passport",
+    "label_en": "Passport 36 Pages / 5-Year Validity — Urgent Delivery",
+    "label_ur": "پاسپورٹ 36 صفحات / 5 سال کی میعاد — ارجنٹ ڈلیوری",
+    "amount_pkr": 7500.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 36},
+        {"key": "validity_years", "op": "eq", "value": 5},
+        {"key": "urgency", "op": "eq", "value": "urgent"}
+      ]
+    }
+  },
+  {
+    "id": "fee-pass-36-10-normal",
+    "service_slug": "passport",
+    "label_en": "Passport 36 Pages / 10-Year Validity — Normal Delivery",
+    "label_ur": "پاسپورٹ 36 صفحات / 10 سال کی میعاد — نارمل ڈلیوری",
+    "amount_pkr": 6700.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 36},
+        {"key": "validity_years", "op": "eq", "value": 10},
+        {"key": "urgency", "op": "eq", "value": "normal"}
+      ]
+    }
+  },
+  {
+    "id": "fee-pass-36-10-urgent",
+    "service_slug": "passport",
+    "label_en": "Passport 36 Pages / 10-Year Validity — Urgent Delivery",
+    "label_ur": "پاسپورٹ 36 صفحات / 10 سال کی میعاد — ارجنٹ ڈلیوری",
+    "amount_pkr": 11200.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 36},
+        {"key": "validity_years", "op": "eq", "value": 10},
+        {"key": "urgency", "op": "eq", "value": "urgent"}
+      ]
+    }
+  },
+  {
+    "id": "fee-pass-72-5-normal",
+    "service_slug": "passport",
+    "label_en": "Passport 72 Pages / 5-Year Validity — Normal Delivery",
+    "label_ur": "پاسپورٹ 72 صفحات / 5 سال کی میعاد — نارمل ڈلیوری",
+    "amount_pkr": 8200.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 72},
+        {"key": "validity_years", "op": "eq", "value": 5},
+        {"key": "urgency", "op": "eq", "value": "normal"}
+      ]
+    }
+  },
+  {
+    "id": "fee-pass-72-5-urgent",
+    "service_slug": "passport",
+    "label_en": "Passport 72 Pages / 5-Year Validity — Urgent Delivery",
+    "label_ur": "پاسپورٹ 72 صفحات / 5 سال کی میعاد — ارجنٹ ڈلیوری",
+    "amount_pkr": 13500.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 72},
+        {"key": "validity_years", "op": "eq", "value": 5},
+        {"key": "urgency", "op": "eq", "value": "urgent"}
+      ]
+    }
+  },
+  {
+    "id": "fee-pass-100-5-normal",
+    "service_slug": "passport",
+    "label_en": "Passport 100 Pages / 5-Year Validity — Normal Delivery",
+    "label_ur": "پاسپورٹ 100 صفحات / 5 سال کی میعاد — نارمل ڈلیوری",
+    "amount_pkr": 9000.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 100},
+        {"key": "validity_years", "op": "eq", "value": 5},
+        {"key": "urgency", "op": "eq", "value": "normal"}
+      ]
+    }
+  },
+  {
+    "id": "fee-pass-100-5-urgent",
+    "service_slug": "passport",
+    "label_en": "Passport 100 Pages / 5-Year Validity — Urgent Delivery",
+    "label_ur": "پاسپورٹ 100 صفحات / 5 سال کی میعاد — ارجنٹ ڈلیوری",
+    "amount_pkr": 18000.0,
+    "verification_status": "verified",
+    "source_id": "SRC-DGIP-OFFICIAL",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "pages", "op": "eq", "value": 100},
+        {"key": "validity_years", "op": "eq", "value": 5},
+        {"key": "urgency", "op": "eq", "value": "urgent"}
+      ]
+    }
+  },
+  {
+    "id": "fee-frc-std",
+    "service_slug": "frc",
+    "label_en": "NADRA Family Registration Certificate (FRC) Official Issuance",
+    "label_ur": "نادرا فیملی رجسٹریشن سرٹیفکیٹ (ایف آر سی) سرکاری فیس",
+    "amount_pkr": 1000.0,
+    "verification_status": "verified",
+    "source_id": "SRC-NADRA-FRC-RULES",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  },
+  {
+    "id": "fee-frc-exec-optional",
+    "service_slug": "frc",
+    "label_en": "Executive Counter Fast-Track Service Surcharge",
+    "label_ur": "ایگزیکٹو کاؤنٹر فاسٹ ٹریک سروس چارج",
+    "amount_pkr": null,
+    "verification_status": "unverified",
+    "source_id": "SRC-NADRA-FRC-RULES",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  },
+  {
+    "id": "fee-cnic-std",
+    "service_slug": "first_cnic",
+    "label_en": "NADRA Standard Normal Track (Free first-time issuance)",
+    "label_ur": "نادرا سٹینڈرڈ نارمل ٹریک (پہلی بار مفت اجرا)",
+    "amount_pkr": 0.0,
+    "verification_status": "verified",
+    "source_id": "SRC-NADRA-PAKID",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  },
+  {
+    "id": "fee-cnic-attestation",
+    "service_slug": "first_cnic",
+    "label_en": "Gazetted Officer Form Attestation / Notary Fee",
+    "label_ur": "سرکاری افسر تصدیق یا نوٹری فیس",
+    "amount_pkr": null,
+    "verification_status": "unverified",
+    "source_id": "SRC-NADRA-PAKID",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  },
+  {
+    "id": "fee-smart-normal",
+    "service_slug": "smart_card",
+    "label_en": "Smart CNIC (Chip) Normal Delivery (NADRA)",
+    "label_ur": "سمارٹ قومی شناختی کارڈ نارمل ڈلیوری (نادرا)",
+    "amount_pkr": 750.0,
+    "verification_status": "verified",
+    "source_id": "SRC-NADRA-SNIC",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "track", "op": "eq", "value": "normal"}
+      ]
+    }
+  },
+  {
+    "id": "fee-smart-urgent",
+    "service_slug": "smart_card",
+    "label_en": "Smart CNIC (Chip) Urgent Delivery (NADRA)",
+    "label_ur": "سمارٹ قومی شناختی کارڈ ارجنٹ ڈلیوری (نادرا)",
+    "amount_pkr": 1500.0,
+    "verification_status": "verified",
+    "source_id": "SRC-NADRA-SNIC",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "track", "op": "eq", "value": "urgent"}
+      ]
+    }
+  },
+  {
+    "id": "fee-smart-executive",
+    "service_slug": "smart_card",
+    "label_en": "Smart CNIC (Chip) Executive Centre Track",
+    "label_ur": "سمارٹ قومی شناختی کارڈ ایگزیکٹو کاؤنٹر",
+    "amount_pkr": 2500.0,
+    "verification_status": "verified",
+    "source_id": "SRC-NADRA-SNIC",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "track", "op": "eq", "value": "executive"}
+      ]
+    }
+  },
+  {
+    "id": "fee-bform-normal",
+    "service_slug": "b_form",
+    "label_en": "Child Registration Certificate (B-Form) Normal Track",
+    "label_ur": "چائلڈ رجسٹریشن سرٹیفکیٹ (ب فارم) نارمل ٹریک",
+    "amount_pkr": 50.0,
+    "verification_status": "verified",
+    "source_id": "SRC-NADRA-CRC-RULES",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "track", "op": "eq", "value": "normal"}
+      ]
+    }
+  },
+  {
+    "id": "fee-bform-executive",
+    "service_slug": "b_form",
+    "label_en": "Child Registration Certificate (B-Form) Executive Track",
+    "label_ur": "چائلڈ رجسٹریشن سرٹیفکیٹ (ب فارم) ایگزیکٹو ٹریک",
+    "amount_pkr": 500.0,
+    "verification_status": "verified",
+    "source_id": "SRC-NADRA-CRC-RULES",
+    "last_verified_on": "2026-11-08",
+    "conditions": {
+      "all": [
+        {"key": "track", "op": "eq", "value": "executive"}
+      ]
+    }
+  },
+  {
+    "id": "fee-bc-uc-challan",
+    "service_slug": "birth_certificate",
+    "label_en": "Union Council Computerized Registration Official Challan",
+    "label_ur": "یونین کونسل کمپیوٹرائزڈ اندراج سرکاری چالان",
+    "amount_pkr": null,
+    "verification_status": "unverified",
+    "source_id": "SRC-SINDH-LG-UC",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  },
+  {
+    "id": "fee-bc-late-surcharge",
+    "service_slug": "birth_certificate",
+    "label_en": "Late Birth Registration Administrative Surcharge",
+    "label_ur": "تاخیری اندراج فیس / سرچارج",
+    "amount_pkr": null,
+    "verification_status": "unverified",
+    "source_id": "SRC-SINDH-LG-UC",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  },
+  {
+    "id": "fee-dom-challan",
+    "service_slug": "domicile_prc",
+    "label_en": "National Bank Sindh Government Treasury Challan (Head C02)",
+    "label_ur": "نیشنل بینک سندھ گورنمنٹ چالان (ہیڈ C02)",
+    "amount_pkr": null,
+    "verification_status": "unverified",
+    "source_id": "SRC-DC-SOUTH-SAMPLE",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  },
+  {
+    "id": "fee-dom-stamps",
+    "service_slug": "domicile_prc",
+    "label_en": "Court Fee Stamps / Oath Commissioner Attestation",
+    "label_ur": "کورٹ فیس ٹکٹ اور اوتھ کمشنر تصدیق",
+    "amount_pkr": null,
+    "verification_status": "unverified",
+    "source_id": "SRC-DC-SOUTH-SAMPLE",
+    "last_verified_on": "2026-11-08",
+    "conditions": null
+  }
+]

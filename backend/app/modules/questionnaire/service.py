@@ -1,6 +1,7 @@
 import uuid
 from typing import Dict, Any, List, Optional
 from backend.app.modules.catalog.service import load_json_seed, CatalogService
+from backend.app.modules.rules.evaluator import evaluate_condition
 from backend.app.db.storage import DatabaseStorage
 
 # Fast in-memory cache synchronized with persistent DatabaseStorage
@@ -60,12 +61,17 @@ class QuestionnaireService:
         questions = [q for q in load_json_seed("questions.json") if q.get("service_id") == service_id]
         questions.sort(key=lambda q: q.get("order_index", 0))
 
-        # Find unanswered questions in sequence
+        # Find unanswered questions in sequence, respecting conditional branching
         answered_keys = list(session["answers"].keys())
         next_question: Optional[Dict[str, Any]] = None
 
         for q in questions:
             if q["key"] not in session["answers"]:
+                cond = q.get("conditions")
+                if cond:
+                    res = evaluate_condition(cond, session["answers"])
+                    if res is False:
+                        continue
                 next_question = q
                 break
 

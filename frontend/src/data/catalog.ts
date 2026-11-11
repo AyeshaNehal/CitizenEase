@@ -12,10 +12,21 @@ export interface Source {
   limitations?: string;
 }
 
+export type ServiceSlug = 'domicile_prc' | 'first_cnic' | 'passport' | 'frc' | 'b_form' | 'birth_certificate' | 'smart_card';
+
+export interface ServicePrerequisite {
+  slug: ServiceSlug;
+  title_en: string;
+  title_ur: string;
+  note_en: string;
+  note_ur: string;
+}
+
 export interface Requirement {
   id: string;
   code: string;
-  service_slug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
+  service_slug: ServiceSlug;
+  service_slugs?: ServiceSlug[];
   application_type?: 'both' | 'domicile_only' | 'prc_only' | 'first_cnic';
   title_en: string;
   title_ur: string;
@@ -79,7 +90,7 @@ export interface QuestionCondition {
 
 export interface Question {
   id: string;
-  service_slug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
+  service_slug: ServiceSlug;
   key: string;
   order_index: number;
   text_en: string;
@@ -93,7 +104,7 @@ export interface Question {
 }
 
 export interface ServiceDetail {
-  slug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
+  slug: ServiceSlug;
   title_en: string;
   title_ur: string;
   short_desc_en: string;
@@ -107,6 +118,7 @@ export interface ServiceDetail {
   keywords: string[];
   official_fee_note_en: string;
   official_fee_note_ur: string;
+  prerequisites?: ServicePrerequisite[];
 }
 
 // ---------------------- SEEDED CATALOG DATA ----------------------
@@ -260,7 +272,77 @@ export const SERVICES: Record<string, ServiceDetail> = {
     authority_ur: 'نادرا رجسٹریشن سینٹرز اور پاک آئی ڈی پورٹل',
     keywords: ['frc', 'family registration certificate', 'family tree', 'nadra', 'visa', 'immigration', 'by birth', 'by marriage'],
     official_fee_note_en: 'Official NADRA standard fee (approx Rs. 1,000 for standard certificate). Payable at NADRA counters or PakID portal.',
-    official_fee_note_ur: 'نادرا کی مقررہ فیس تقریباً 1000 روپے ہے جو کاؤنٹر یا پاک آئی ڈی ایپ پر ادا کی جاتی ہے۔'
+    official_fee_note_ur: 'نادرا کی مقررہ فیس تقریباً 1000 روپے ہے جو کاؤنٹر یا پاک آئی ڈی ایپ پر ادا کی جاتی ہے۔',
+    prerequisites: [
+      {
+        slug: 'first_cnic',
+        title_en: 'Valid CNICs of Family Members',
+        title_ur: 'خاندان کے ارکان کے درست شناختی کارڈز',
+        note_en: 'All adult family members must hold computerized CNICs registered in NADRA database.',
+        note_ur: 'خاندان کے تمام بالغ افراد کا نادرا میں کمپیوٹرائزڈ شناختی کارڈ کا ہونا ضروری ہے۔'
+      }
+    ]
+  },
+  birth_certificate: {
+    slug: 'birth_certificate',
+    title_en: 'Birth Certificate (Union Council)',
+    title_ur: 'پیدائش سرٹیفکیٹ (یونین کونسل)',
+    short_desc_en: 'Official Computerized Birth Certificate issued by the relevant Union Council / Town Municipal Corporation in Karachi.',
+    short_desc_ur: 'کراچی کی متعلقہ یونین کونسل یا ٹاؤن میونسپل کارپوریشن کا کمپیوٹرائزڈ برتھ سرٹیفکیٹ۔',
+    full_desc_en: 'Primary foundation of civil identity in Pakistan. Issued by local Union Councils across Karachi districts upon presentation of hospital birth slip and parents original CNICs.',
+    full_desc_ur: 'پاکستان میں بنیادی شہری شناخت۔ ہسپتال کی پرچی اور والدین کے شناختی کارڈز کی بنیاد پر متعلقہ یونین کونسل سے جاری کیا جاتا ہے۔',
+    authority_en: 'Union Council / Town Municipal Corporation (TMC) Karachi',
+    authority_ur: 'یونین کونسل / ٹاؤن میونسپل کارپوریشن کراچی',
+    keywords: ['birth certificate', 'union council', 'tmc', 'nadra', 'birth slip', 'karachi', 'uc'],
+    official_fee_note_en: 'Challan fee varies by local Union Council / Town Corporation. Confirm with office.',
+    official_fee_note_ur: 'سرکاری چالان فیس یونین کونسل کے مطابق مختلف ہوتی ہے۔ دفتر سے تصدیق کریں۔',
+    prerequisites: []
+  },
+  b_form: {
+    slug: 'b_form',
+    title_en: 'B-Form / Child Registration Certificate (NADRA)',
+    title_ur: 'ب فارم / چائلڈ رجسٹریشن سرٹیفکیٹ (نادرا)',
+    short_desc_en: 'Official NADRA registration document for children under 18 years of age.',
+    short_desc_ur: '18 سال سے کم عمر بچوں کے لیے نادرا کا آفیشل رجسٹریشن سرٹیفکیٹ (ب فارم)۔',
+    full_desc_en: 'Statutory registration for minor Pakistani citizens. Required for school admission, minor passport, and turning 18 CNIC conversion.',
+    full_desc_ur: '18 سال سے کم عمر پاکستانی بچوں کی نادرا میں سرکاری رجسٹریشن۔ اسکول داخلے اور 18 سال کی عمر میں شناختی کارڈ کے لیے لازمی۔',
+    authority_en: 'NADRA (National Database & Registration Authority)',
+    authority_ur: 'نادرا (نیشنل ڈیٹا بیس اینڈ رجسٹریشن اتھارٹی)',
+    keywords: ['b-form', 'crc', 'child registration', 'nadra', 'minor', 'birth record'],
+    official_fee_note_en: 'NADRA normal fee is Rs. 50; Executive centre processing is Rs. 500.',
+    official_fee_note_ur: 'نادرا نارمل فیس 50 روپے جبکہ ایگزیکٹو کاؤنٹر فیس 500 روپے ہے۔',
+    prerequisites: [
+      {
+        slug: 'birth_certificate',
+        title_en: 'Union Council Computerized Birth Certificate',
+        title_ur: 'یونین کونسل کمپیوٹرائزڈ پیدائش سرٹیفکیٹ',
+        note_en: 'You must obtain an official Computerized Birth Certificate from your Union Council before registering for a B-Form with NADRA.',
+        note_ur: 'نادرا سے ب فارم بنوانے سے پہلے آپ کو متعلقہ یونین کونسل سے کمپیوٹرائزڈ برتھ سرٹیفکیٹ حاصل کرنا لازمی ہے۔'
+      }
+    ]
+  },
+  smart_card: {
+    slug: 'smart_card',
+    title_en: 'Smart CNIC / SNIC (NADRA)',
+    title_ur: 'سمارٹ قومی شناختی کارڈ (نادرا)',
+    short_desc_en: 'Chip-based high-security Computerized National Identity Card for Pakistani citizens.',
+    short_desc_ur: 'پاکستانی شہریوں کے لیے چپ پر مبنی جدید اور محفوظ سمارٹ شناختی کارڈ۔',
+    full_desc_en: 'State of the art cryptographic identity card containing embedded encrypted biometric records, compliant with international ICAO guidelines.',
+    full_desc_ur: 'جدید انکرپٹڈ چپ کا حامل سمارٹ شناختی کارڈ جس میں فنگر پرنٹس اور بائیو میٹرک محفوظ ہوتے ہیں۔',
+    authority_en: 'NADRA (National Database & Registration Authority)',
+    authority_ur: 'نادرا (نیشنل ڈیٹا بیس اینڈ رجسٹریشن اتھارٹی)',
+    keywords: ['smart card', 'snic', 'chip cnic', 'nadra', 'identity', 'renewal', 'upgrade'],
+    official_fee_note_en: 'Normal delivery is Rs. 750, Urgent is Rs. 1,500, Executive is Rs. 2,500.',
+    official_fee_note_ur: 'نارمل فیس 750 روپے، ارجنٹ 1500 روپے، اور ایگزیکٹو 2500 روپے ہے۔',
+    prerequisites: [
+      {
+        slug: 'first_cnic',
+        title_en: 'First-time CNIC / Established NADRA Record',
+        title_ur: 'قومی شناختی کارڈ یا نادرا ریکارڈ',
+        note_en: 'Applicants must have an established NADRA record / B-Form, or previous CNIC for smart card conversion/issuance.',
+        note_ur: 'سمارٹ کارڈ کے لیے نادرا میں پیدائشی ریکارڈ (ب فارم) یا سابقہ قومی شناختی کارڈ لازمی ہے۔'
+      }
+    ]
   }
 };
 

@@ -115,8 +115,11 @@ def evaluate_rules(
         district_specific = [e for e in eval_list if e["is_district_specific"]]
         chosen_candidates = district_specific if district_specific else eval_list
 
-        # Pick candidate with highest priority
-        chosen_candidates.sort(key=lambda x: x["priority"], reverse=True)
+        # Pick candidate with highest priority (preferring True over None)
+        chosen_candidates.sort(
+            key=lambda x: (1 if x["applies"] is True else 0, x["priority"]),
+            reverse=True
+        )
         chosen = chosen_candidates[0]
 
         verification_status = req.get("verification_status", "unverified")

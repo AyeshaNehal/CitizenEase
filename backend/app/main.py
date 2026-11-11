@@ -13,7 +13,8 @@ from backend.app.routers import (
     offices,
     fees,
     sources,
-    discover
+    discover,
+    costs
 )
 
 app = FastAPI(
@@ -97,6 +98,7 @@ app.include_router(offices.router, prefix=api_prefix)
 app.include_router(fees.router, prefix=api_prefix)
 app.include_router(sources.router, prefix=api_prefix)
 app.include_router(discover.router, prefix=api_prefix)
+app.include_router(costs.router, prefix=api_prefix)
 
 # Also mount discover and assistant at /api for client compatibility
 app.include_router(discover.router, prefix="/api")

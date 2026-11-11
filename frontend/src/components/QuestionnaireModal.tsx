@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { I18N, Language } from '../lib/i18n';
-import { QUESTIONS, Question, SERVICES, KARACHI_DISTRICTS } from '../data/catalog';
+import { QUESTIONS, Question, SERVICES, KARACHI_DISTRICTS, ServiceSlug } from '../data/catalog';
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 interface QuestionnaireModalProps {
-  serviceSlug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
+  serviceSlug: ServiceSlug;
   language: Language;
   initialAnswers?: Record<string, any>;
   onClose: () => void;

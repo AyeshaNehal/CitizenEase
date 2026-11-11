@@ -62,6 +62,20 @@ class CatalogService:
                 {"id": "app-frc-birth", "slug": "by_birth", "title_en": "FRC By Birth (Parents & Siblings)", "title_ur": "پیدائشی خاندانی شجرہ"},
                 {"id": "app-frc-marriage", "slug": "by_marriage", "title_en": "FRC By Marriage (Spouse & Children)", "title_ur": "ازدواجی خاندانی شجرہ"}
             ]
+        elif slug == "b_form":
+            app_types = [
+                {"id": "app-bform-std", "slug": "standard", "title_en": "Child Registration Certificate (B-Form)", "title_ur": "چائلڈ رجسٹریشن سرٹیفکیٹ (ب فارم)"}
+            ]
+        elif slug == "birth_certificate":
+            app_types = [
+                {"id": "app-bc-standard", "slug": "standard", "title_en": "Union Council Computerized Birth Certificate", "title_ur": "یونین کونسل کمپیوٹرائزڈ پیدائش سرٹیفکیٹ"}
+            ]
+        elif slug == "smart_card":
+            app_types = [
+                {"id": "app-smart-fresh", "slug": "fresh", "title_en": "Fresh Smart Card", "title_ur": "نیا سمارٹ کارڈ"},
+                {"id": "app-smart-upgrade", "slug": "upgrade", "title_en": "Upgrade to Smart Card", "title_ur": "سمارٹ کارڈ میں اپ گریڈ"},
+                {"id": "app-smart-renewal", "slug": "renewal", "title_en": "Smart Card Renewal / Duplicate", "title_ur": "سمارٹ کارڈ تجدید یا گمشدہ"}
+            ]
         else:
             app_types = [
                 {"id": "app-cnic-reg", "slug": "standard", "title_en": "Standard First-Time Adult CNIC", "title_ur": "پہلا شناختی کارڈ (معیاری)"}
@@ -118,38 +132,19 @@ class CatalogService:
 
     @classmethod
     def get_fees(cls, service_slug: str) -> List[Dict[str, Any]]:
-        if service_slug == "passport":
-            return [
-                {
-                    "label": "MRP Standard 36 Pages (5 Years) - Payable via National Bank / Asaan App",
-                    "amount_pkr": None,
-                    "verification_status": "unverified",
-                    "source": "DGI&P Official Fee Schedule"
-                }
-            ]
-        elif service_slug == "frc":
-            return [
-                {
-                    "label": "NADRA Family Registration Certificate Standard Issuance",
-                    "amount_pkr": None,
-                    "verification_status": "unverified",
-                    "source": "NADRA Schedule of Charges"
-                }
-            ]
-        elif service_slug == "first_cnic":
-            return [
-                {
-                    "label": "NADRA Normal Issuance (Free standard track)",
-                    "amount_pkr": None,
-                    "verification_status": "unverified",
-                    "source": "NADRA Schedule of Charges"
-                }
-            ]
-        return [
-            {
-                "label": "Sindh Domicile / PRC District Magistrate Challan",
-                "amount_pkr": None,
-                "verification_status": "unverified",
-                "source": "DC Office Notice Board"
-            }
-        ]
+        fees = load_json_seed("fees.json")
+        sources = {s["id"]: s for s in load_json_seed("sources.json")}
+        service_fees = [f for f in fees if f.get("service_slug") == service_slug]
+        result = []
+        for f in service_fees:
+            src = sources.get(f.get("source_id"), {})
+            result.append({
+                "label": f.get("label_en", "Official Fee"),
+                "label_ur": f.get("label_ur"),
+                "amount_pkr": f.get("amount_pkr"),
+                "verification_status": f.get("verification_status", "unverified"),
+                "source": src.get("title", f.get("source_id", "Official Reference")),
+                "source_id": f.get("source_id"),
+                "last_verified_on": f.get("last_verified_on", src.get("last_verified_on", "2026-11-08"))
+            })
+        return result

@@ -23,7 +23,11 @@ class ChecklistService:
         all_reqs = load_json_seed("requirements.json")
         all_sources = {s["id"]: s for s in load_json_seed("sources.json")}
 
-        service_reqs = [r for r in all_reqs if r.get("service_id") == service_id]
+        service_reqs = [
+            r for r in all_reqs
+            if r.get("service_id") == service_id
+            or (isinstance(r.get("service_ids"), list) and service_id in r.get("service_ids"))
+        ]
         eval_result = evaluate_rules(answers, all_rules, service_reqs)
 
         items: List[Dict[str, Any]] = []

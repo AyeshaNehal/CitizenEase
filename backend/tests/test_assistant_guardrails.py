@@ -48,7 +48,8 @@ def test_message_length_limit():
     assert "exceeds maximum allowed length" in excinfo.value.detail
 
 def test_per_session_rate_limit():
-    sess_id = "quota-test-session"
+    import uuid
+    sess_id = f"quota-test-session-{uuid.uuid4()}"
     for i in range(20):
         res = AssistantService.chat(
             session_id=sess_id,

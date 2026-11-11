@@ -42,5 +42,38 @@
     "source_id": "SRC-NADRA-FRC-RULES",
     "verification_status": "verified",
     "last_verified_on": "2026-11-08"
+  },
+  {
+    "id": "faq-5",
+    "service_id": "s-b-form",
+    "question_en": "Can I obtain a NADRA B-Form without a Union Council Birth Certificate?",
+    "question_ur": "کیا یونین کونسل برتھ سرٹیفکیٹ کے بغیر نادرا ب فارم بن سکتا ہے؟",
+    "answer_en": "No. Under statutory NADRA regulations, an official computerized birth certificate issued by the Union Council or Cantonment Board is a mandatory legal prerequisite before registering a child for a B-Form / CRC.",
+    "answer_ur": "نہیں۔ نادرا کے قانونی قواعد کے مطابق بچے کا ب فارم بنوانے کے لیے یونین کونسل کا کمپیوٹرائزڈ پیدائش سرٹیفکیٹ بنیادی اور لازمی شرط ہے۔",
+    "source_id": "SRC-NADRA-CRC-RULES",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08"
+  },
+  {
+    "id": "faq-6",
+    "service_id": "s-birth-certificate",
+    "question_en": "Where do I apply for a Computerized Birth Certificate in Karachi?",
+    "question_ur": "کراچی میں کمپیوٹرائزڈ برتھ سرٹیفکیٹ کے لیے کہاں رجوع کریں؟",
+    "answer_en": "You must apply at the Union Council or Town Municipal Corporation (TMC) office having jurisdiction over the child's place of residence or the hospital where birth occurred. Hospital birth slip and parents' CNICs are required.",
+    "answer_ur": "آپ کو اپنے رہائشی علاقے یا متعلقہ ہسپتال کی حدود والی یونین کونسل / ٹاؤن میونسپل کارپوریشن کے دفتر میں درخواست دینا ہوگی۔ ہسپتال کی پرچی اور والدین کے شناختی کارڈز لازمی ہیں۔",
+    "source_id": "SRC-SINDH-LG-UC",
+    "verification_status": "unverified",
+    "last_verified_on": "2026-11-08"
+  },
+  {
+    "id": "faq-7",
+    "service_id": "s-smart-card",
+    "question_en": "What is the key advantage of upgrading from a normal CNIC to a Smart CNIC?",
+    "question_ur": "عام شناختی کارڈ سے سمارٹ کارڈ میں منتقلی کا کیا فائدہ ہے؟",
+    "answer_en": "The Smart Card (SNIC) incorporates a cryptographic chip containing encrypted citizen biometrics, is compliant with ICAO security standards, and reduces identity theft risks. It can be applied for at any NADRA Registration Centre.",
+    "answer_ur": "سمارٹ قومی شناختی کارڈ میں انکرپٹڈ سمارٹ چپ موجود ہوتی ہے جس میں بائیو میٹرک ڈیٹا محفوظ ہوتا ہے۔ یہ شناختی جعل سازی سے بچاتا ہے اور بین الاقوامی معیار کے مطابق ہے۔",
+    "source_id": "SRC-NADRA-SNIC",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08"
   }
 ]

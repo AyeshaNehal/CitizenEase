@@ -8,7 +8,48 @@
     "description_ur": "قطار میں لگنے سے پہلے اپنی مطلوبہ دستاویزات، فارم اور متعلقہ ڈی سی آفس کی شرائط کی مکمل تیاری کریں۔",
     "icon": "FileCheck2",
     "keywords": ["domicile", "prc", "residence", "karachi", "admission", "job quota", "sindh", "dc office"],
-    "is_active": true
+    "is_active": true,
+    "prerequisites": [
+      {
+        "slug": "first_cnic",
+        "title_en": "Valid CNIC / Smart Card (or B-Form if under 18)",
+        "title_ur": "درست شناختی کارڈ / سمارٹ کارڈ (یا 18 سے کم عمر کے لیے ب فارم)",
+        "note_en": "You must hold an official CNIC (or B-Form if minor) before applying for Sindh Domicile & PRC.",
+        "note_ur": "سندھ ڈومیسائل اور پی آر سی کی درخواست سے پہلے اصل شناختی کارڈ یا ب فارم کا ہونا لازمی ہے۔"
+      }
+    ]
+  },
+  {
+    "id": "s-birth-certificate",
+    "slug": "birth_certificate",
+    "title_en": "Birth Certificate (Union Council)",
+    "title_ur": "پیدائش سرٹیفکیٹ (یونین کونسل)",
+    "description_en": "Official Computerized Birth Certificate issued by the relevant Union Council / Town Municipal Corporation in Karachi.",
+    "description_ur": "کراچی کی متعلقہ یونین کونسل یا ٹاؤن میونسپل کارپوریشن کا جاری کردہ کمپیوٹرائزڈ پیدائش سرٹیفکیٹ۔",
+    "icon": "FileText",
+    "keywords": ["birth certificate", "union council", "tmc", "nadra", "birth slip", "karachi", "uc"],
+    "is_active": true,
+    "prerequisites": []
+  },
+  {
+    "id": "s-b-form",
+    "slug": "b_form",
+    "title_en": "B-Form / Child Registration Certificate (NADRA)",
+    "title_ur": "ب فارم / چائلڈ رجسٹریشن سرٹیفکیٹ (نادرا)",
+    "description_en": "Official NADRA registration document for children under 18 years of age.",
+    "description_ur": "18 سال سے کم عمر بچوں کے لیے نادرا کا آفیشل رجسٹریشن سرٹیفکیٹ (ب فارم)۔",
+    "icon": "Baby",
+    "keywords": ["b-form", "crc", "child registration", "nadra", "minor", "birth record"],
+    "is_active": true,
+    "prerequisites": [
+      {
+        "slug": "birth_certificate",
+        "title_en": "Union Council Computerized Birth Certificate",
+        "title_ur": "یونین کونسل کمپیوٹرائزڈ پیدائش سرٹیفکیٹ",
+        "note_en": "You must obtain an official Computerized Birth Certificate from your Union Council before registering for a B-Form with NADRA.",
+        "note_ur": "نادرا سے ب فارم بنوانے سے پہلے آپ کو متعلقہ یونین کونسل سے کمپیوٹرائزڈ برتھ سرٹیفکیٹ حاصل کرنا لازمی ہے۔"
+      }
+    ]
   },
   {
     "id": "s-first-cnic",
@@ -19,7 +60,36 @@
     "description_ur": "18 سال کی عمر میں پہلا قومی شناختی کارڈ بنوانے کے لیے نادرا کی لازمی شرائط اور رہنمائی۔",
     "icon": "CreditCard",
     "keywords": ["cnic", "smart card", "nadra", "b-form", "first time", "18 years", "identity"],
-    "is_active": true
+    "is_active": true,
+    "prerequisites": [
+      {
+        "slug": "b_form",
+        "title_en": "NADRA B-Form (Child Registration Certificate)",
+        "title_ur": "نادرا ب فارم (چائلڈ رجسٹریشن سرٹیفکیٹ)",
+        "note_en": "You must hold an original B-Form to register for your first-time CNIC at age 18.",
+        "note_ur": "18 سال کی عمر میں پہلا شناختی کارڈ بنوانے کے لیے اصل ب فارم کا ہونا لازمی ہے۔"
+      }
+    ]
+  },
+  {
+    "id": "s-smart-card",
+    "slug": "smart_card",
+    "title_en": "Smart CNIC / SNIC (NADRA)",
+    "title_ur": "سمارٹ قومی شناختی کارڈ (نادرا)",
+    "description_en": "Chip-based high-security Computerized National Identity Card for Pakistani citizens.",
+    "description_ur": "پاکستانی شہریوں کے لیے چپ پر مبنی جدید اور محفوظ سمارٹ شناختی کارڈ۔",
+    "icon": "ShieldCheck",
+    "keywords": ["smart card", "snic", "chip cnic", "nadra", "identity", "renewal", "upgrade"],
+    "is_active": true,
+    "prerequisites": [
+      {
+        "slug": "first_cnic",
+        "title_en": "First-time CNIC / Established NADRA Record",
+        "title_ur": "قومی شناختی کارڈ یا نادرا ریکارڈ",
+        "note_en": "Applicants must have an established NADRA record / B-Form, or previous CNIC for smart card conversion/issuance.",
+        "note_ur": "سمارٹ کارڈ کے لیے نادرا میں پیدائشی ریکارڈ (ب فارم) یا سابقہ قومی شناختی کارڈ لازمی ہے۔"
+      }
+    ]
   },
   {
     "id": "s-passport",
@@ -30,7 +100,16 @@
     "description_ur": "کراچی ریجنل پاسپورٹ آفسز کے ذریعے نیا پاسپورٹ، تجدید اور گمشدہ پاسپورٹ کے لیے مکمل مصدقہ رہنمائی۔",
     "icon": "BookOpen",
     "keywords": ["passport", "mrp", "epassport", "immigration", "dgip", "travel", "visa", "renewal"],
-    "is_active": true
+    "is_active": true,
+    "prerequisites": [
+      {
+        "slug": "smart_card",
+        "title_en": "Valid CNIC / Smart Card (or B-Form for minors)",
+        "title_ur": "درست شناختی کارڈ / سمارٹ کارڈ (یا نابالغ کے لیے ب فارم)",
+        "note_en": "A valid original CNIC or Smart Card is an absolute legal prerequisite before visiting the passport office.",
+        "note_ur": "پاسپورٹ آفس جانے سے پہلے اصل اور درست شناختی کارڈ یا سمارٹ کارڈ ہونا لازمی ہے۔"
+      }
+    ]
   },
   {
     "id": "s-frc",
@@ -41,6 +120,15 @@
     "description_ur": "نادرا سے خاندانی شجرہ اور رجسٹریشن سرٹیفکیٹ (پیدائشی یا ازدواجی فیملی) حاصل کرنے کی شرائط۔",
     "icon": "Users",
     "keywords": ["frc", "family registration", "nadra", "family tree", "by birth", "by marriage", "visa"],
-    "is_active": true
+    "is_active": true,
+    "prerequisites": [
+      {
+        "slug": "first_cnic",
+        "title_en": "Valid CNICs for Adult Family Members",
+        "title_ur": "خاندان کے بالغ ارکان کے شناختی کارڈ",
+        "note_en": "All adult family members must hold valid computerized CNICs registered in NADRA's centralized database.",
+        "note_ur": "خاندان کے تمام بالغ ارکان کے نادرا میں رجسٹرڈ کمپیوٹرائزڈ شناختی کارڈ کا ہونا لازمی ہے۔"
+      }
+    ]
   }
 ]

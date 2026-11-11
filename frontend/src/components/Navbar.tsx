@@ -10,10 +10,11 @@ import {
   Sparkles,
   Layers,
   Sun,
-  Moon
+  Moon,
+  Calculator
 } from 'lucide-react';
 
-export type ActiveNavView = 'all' | 'home' | 'services' | 'checklist' | 'offices' | 'assistant' | 'sources';
+export type ActiveNavView = 'all' | 'home' | 'services' | 'checklist' | 'cost' | 'offices' | 'assistant' | 'sources';
 
 interface NavbarProps {
   language: Language;
@@ -104,6 +105,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <FileCheck2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>{t.nav_saved}</span>
+          </button>
+
+          <button
+            onClick={() => scrollToSection('cost', 'cost')}
+            className={`flex items-center gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer ${
+              activeView === 'cost'
+                ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-semibold'
+                : 'border-transparent'
+            }`}
+          >
+            <Calculator className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+            <span>{isUrdu ? 'لاگت کیلکولیٹر' : 'Cost Calculator'}</span>
           </button>
 
           <button

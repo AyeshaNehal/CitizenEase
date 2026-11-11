@@ -3,7 +3,8 @@ import {
   EligibilityRule,
   REQUIREMENTS,
   ELIGIBILITY_RULES,
-  SOURCES
+  SOURCES,
+  ServiceSlug
 } from '../data/catalog';
 
 export type UserItemStatus = 'have' | 'missing' | 'not_sure';
@@ -47,7 +48,7 @@ export interface ReadinessResult {
 
 export interface GeneratedChecklist {
   checklist_id: string;
-  service_slug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
+  service_slug: ServiceSlug;
   rules_version: string;
   answers_snapshot: Record<string, any>;
   items: EvaluatedChecklistItem[];
@@ -83,11 +84,13 @@ function evaluateSingleCondition(cond: { key: string; op: 'eq' | 'neq' | 'in'; v
  * Pure evaluator matching Section 8 of the blueprint
  */
 export function generateChecklistFromAnswers(
-  serviceSlug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc',
+  serviceSlug: ServiceSlug,
   answers: Record<string, any>,
   userStatuses: Record<string, UserItemStatus> = {}
 ): GeneratedChecklist {
-  const serviceRequirements = REQUIREMENTS.filter(r => r.service_slug === serviceSlug);
+  const serviceRequirements = REQUIREMENTS.filter(
+    r => r.service_slug === serviceSlug || (r.service_slugs && r.service_slugs.includes(serviceSlug))
+  );
   const serviceRules = ELIGIBILITY_RULES;
 
   const evaluatedItems: EvaluatedChecklistItem[] = [];

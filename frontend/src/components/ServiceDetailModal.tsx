@@ -1,6 +1,6 @@
 import React from 'react';
 import { I18N, Language } from '../lib/i18n';
-import { SERVICES, ServiceDetail } from '../data/catalog';
+import { SERVICES, ServiceDetail, ServiceSlug } from '../data/catalog';
 import {
   X,
   Scale,
@@ -12,10 +12,10 @@ import {
 } from 'lucide-react';
 
 interface ServiceDetailModalProps {
-  serviceSlug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc';
+  serviceSlug: ServiceSlug;
   language: Language;
   onClose: () => void;
-  onStartQuestionnaire: (serviceSlug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc') => void;
+  onStartQuestionnaire: (serviceSlug: ServiceSlug) => void;
 }
 
 export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
@@ -53,6 +53,22 @@ export const ServiceDetailModal: React.FC<ServiceDetailModalProps> = ({
 
         {/* Modal Body */}
         <div className="p-6 space-y-6 text-sm text-stone-700 dark:text-stone-300">
+          {/* Prerequisites / Do This First Banner */}
+          {service.prerequisites && service.prerequisites.length > 0 && (
+            <div className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/50 space-y-2">
+              <div className="flex items-center gap-2 text-xs font-bold text-blue-900 dark:text-blue-300 uppercase tracking-wide">
+                <FileCheck className="w-4 h-4 text-blue-700 dark:text-blue-400" />
+                <span>{isUrdu ? 'پہلے یہ مکمل کریں (لازمی شرط)' : 'Do This First (Prerequisite)'}</span>
+              </div>
+              {service.prerequisites.map((p, idx) => (
+                <div key={idx} className="text-xs text-blue-950 dark:text-blue-200 space-y-1">
+                  <div className="font-bold">{isUrdu ? p.title_ur : p.title_en}</div>
+                  <p className="text-stone-600 dark:text-stone-300">{isUrdu ? p.note_ur : p.note_en}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
           {/* Overview */}
           <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-1.5">

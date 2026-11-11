@@ -68,5 +68,47 @@
     "service_id": "s-frc",
     "notes": "Official guidelines governing Family Registration Certificates (By Birth vs By Marriage) and computerized Union Council records.",
     "limitations": "Marriage certificate must be registered in NADRA database prior to FRC By Marriage application."
+  },
+  {
+    "id": "SRC-NADRA-CRC-RULES",
+    "title": "NADRA Child Registration Certificate (B-Form) Statutory Guidelines",
+    "url": "https://www.nadra.gov.pk/identity/identity-crc/",
+    "issuing_authority": "National Database & Registration Authority (NADRA)",
+    "source_type": "official_web",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "NADRA Portal Review",
+    "applicable_district": null,
+    "service_id": "s-b-form",
+    "notes": "Statutory requirements for registering children under 18 years in NADRA database.",
+    "limitations": "Requires computerized birth certificate from Union Council."
+  },
+  {
+    "id": "SRC-SINDH-LG-UC",
+    "title": "Sindh Local Government Union Council Birth Registration Regulations (Karachi)",
+    "url": "https://sindhlocalgovt.gov.pk",
+    "issuing_authority": "Sindh Local Government Department / Town Municipal Corporations",
+    "source_type": "office_visit",
+    "verification_status": "unverified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "Pending Karachi UC Inspection",
+    "applicable_district": null,
+    "service_id": "s-birth-certificate",
+    "notes": "Procedures for obtaining computerized birth certificates across Karachi Union Councils. Requirements, fees, and processing times vary by Town Municipal Corporation.",
+    "limitations": "Fees and document attestations must be confirmed with the respective Union Council office."
+  },
+  {
+    "id": "SRC-NADRA-SNIC",
+    "title": "NADRA Smart National Identity Card (SNIC) Regulations & Guidelines",
+    "url": "https://www.nadra.gov.pk/identity/identity-snic/",
+    "issuing_authority": "National Database & Registration Authority (NADRA)",
+    "source_type": "official_web",
+    "verification_status": "verified",
+    "last_verified_on": "2026-11-08",
+    "verified_by": "NADRA Portal Verification",
+    "applicable_district": null,
+    "service_id": "s-smart-card",
+    "notes": "Chip-based smart identity card issuance, conversion from old CNIC, and renewal rules.",
+    "limitations": "Urgent and executive delivery fees apply for expedited collection."
   }
 ]

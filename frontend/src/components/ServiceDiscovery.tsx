@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { I18N, Language } from '../lib/i18n';
-import { SERVICES, ServiceDetail } from '../data/catalog';
+import { SERVICES, ServiceDetail, ServiceSlug } from '../data/catalog';
 import { discoverServiceIntent, IntentDiscoveryResult } from '../lib/geminiAssistant';
 import {
   Search,
@@ -13,13 +13,14 @@ import {
   HelpCircle,
   CheckCircle2,
   MapPin,
-  Scale
+  Scale,
+  CreditCard
 } from 'lucide-react';
 
 interface ServiceDiscoveryProps {
   language: Language;
-  onSelectService: (serviceSlug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc') => void;
-  onOpenServiceDetail: (serviceSlug: 'domicile_prc' | 'first_cnic' | 'passport' | 'frc') => void;
+  onSelectService: (serviceSlug: ServiceSlug) => void;
+  onOpenServiceDetail: (serviceSlug: ServiceSlug) => void;
   onOpenOffices: () => void;
   onOpenAssistant: (initialPrompt?: string) => void;
 }
@@ -436,6 +437,200 @@ export const ServiceDiscovery: React.FC<ServiceDiscoveryProps> = ({
               </button>
               <button
                 onClick={() => onOpenServiceDetail('frc')}
+                className="w-full sm:w-auto py-3 px-4 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold rounded-xl transition-colors cursor-pointer min-h-[44px]"
+              >
+                {t.view_details_btn}
+              </button>
+            </div>
+          </div>
+
+          {/* Card 5: Birth Certificate (Union Council) */}
+          <div className="flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#102019] border border-stone-200/90 dark:border-stone-800 hover:border-emerald-700/40 dark:hover:border-emerald-500/40 transition-all shadow-xs hover:shadow-md group">
+            <div className="space-y-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200/80 dark:border-amber-800/60 flex items-center justify-center text-amber-800 dark:text-amber-300">
+                  <FileText className="w-6 h-6" />
+                </div>
+                <div className="text-right text-xs text-stone-500 dark:text-stone-400">
+                  <span className="font-semibold text-amber-800 dark:text-amber-400">{isUrdu ? 'بنیادی شہری رجسٹریشن' : 'Foundation Identity'}</span>
+                  <p className="text-[11px] text-stone-400 dark:text-stone-500">{isUrdu ? 'یونین کونسل کراچی' : 'Union Council Karachi'}</p>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 group-hover:text-[#0C3E2E] dark:group-hover:text-emerald-400 transition-colors">
+                  {isUrdu ? SERVICES.birth_certificate.title_ur : SERVICES.birth_certificate.title_en}
+                </h3>
+                <div className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400 mt-1">
+                  <Building2 className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
+                  <span>{isUrdu ? SERVICES.birth_certificate.authority_ur : SERVICES.birth_certificate.authority_en}</span>
+                </div>
+              </div>
+
+              <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                {isUrdu ? SERVICES.birth_certificate.short_desc_ur : SERVICES.birth_certificate.short_desc_en}
+              </p>
+
+              {/* Status Summary */}
+              <div className="pt-2 pb-1 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
+                <span className="flex items-center gap-1.5 text-amber-700 dark:text-amber-400 font-medium">
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
+                  <span>{isUrdu ? 'فیس و ضوابط دفتر سے تصدیق طلب' : 'Fees confirm with office'}</span>
+                </span>
+                <span className="text-stone-500 dark:text-stone-400">
+                  {isUrdu ? 'ہسپتال پرچی لازمی' : 'Hospital Slip Required'}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-stone-100 dark:border-stone-800 flex flex-col sm:flex-row items-center gap-2.5">
+              <button
+                onClick={() => onSelectService('birth_certificate')}
+                className="w-full sm:flex-1 py-3 px-4 bg-[#0C3E2E] hover:bg-[#0A3426] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
+              >
+                <span>{t.start_checklist_btn}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onOpenServiceDetail('birth_certificate')}
+                className="w-full sm:w-auto py-3 px-4 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold rounded-xl transition-colors cursor-pointer min-h-[44px]"
+              >
+                {t.view_details_btn}
+              </button>
+            </div>
+          </div>
+
+          {/* Card 6: B-Form / Child Registration Certificate (NADRA) */}
+          <div className="flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#102019] border border-stone-200/90 dark:border-stone-800 hover:border-emerald-700/40 dark:hover:border-emerald-500/40 transition-all shadow-xs hover:shadow-md group">
+            <div className="space-y-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-teal-50 dark:bg-teal-950/60 border border-teal-200/80 dark:border-teal-800/60 flex items-center justify-center text-teal-800 dark:text-teal-300">
+                  <CreditCard className="w-6 h-6" />
+                </div>
+                <div className="text-right text-xs text-stone-500 dark:text-stone-400">
+                  <span className="font-semibold text-teal-800 dark:text-teal-400">{isUrdu ? '18 سال سے کم عمر' : 'Under 18 Years'}</span>
+                  <p className="text-[11px] text-stone-400 dark:text-stone-500">{isUrdu ? 'نادرا سی آر سی' : 'NADRA CRC'}</p>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 group-hover:text-[#0C3E2E] dark:group-hover:text-emerald-400 transition-colors">
+                  {isUrdu ? SERVICES.b_form.title_ur : SERVICES.b_form.title_en}
+                </h3>
+                <div className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400 mt-1">
+                  <Building2 className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
+                  <span>{isUrdu ? SERVICES.b_form.authority_ur : SERVICES.b_form.authority_en}</span>
+                </div>
+              </div>
+
+              {/* Do This First Callout */}
+              <div className="p-3 rounded-xl bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-800/40 text-xs text-blue-950 dark:text-blue-200">
+                <div className="font-bold flex items-center gap-1.5 text-blue-900 dark:text-blue-300">
+                  <span>📌 {isUrdu ? 'پہلے یہ مکمل کریں:' : 'Do this first:'}</span>
+                  <span>{isUrdu ? 'یونین کونسل برتھ سرٹیفکیٹ' : 'Union Council Birth Certificate'}</span>
+                </div>
+                <p className="text-[11px] text-stone-600 dark:text-stone-300 mt-0.5">
+                  {isUrdu
+                    ? 'ب فارم سے پہلے متعلقہ یونین کونسل سے کمپیوٹرائزڈ برتھ سرٹیفکیٹ بنوانا لازمی ہے۔'
+                    : 'A computerized UC birth certificate must be obtained before NADRA registration.'}
+                </p>
+              </div>
+
+              <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                {isUrdu ? SERVICES.b_form.short_desc_ur : SERVICES.b_form.short_desc_en}
+              </p>
+
+              {/* Status Summary */}
+              <div className="pt-2 pb-1 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
+                <span className="flex items-center gap-1.5 text-emerald-800 dark:text-emerald-400 font-medium">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>{isUrdu ? 'مصدقہ نادرا قوانین' : 'Verified CRC Rules'}</span>
+                </span>
+                <span className="text-stone-500 dark:text-stone-400">
+                  {isUrdu ? 'والدین کی بائیو میٹرک لازمی' : 'Parent Biometric Required'}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-stone-100 dark:border-stone-800 flex flex-col sm:flex-row items-center gap-2.5">
+              <button
+                onClick={() => onSelectService('b_form')}
+                className="w-full sm:flex-1 py-3 px-4 bg-[#0C3E2E] hover:bg-[#0A3426] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
+              >
+                <span>{t.start_checklist_btn}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onOpenServiceDetail('b_form')}
+                className="w-full sm:w-auto py-3 px-4 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold rounded-xl transition-colors cursor-pointer min-h-[44px]"
+              >
+                {t.view_details_btn}
+              </button>
+            </div>
+          </div>
+
+          {/* Card 7: Smart CNIC / SNIC (NADRA) */}
+          <div className="flex flex-col justify-between p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#102019] border border-stone-200/90 dark:border-stone-800 hover:border-emerald-700/40 dark:hover:border-emerald-500/40 transition-all shadow-xs hover:shadow-md group">
+            <div className="space-y-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-200/80 dark:border-cyan-800/60 flex items-center justify-center text-cyan-800 dark:text-cyan-300">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div className="text-right text-xs text-stone-500 dark:text-stone-400">
+                  <span className="font-semibold text-cyan-800 dark:text-cyan-400">{isUrdu ? 'چپ والا سمارٹ کارڈ' : 'Microchip Security'}</span>
+                  <p className="text-[11px] text-stone-400 dark:text-stone-500">{isUrdu ? 'آئی سی اے او معیار' : 'ICAO Standard'}</p>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-bold text-stone-900 dark:text-stone-100 group-hover:text-[#0C3E2E] dark:group-hover:text-emerald-400 transition-colors">
+                  {isUrdu ? SERVICES.smart_card.title_ur : SERVICES.smart_card.title_en}
+                </h3>
+                <div className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400 mt-1">
+                  <Building2 className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
+                  <span>{isUrdu ? SERVICES.smart_card.authority_ur : SERVICES.smart_card.authority_en}</span>
+                </div>
+              </div>
+
+              {/* Do This First Callout */}
+              <div className="p-3 rounded-xl bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-800/40 text-xs text-blue-950 dark:text-blue-200">
+                <div className="font-bold flex items-center gap-1.5 text-blue-900 dark:text-blue-300">
+                  <span>📌 {isUrdu ? 'پہلے یہ مکمل کریں:' : 'Do this first:'}</span>
+                  <span>{isUrdu ? 'پہلا شناختی کارڈ یا نادرا ریکارڈ' : 'First-time CNIC or B-Form Record'}</span>
+                </div>
+                <p className="text-[11px] text-stone-600 dark:text-stone-300 mt-0.5">
+                  {isUrdu
+                    ? 'سمارٹ کارڈ کے لیے سابقہ شناختی کارڈ یا نادرا میں تصدیق شدہ پیدائشی ریکارڈ لازمی ہے۔'
+                    : 'Must hold previous CNIC or established NADRA citizen record.'}
+                </p>
+              </div>
+
+              <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">
+                {isUrdu ? SERVICES.smart_card.short_desc_ur : SERVICES.smart_card.short_desc_en}
+              </p>
+
+              {/* Status Summary */}
+              <div className="pt-2 pb-1 border-t border-stone-100 dark:border-stone-800 flex items-center justify-between text-xs text-stone-500 dark:text-stone-400">
+                <span className="flex items-center gap-1.5 text-emerald-800 dark:text-emerald-400 font-medium">
+                  <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>{isUrdu ? '100% مصدقہ قواعد' : '100% Verified Rules'}</span>
+                </span>
+                <span className="text-stone-500 dark:text-stone-400">
+                  {isUrdu ? 'نارمل فیس: 750 روپے' : 'Normal Fee: Rs. 750'}
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-stone-100 dark:border-stone-800 flex flex-col sm:flex-row items-center gap-2.5">
+              <button
+                onClick={() => onSelectService('smart_card')}
+                className="w-full sm:flex-1 py-3 px-4 bg-[#0C3E2E] hover:bg-[#0A3426] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-sm font-semibold rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer min-h-[44px]"
+              >
+                <span>{t.start_checklist_btn}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => onOpenServiceDetail('smart_card')}
                 className="w-full sm:w-auto py-3 px-4 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-800 dark:text-stone-200 text-xs font-semibold rounded-xl transition-colors cursor-pointer min-h-[44px]"
               >
                 {t.view_details_btn}

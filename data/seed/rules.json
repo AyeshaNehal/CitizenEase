@@ -220,5 +220,122 @@
     "district": null,
     "priority": 5,
     "is_active": true
+  },
+  {
+    "id": "rule-bc-hospital-slip",
+    "requirement_id": "req-bc-hospital-slip",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "birth_place_type", "op": "eq", "value": "hospital"}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-bc-parents-cnic",
+    "requirement_id": "req-bc-parents-cnic",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "parents_cnic_valid", "op": "in", "value": [true, false]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-bc-nikahnama",
+    "requirement_id": "req-bc-nikahnama",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "has_parents_nikahnama", "op": "in", "value": [true, false]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-bform-uc-cert",
+    "requirement_id": "req-bform-uc-cert",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "has_birth_certificate", "op": "in", "value": [true, false]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-bform-parents-cnic",
+    "requirement_id": "req-bform-parents-cnic",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "parents_marital_status_updated", "op": "in", "value": [true, false]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-bform-parent-biometric",
+    "requirement_id": "req-parent-presence",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "parent_available_bform", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-smart-prev-doc",
+    "requirement_id": "req-smart-prev-doc",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "has_existing_id_doc", "op": "in", "value": [true, false]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-smart-biometrics",
+    "requirement_id": "req-smart-biometrics",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "smart_card_purpose", "op": "in", "value": ["fresh_18", "upgrade", "renewal_lost"]}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
+  },
+  {
+    "id": "rule-smart-attestor",
+    "requirement_id": "req-smart-attestor",
+    "applicability": "mandatory",
+    "condition": {
+      "all": [
+        {"key": "blood_relative_available", "op": "eq", "value": true}
+      ]
+    },
+    "district": null,
+    "priority": 10,
+    "is_active": true
   }
 ]

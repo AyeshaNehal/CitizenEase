@@ -42,7 +42,43 @@ class AssistantService:
                 "summary_en": "Matched: Family Registration Certificate (FRC) via NADRA.",
                 "summary_ur": "متعلقہ سروس: نادرا کے تحت فیملی رجسٹریشن سرٹیفکیٹ۔"
             }
-        elif any(w in cleaned for w in ["cnic", "identity card", "nadra", "b-form", "18", "شناختی کارڈ"]):
+        elif any(w in cleaned for w in ["birth certificate", "پیدائش", "برتھ سرٹیفکیٹ", "یونین کونسل", "tmc"]):
+            q_en = "Do you need a computerized birth certificate issued by your Karachi Union Council?"
+            q_ur = "کیا آپ کو اپنی کراچی یونین کونسل سے کمپیوٹرائزڈ برتھ سرٹیفکیٹ حاصل کرنا ہے؟"
+            return {
+                "service_slug": "birth_certificate",
+                "confidence": 0.95,
+                "clarifying_question": q_ur if language == "ur" else q_en,
+                "clarifying_question_en": q_en,
+                "clarifying_question_ur": q_ur,
+                "summary_en": "Matched: Union Council Computerized Birth Certificate.",
+                "summary_ur": "متعلقہ سروس: یونین کونسل کمپیوٹرائزڈ پیدائش سرٹیفکیٹ۔"
+            }
+        elif any(w in cleaned for w in ["b-form", "bform", "crc", "child registration", "بے فارم", "ب فارم"]):
+            q_en = "Do you need to register a child under 18 for a NADRA Child Registration Certificate (B-Form)?"
+            q_ur = "کیا آپ کو 18 سال سے کم عمر بچے کے لیے نادرا کا چائلڈ رجسٹریشن سرٹیفکیٹ (ب فارم) بنوانا ہے؟"
+            return {
+                "service_slug": "b_form",
+                "confidence": 0.95,
+                "clarifying_question": q_ur if language == "ur" else q_en,
+                "clarifying_question_en": q_en,
+                "clarifying_question_ur": q_ur,
+                "summary_en": "Matched: NADRA Child Registration Certificate (B-Form).",
+                "summary_ur": "متعلقہ سروس: نادرا ب فارم (چائلڈ رجسٹریشن سرٹیفکیٹ)۔"
+            }
+        elif any(w in cleaned for w in ["smart card", "snic", "chip card", "سمارٹ کارڈ"]):
+            q_en = "Are you applying for a chip-based Smart National Identity Card (SNIC) from NADRA?"
+            q_ur = "کیا آپ نادرا سے چپ والا سمارٹ شناختی کارڈ بنوانا چاہتے ہیں؟"
+            return {
+                "service_slug": "smart_card",
+                "confidence": 0.95,
+                "clarifying_question": q_ur if language == "ur" else q_en,
+                "clarifying_question_en": q_en,
+                "clarifying_question_ur": q_ur,
+                "summary_en": "Matched: NADRA Smart National Identity Card (SNIC).",
+                "summary_ur": "متعلقہ سروس: نادرا سمارٹ قومی شناختی کارڈ۔"
+            }
+        elif any(w in cleaned for w in ["cnic", "identity card", "nadra", "18", "شناختی کارڈ"]):
             q_en = "Are you turning 18 and converting your B-Form into an adult national identity card?"
             q_ur = "کیا آپ کی عمر 18 سال مکمل ہو رہی ہے اور بے فارم کو شناختی کارڈ میں تبدیل کروانا ہے؟"
             return {
@@ -197,9 +233,9 @@ class AssistantService:
         # Red-team guardrail: Asking for fees or unofficial amounts
         if any(term in lower_msg for term in ["fee", "cost", "rupees", "pkr", "how much", "فیس", "پیسے"]):
             msg = (
-                "سرکاری فیس چالان کی رقم مجاز محکمے (ڈی سی آفس، نادرا، یا پاسپورٹ آفس) کے نوٹس بورڈ اور بینک کاؤنٹر سے براہ راست تصدیق کریں۔ غیر مصدقہ رقم پر انحصار نہ کریں۔"
+                "فیس ابھی غیر مصدقہ ہے، دفتر سے تصدیق کریں۔ سرکاری فیس چالان کی رقم مجاز محکمے (ڈی سی آفس، نادرا، یا پاسپورٹ آفس) کے نوٹس بورڈ اور بینک کاؤنٹر سے براہ راست تصدیق کریں۔"
                 if language == "ur"
-                else "Official fees are determined by the respective government department at the time of submission. To avoid misleading or outdated amounts, please confirm the exact fee at the official DC office, NADRA desk, or Passport counter."
+                else "Fee not verified; confirm with the office. Official fees are determined by the respective government department at the time of submission. Please confirm the exact fee at the official DC office, NADRA desk, or Passport counter."
             )
             return {
                 "answer": msg,

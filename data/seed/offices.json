@@ -37,7 +37,7 @@
     "address": "Commercial Area Phase 2 Extension, DHA, Karachi",
     "lat": 24.8387,
     "lng": 67.0673,
-    "services": ["first_cnic", "frc"],
+    "services": ["first_cnic", "frc", "b_form", "smart_card"],
     "source_id": "SRC-NADRA-PAKID",
     "verification_status": "verified",
     "last_verified_on": "2026-11-08",
@@ -52,7 +52,7 @@
     "address": "Block L, North Nazimabad, Karachi Central",
     "lat": 24.9381,
     "lng": 67.0425,
-    "services": ["first_cnic", "frc"],
+    "services": ["first_cnic", "frc", "b_form", "smart_card"],
     "source_id": "SRC-NADRA-PAKID",
     "verification_status": "verified",
     "last_verified_on": "2026-11-08",
@@ -103,5 +103,35 @@
     "last_verified_on": "2026-11-08",
     "hours_note": "Monday to Friday: 9:00 AM - 2:00 PM (Executive premium processing)",
     "notes": "Premium executive facility for swift expedited processing."
+  },
+  {
+    "id": "off-uc-saddar",
+    "name": "Town Municipal Corporation Saddar - Union Council Office",
+    "office_type": "union_council",
+    "district": "karachi_south",
+    "address": "TMC Saddar Building, Karachi South",
+    "lat": 24.8569,
+    "lng": 67.0149,
+    "services": ["birth_certificate"],
+    "source_id": "SRC-SINDH-LG-UC",
+    "verification_status": "unverified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Confirm with office",
+    "notes": "Handles computerized birth registrations for residents of Saddar TMC / UC jurisdiction."
+  },
+  {
+    "id": "off-uc-gulshan",
+    "name": "Town Municipal Corporation Gulshan-e-Iqbal - Union Council Office",
+    "office_type": "union_council",
+    "district": "karachi_east",
+    "address": "Main University Road, TMC Gulshan, Karachi East",
+    "lat": 24.9189,
+    "lng": 67.0988,
+    "services": ["birth_certificate"],
+    "source_id": "SRC-SINDH-LG-UC",
+    "verification_status": "unverified",
+    "last_verified_on": "2026-11-08",
+    "hours_note": "Confirm with office",
+    "notes": "Union council birth certificate processing for Karachi East subdivisions."
   }
 ]
