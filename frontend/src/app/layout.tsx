@@ -1,5 +1,6 @@
 import './globals.css';
 import { ReactNode } from 'react';
+import { DeveloperFooter } from '@/components/DeveloperFooter';
 
 export const metadata = {
   title: 'CitizenEase — Karachi Domicile, PRC & CNIC Preparation',
@@ -23,8 +24,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           crossOrigin=""
         />
       </head>
-      <body className="bg-[#FAF8F5] text-stone-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">
-        {children}
+      <body className="bg-[#FAF8F5] text-stone-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen flex flex-col">
+        <div className="flex-1 flex flex-col">
+          {children}
+        </div>
+        <DeveloperFooter />
       </body>
     </html>
   );
