@@ -87,8 +87,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FAF8F5]/95 dark:bg-[#0c1813]/95 backdrop-blur-md border-b border-stone-200/80 dark:border-stone-800 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <>
+      <header className="sticky top-0 z-40 bg-[#FAF8F5]/95 dark:bg-[#0c1813]/95 backdrop-blur-md border-b border-stone-200/80 dark:border-stone-800 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Zone 1: Brand Wordmark */}
         <button
           onClick={() => scrollToSection('services', 'all')}
@@ -259,13 +260,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
       </div>
-
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        language={language}
-        onAuthSuccess={(email) => setCurrentUser({ email })}
-      />
     </header>
-  );
+
+    <AuthModal
+      isOpen={isAuthModalOpen}
+      onClose={() => setIsAuthModalOpen(false)}
+      language={language}
+      onAuthSuccess={(email) => setCurrentUser({ email })}
+    />
+  </>
+);
 };
