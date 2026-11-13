@@ -85,7 +85,8 @@ Enforces strict verification and presentation rules:
 ```text
 CitizenEase/
 ├── docker-compose.yml              # Production multi-container stack (Postgres 16, Backend, Frontend)
-├── render.yaml                     # Render Infrastructure-as-Code Blueprint (Free Tier)
+├── railway.json                    # Railway Cloud Deployment Blueprint (No card trial)
+├── render.yaml                     # Render Infrastructure-as-Code Blueprint
 ├── backend/
 │   ├── Dockerfile                  # Multi-stage Python 3.11-slim container
 │   ├── requirements.txt            # FastAPI, Uvicorn, SQLAlchemy, Psycopg, Pytest
@@ -178,62 +179,53 @@ docker compose up --build
 
 ---
 
-## 🌐 100% Free Production Cloud Deployment
+## 🌐 Zero-Cost Cloud Deployment (No Credit Card)
 
-Deploy CitizenEase for **$0/month** using free-tier cloud infrastructure:
-- **Frontend:** [Vercel](https://vercel.com) (Hobby Tier — Global Edge CDN)
-- **Backend:** [Render](https://render.com) (Free Web Service) or [Koyeb](https://koyeb.com)
-- **Database & Auth:** [Supabase](https://supabase.com) (Free Tier — PostgreSQL 16)
-- **Uptime Monitor:** [Cron-job.org](https://cron-job.org) or [UptimeRobot](https://uptimerobot.com) (Eliminates Render cold starts)
+Deploy CitizenEase for **$0** with no upfront credit card required:
+- **Frontend:** [Vercel](https://vercel.com) (Hobby Tier — **100% Free Forever, No Credit Card**)
+- **Backend Options (No Card Needed):**
+  - **[Railway](https://railway.com):** Sign in with GitHub for a **$5 Free Trial credit with NO card required**.
+  - **[Hugging Face Spaces](https://huggingface.co/spaces):** **100% Free Forever with NO card ever**, 16 GB RAM, Docker SDK.
+- **Database & Auth:** [Supabase](https://supabase.com) (Free Tier — **No Credit Card**)
 
 ```
-[Citizen Browser] ──HTTPS──> [Vercel: Next.js 14] ──REST API──> [Render: FastAPI] ──SQL──> [Supabase: PostgreSQL]
-                                                                        ▲
-                                      [Cron-Job.org (10m /health ping)] ─┘
+[Citizen Browser] ──HTTPS──> [Vercel: Next.js 14] ──REST API──> [Railway / HF: FastAPI] ──SQL──> [Supabase: PostgreSQL]
 ```
 
 ### Step 1: Database Setup (Supabase)
-1. In your [Supabase Dashboard](https://supabase.com/dashboard), open the **SQL Editor**.
-2. Run [`backend/app/db/migrations/001_initial.sql`](backend/app/db/migrations/001_initial.sql) to initialize tables and indexes.
+1. Open your [Supabase SQL Editor](https://supabase.com/dashboard).
+2. Execute [`backend/app/db/migrations/001_initial.sql`](backend/app/db/migrations/001_initial.sql) to initialize tables and indexes.
 3. Under **Project Settings** > **Database** > **Connection Pooling**, copy the transaction/session pooler connection string (port `6543`).
 
-### Step 2: Backend API Deployment (Render)
-1. Go to [Render Dashboard](https://dashboard.render.com) > **New +** > **Web Service**.
-2. Select your repository `AyeshaNehal/CitizenEase`.
-3. Set configuration:
-   - **Environment:** `Python 3`
-   - **Root Directory:** *(Leave blank to run from repository root)*
-   - **Build Command:** `pip install --upgrade pip && pip install -r backend/requirements.txt`
-   - **Start Command:** `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
-   - **Plan:** `Free`
-4. Add **Environment Variables** in Render:
+### Step 2: Backend API Deployment (Railway — No Card Required)
+1. Go to [railway.com](https://railway.com) and click **Login** > **Continue with GitHub** (activates $5 free trial credit without asking for a credit card).
+2. Click **New Project** > **Deploy from GitHub repo** > select `AyeshaNehal/CitizenEase`.
+3. Railway automatically detects [`railway.json`](railway.json) and configures `backend/Dockerfile`.
+4. In your Railway service **Variables**, add:
    - `ENV`: `production`
    - `PYTHONUNBUFFERED`: `1`
    - `DATABASE_URL`: *(Your Supabase pooled PostgreSQL URL)*
-   - `SUPABASE_URL`: `https://[your-project].supabase.co`
+   - `SUPABASE_URL`: `https://buzyerrzedhjzhspscrz.supabase.co`
    - `SUPABASE_SERVICE_KEY`: `[your-service-role-key]`
-   - `ALLOWED_ORIGINS`: `https://[your-app].vercel.app,http://localhost:3000`
-5. Click **Create Web Service** and note your public URL (e.g. `https://citizenease-backend.onrender.com`).
-6. Verify: `https://citizenease-backend.onrender.com/health` returns `{"ok": true}`.
+   - `ALLOWED_ORIGINS`: `*`
+5. Go to **Settings** > **Networking** > click **Generate Domain** (e.g. `https://citizenease-production.up.railway.app`).
+6. Verify: `https://[your-railway-app].up.railway.app/health` returns `{"ok": true}`.
 
-### Step 3: Frontend Deployment (Vercel)
-1. Go to [Vercel Dashboard](https://vercel.com) > **Add New...** > **Project**.
-2. Import the `AyeshaNehal/CitizenEase` repository.
+*(Alternative 100% Free Forever: You can also deploy `backend/Dockerfile` as a free Docker Space on [Hugging Face Spaces](https://huggingface.co/spaces) with zero credit card forever).*
+
+### Step 3: Frontend Deployment (Vercel — No Card Required)
+1. Go to [Vercel Dashboard](https://vercel.com) and log in with your GitHub account.
+2. Click **Add New...** > **Project** and select `AyeshaNehal/CitizenEase`.
 3. Configure project:
    - **Framework Preset:** `Next.js`
    - **Root Directory:** `frontend`
 4. Add **Environment Variables** in Vercel:
-   - `NEXT_PUBLIC_API_BASE_URL`: `https://citizenease-backend.onrender.com/api/v1`
-   - `NEXT_PUBLIC_SUPABASE_URL`: `https://[your-project].supabase.co`
+   - `NEXT_PUBLIC_API_BASE_URL`: `https://[your-railway-app].up.railway.app/api/v1`
+   - `NEXT_PUBLIC_SUPABASE_URL`: `https://buzyerrzedhjzhspscrz.supabase.co`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: `[your-supabase-anon-key]`
    - `NEXT_PUBLIC_USE_MOCKS`: `false`
 5. Click **Deploy**. Vercel will output your live URL (e.g. `https://citizenease.vercel.app`).
-6. *(Important)* Add your live Vercel URL to `ALLOWED_ORIGINS` in your Render backend settings.
-
-### Step 4: Prevent Cold Starts (Keep Backend Awake)
-Render free instances sleep after 15 minutes of inactivity. To keep your API hot 24/7 for free:
-- Register at [cron-job.org](https://cron-job.org) or [UptimeRobot](https://uptimerobot.com).
-- Schedule an HTTP `GET` ping to `https://citizenease-backend.onrender.com/health` every **10 minutes**.
+6. In Railway settings, update `ALLOWED_ORIGINS` with your new Vercel domain.
 
 ---
 
