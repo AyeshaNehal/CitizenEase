@@ -7,13 +7,28 @@ import {
   Office,
   AssistantChatResponse
 } from './types';
+import { supabase } from './supabaseClient';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api/v1';
 
 async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
+  let authHeaders: Record<string, string> = {};
+
+  if (supabase) {
+    try {
+      const { data } = await supabase.auth.getSession();
+      if (data?.session?.access_token) {
+        authHeaders['Authorization'] = `Bearer ${data.session.access_token}`;
+      }
+    } catch {
+      // Ignore if session retrieval fails in SSR/offline
+    }
+  }
+
   const res = await fetch(`${API_BASE_URL}${url}`, {
     headers: {
       'Content-Type': 'application/json',
+      ...authHeaders,
       ...options?.headers,
     },
     ...options,
@@ -86,4 +101,7 @@ export const api = {
 
   getSources: (serviceSlug: string) =>
     fetchJson<any[]>(`/sources/${serviceSlug}`),
+
+  getUserChecklists: () =>
+    fetchJson<any[]>('/checklist/user/all'),
 };

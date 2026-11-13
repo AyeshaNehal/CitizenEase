@@ -131,6 +131,7 @@ CREATE TABLE IF NOT EXISTS question_conditions (
 -- Runtime tables (User sessions & generated checklists - NO PII)
 CREATE TABLE IF NOT EXISTS user_sessions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID,
     service_id UUID REFERENCES services(id) ON DELETE CASCADE,
     language TEXT DEFAULT 'en',
     expires_at TIMESTAMPTZ,
@@ -148,6 +149,7 @@ CREATE TABLE IF NOT EXISTS questionnaire_answers (
 
 CREATE TABLE IF NOT EXISTS generated_checklists (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID,
     session_id UUID REFERENCES user_sessions(id) ON DELETE CASCADE,
     service_id UUID REFERENCES services(id) ON DELETE CASCADE,
     rules_version TEXT NOT NULL,
@@ -166,3 +168,16 @@ CREATE TABLE IF NOT EXISTS checklist_items (
     explanation_snapshot TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Enable Row Level Security (RLS) on runtime checklists
+ALTER TABLE generated_checklists ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow anonymous read by checklist id"
+ON generated_checklists FOR SELECT
+USING (true);
+
+CREATE POLICY "Allow users to manage their own checklists"
+ON generated_checklists FOR ALL
+USING (auth.uid() = user_id OR user_id IS NULL)
+WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
+

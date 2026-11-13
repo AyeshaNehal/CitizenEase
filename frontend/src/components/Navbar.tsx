@@ -1,7 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { I18N, Language } from '../lib/i18n';
+import { supabase } from '../lib/supabaseClient';
+import { AuthModal } from './AuthModal';
 import {
   ShieldCheck,
   MapPin,
@@ -11,7 +13,10 @@ import {
   Layers,
   Sun,
   Moon,
-  Calculator
+  Calculator,
+  User,
+  LogOut,
+  LogIn
 } from 'lucide-react';
 
 export type ActiveNavView = 'all' | 'home' | 'services' | 'checklist' | 'cost' | 'offices' | 'assistant' | 'sources';
@@ -40,6 +45,38 @@ export const Navbar: React.FC<NavbarProps> = ({
   const t = I18N[language];
   const isUrdu = language === 'ur';
   const isDark = theme === 'dark';
+
+  const [currentUser, setCurrentUser] = useState<{ email?: string } | null>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!supabase) return;
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user?.email) {
+        setCurrentUser({ email: session.user.email });
+      }
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user?.email) {
+        setCurrentUser({ email: session.user.email });
+      } else {
+        setCurrentUser(null);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleSignOut = async () => {
+    if (supabase) {
+      await supabase.auth.signOut();
+      setCurrentUser(null);
+    }
+  };
 
   const scrollToSection = (id: string, view: ActiveNavView) => {
     onNavigate(view);
@@ -158,6 +195,32 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Zone 3: Actions & Controls */}
         <div className="flex items-center gap-2.5 shrink-0">
+          {/* Supabase User Auth Button / Indicator */}
+          {currentUser ? (
+            <div className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-800 rounded-xl px-2.5 py-1.5 text-xs shadow-xs">
+              <User className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+              <span className="hidden md:inline max-w-[120px] truncate text-emerald-900 dark:text-emerald-300 font-medium">
+                {currentUser.email?.split('@')[0]}
+              </span>
+              <button
+                onClick={handleSignOut}
+                className="text-stone-400 hover:text-red-600 dark:hover:text-red-400 p-0.5 rounded cursor-pointer transition-colors"
+                title={isUrdu ? 'لاگ آؤٹ کریں' : 'Sign Out'}
+              >
+                <LogOut className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => setIsAuthModalOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#0C3E2E] dark:text-emerald-300 bg-white dark:bg-stone-800 hover:bg-stone-100 dark:hover:bg-stone-700 border border-stone-300 dark:border-stone-700 rounded-xl transition-colors whitespace-nowrap shadow-xs cursor-pointer"
+              title="Sign In / Register"
+            >
+              <LogIn className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+              <span>{isUrdu ? 'لاگ ان' : 'Sign In'}</span>
+            </button>
+          )}
+
           {/* Ask AI Quick Drawer */}
           <button
             onClick={onOpenAssistant}
@@ -196,6 +259,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
       </div>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        language={language}
+        onAuthSuccess={(email) => setCurrentUser({ email })}
+      />
     </header>
   );
 };

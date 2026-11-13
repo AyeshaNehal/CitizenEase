@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from typing import Optional, Dict, Any, List
 from backend.app.schemas.checklist import (
     ChecklistGenerateRequest,
     ChecklistResponse,
@@ -6,17 +7,24 @@ from backend.app.schemas.checklist import (
     ChecklistUpdateResponse
 )
 from backend.app.modules.checklist.service import ChecklistService
+from backend.app.dependencies.auth import get_current_user_optional, get_current_user_required
+from backend.app.db.storage import DatabaseStorage
 
 router = APIRouter(prefix="/checklist", tags=["checklist"])
 
 @router.post("/generate", response_model=ChecklistResponse)
-def generate_checklist(payload: ChecklistGenerateRequest):
+def generate_checklist(payload: ChecklistGenerateRequest, current_user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)):
     try:
-        return ChecklistService.generate_checklist(payload.session_id)
+        user_id = current_user.get("id") if current_user else None
+        return ChecklistService.generate_checklist(payload.session_id, user_id=user_id)
     except KeyError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("/user/all")
+def get_user_checklists(current_user: Dict[str, Any] = Depends(get_current_user_required)):
+    return DatabaseStorage.list_checklists_for_user(current_user["id"])
 
 @router.get("/{checklist_id}", response_model=ChecklistResponse)
 def get_checklist(checklist_id: str):

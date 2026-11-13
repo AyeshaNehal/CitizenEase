@@ -1,8 +1,8 @@
 import os
 import json
 from datetime import datetime, timezone
-from typing import Dict, Any, Optional
-from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text
+from typing import Dict, Any, Optional, List
+from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from backend.app.config import settings
 
@@ -15,6 +15,7 @@ class UserSessionModel(Base):
     __tablename__ = "user_sessions_runtime"
 
     id = Column(String(64), primary_key=True)
+    user_id = Column(String(64), nullable=True, index=True)
     service_id = Column(String(64), nullable=True)
     service_slug = Column(String(64), nullable=True)
     language = Column(String(10), default="en")
@@ -27,6 +28,7 @@ class ChecklistRecordModel(Base):
     __tablename__ = "generated_checklists_runtime"
 
     id = Column(String(64), primary_key=True)
+    user_id = Column(String(64), nullable=True, index=True)
     session_id = Column(String(64), nullable=False)
     service_id = Column(String(64), nullable=True)
     rules_version = Column(String(64), default="v1.0")
@@ -38,6 +40,9 @@ class ChecklistRecordModel(Base):
 
 # Configure database engine
 db_url = settings.DATABASE_URL.strip() if settings.DATABASE_URL else ""
+if db_url.startswith("postgresql://"):
+    db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
+
 if not db_url or "postgres" not in db_url:
     # Use robust local SQLite persistence in data/citizenease.db
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../data"))
@@ -55,6 +60,14 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Auto-create tables on import
 try:
     Base.metadata.create_all(bind=engine)
+    # Ensure backwards compatibility for local SQLite testing
+    with engine.connect() as conn:
+        for tbl in ["user_sessions_runtime", "generated_checklists_runtime"]:
+            try:
+                conn.execute(text(f"ALTER TABLE {tbl} ADD COLUMN user_id VARCHAR(64)"))
+                conn.commit()
+            except Exception:
+                pass
 except Exception as e:
     print(f"Database metadata initialization note: {e}")
 
@@ -67,6 +80,7 @@ class DatabaseStorage:
             if not record:
                 record = UserSessionModel(
                     id=session_id,
+                    user_id=data.get("user_id"),
                     service_id=data.get("service_id"),
                     service_slug=data.get("service_slug"),
                     language=data.get("language", "en"),
@@ -75,6 +89,8 @@ class DatabaseStorage:
                 )
                 db.add(record)
             else:
+                if data.get("user_id"):
+                    record.user_id = data.get("user_id")
                 record.service_id = data.get("service_id", record.service_id)
                 record.service_slug = data.get("service_slug", record.service_slug)
                 record.language = data.get("language", record.language)
@@ -93,6 +109,7 @@ class DatabaseStorage:
                 return None
             return {
                 "session_id": record.id,
+                "user_id": record.user_id,
                 "service_id": record.service_id,
                 "service_slug": record.service_slug,
                 "language": record.language,
@@ -129,6 +146,7 @@ class DatabaseStorage:
             if not record:
                 record = ChecklistRecordModel(
                     id=checklist_id,
+                    user_id=data.get("user_id"),
                     session_id=data.get("session_id", ""),
                     service_id=data.get("service_id"),
                     rules_version=data.get("rules_version", "v1.0"),
@@ -138,6 +156,8 @@ class DatabaseStorage:
                 )
                 db.add(record)
             else:
+                if data.get("user_id"):
+                    record.user_id = data.get("user_id")
                 record.items_json = json.dumps(data.get("items", []))
                 record.readiness_json = json.dumps(data.get("readiness", {}))
                 record.disclaimers_json = json.dumps(data.get("disclaimers", []))
@@ -154,6 +174,7 @@ class DatabaseStorage:
                 return None
             return {
                 "id": record.id,
+                "user_id": record.user_id,
                 "session_id": record.session_id,
                 "service_id": record.service_id,
                 "rules_version": record.rules_version,
@@ -161,5 +182,28 @@ class DatabaseStorage:
                 "readiness": json.loads(record.readiness_json or "{}"),
                 "disclaimers": json.loads(record.disclaimers_json or "[]")
             }
+        finally:
+            db.close()
+
+    @staticmethod
+    def list_checklists_for_user(user_id: str) -> List[Dict[str, Any]]:
+        db = SessionLocal()
+        try:
+            records = db.query(ChecklistRecordModel).filter(ChecklistRecordModel.user_id == user_id).order_by(ChecklistRecordModel.updated_at.desc()).all()
+            return [
+                {
+                    "id": r.id,
+                    "user_id": r.user_id,
+                    "session_id": r.session_id,
+                    "service_id": r.service_id,
+                    "rules_version": r.rules_version,
+                    "items": json.loads(r.items_json or "[]"),
+                    "readiness": json.loads(r.readiness_json or "{}"),
+                    "disclaimers": json.loads(r.disclaimers_json or "[]"),
+                    "created_at": r.created_at.isoformat() if r.created_at else None,
+                    "updated_at": r.updated_at.isoformat() if r.updated_at else None
+                }
+                for r in records
+            ]
         finally:
             db.close()

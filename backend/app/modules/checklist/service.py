@@ -10,11 +10,12 @@ CHECKLISTS: Dict[str, Dict[str, Any]] = {}
 
 class ChecklistService:
     @classmethod
-    def generate_checklist(cls, session_id: str) -> Dict[str, Any]:
+    def generate_checklist(cls, session_id: str, user_id: Optional[str] = None) -> Dict[str, Any]:
         session = QuestionnaireService.get_session(session_id)
         if not session:
             raise KeyError(f"Session {session_id} not found")
 
+        resolved_user_id = user_id or session.get("user_id")
         answers = session.get("answers", {})
         service_id = session.get("service_id")
         lang = session.get("language", "en")
@@ -67,6 +68,7 @@ class ChecklistService:
         CHECKLISTS[checklist_id] = checklist_obj
         try:
             DatabaseStorage.save_checklist(checklist_id, {
+                "user_id": resolved_user_id,
                 "session_id": session_id,
                 "service_id": service_id,
                 "items": items,

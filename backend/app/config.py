@@ -6,6 +6,8 @@ from pydantic import ConfigDict
 class Settings(BaseSettings):
     ENV: str = "development"
     DATABASE_URL: str = ""
+    SUPABASE_URL: str = ""
+    SUPABASE_ANON_KEY: str = ""
     SUPABASE_SERVICE_KEY: str = ""
     GROQ_API_KEY: str = ""
     OPENROUTER_API_KEY: str = ""

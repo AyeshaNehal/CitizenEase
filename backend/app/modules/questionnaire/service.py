@@ -9,7 +9,7 @@ SESSIONS: Dict[str, Dict[str, Any]] = {}
 
 class QuestionnaireService:
     @classmethod
-    def start_session(cls, service_slug: str, language: str = "en") -> Dict[str, Any]:
+    def start_session(cls, service_slug: str, language: str = "en", user_id: Optional[str] = None) -> Dict[str, Any]:
         svc = CatalogService.get_service_by_slug(service_slug)
         if not svc:
             raise ValueError(f"Unknown service slug: {service_slug}")
@@ -21,6 +21,7 @@ class QuestionnaireService:
         session_id = str(uuid.uuid4())
         session_data = {
             "session_id": session_id,
+            "user_id": user_id,
             "service_slug": service_slug,
             "service_id": service_id,
             "language": language,

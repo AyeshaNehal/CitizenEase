@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from typing import Optional, Dict, Any
 from backend.app.schemas.questionnaire import (
     StartQuestionnaireRequest,
     StartQuestionnaireResponse,
@@ -6,13 +7,15 @@ from backend.app.schemas.questionnaire import (
     AnswerQuestionnaireResponse
 )
 from backend.app.modules.questionnaire.service import QuestionnaireService
+from backend.app.dependencies.auth import get_current_user_optional
 
 router = APIRouter(prefix="/questionnaire", tags=["questionnaire"])
 
 @router.post("/start", response_model=StartQuestionnaireResponse)
-def start_questionnaire(payload: StartQuestionnaireRequest):
+def start_questionnaire(payload: StartQuestionnaireRequest, current_user: Optional[Dict[str, Any]] = Depends(get_current_user_optional)):
     try:
-        return QuestionnaireService.start_session(payload.service_slug, payload.language)
+        user_id = current_user.get("id") if current_user else None
+        return QuestionnaireService.start_session(payload.service_slug, payload.language, user_id=user_id)
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
