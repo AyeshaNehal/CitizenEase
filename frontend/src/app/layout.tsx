@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           crossOrigin=""
         />
       </head>
-      <body className="bg-[#FAF8F5] text-stone-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen flex flex-col">
+      <body className="bg-[#FAF8F5] text-stone-900 antialiased selection:bg-emerald-100 selection:text-emerald-900 min-h-screen flex flex-col" suppressHydrationWarning>
         <div className="flex-1 flex flex-col">
           {children}
         </div>

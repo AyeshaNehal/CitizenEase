@@ -103,63 +103,93 @@ const DEFAULT_ANSWERS: Record<ServiceSlug, Record<string, any>> = {
 
 function CitizenEaseMain() {
   const searchParams = useSearchParams();
+  const isMountedRef = useRef(false);
 
-  const [language, setLanguage] = useState<Language>(() => {
-    if (typeof window === 'undefined') return 'en';
-    try {
-      const saved = localStorage.getItem(LANG_STORAGE_KEY);
-      return saved === 'ur' ? 'ur' : 'en';
-    } catch {
-      return 'en';
-    }
-  });
-
-  // Dark / Light Theme state
+  // Deterministic initial states to prevent SSR hydration mismatches
+  const [language, setLanguage] = useState<Language>('en');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [activeTab, setActiveTabState] = useState<TabKey>('services');
+  const [activeServiceSlug, setActiveServiceSlug] = useState<ServiceSlug>('domicile_prc');
+  const [hasUserChecklist, setHasUserChecklist] = useState<boolean>(false);
+  const [checklist, setChecklist] = useState<GeneratedChecklist | null>(null);
 
+  // Modals state
+  const [detailModalSlug, setDetailModalSlug] = useState<ServiceSlug | null>(null);
+  const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+  const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
+  const [assistantInitialPrompt, setAssistantInitialPrompt] = useState<string | undefined>(undefined);
+
+  // Client-side mount initialization: safely restore user preferences and cached session
   useEffect(() => {
+    isMountedRef.current = true;
+
+    // 1. Restore theme preference
     try {
-      const saved = localStorage.getItem(THEME_STORAGE_KEY);
-      if (saved === 'dark' || saved === 'light') {
-        setTheme(saved);
+      const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+      if (savedTheme === 'dark' || savedTheme === 'light') {
+        setTheme(savedTheme);
       } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
         setTheme('dark');
       }
     } catch {}
+
+    // 2. Restore language preference
+    try {
+      const savedLang = localStorage.getItem(LANG_STORAGE_KEY);
+      if (savedLang === 'ur' || savedLang === 'en') {
+        setLanguage(savedLang);
+      }
+    } catch {}
+
+    // 3. Restore active tab from hash or localStorage
+    try {
+      const hash = window.location.hash.replace('#', '') as TabKey;
+      if (VALID_TABS.includes(hash)) {
+        setActiveTabState(hash);
+      } else {
+        const savedTab = localStorage.getItem(TAB_STORAGE_KEY) as TabKey;
+        if (VALID_TABS.includes(savedTab)) {
+          setActiveTabState(savedTab);
+        }
+      }
+    } catch {}
+
+    // 4. Restore checklist from localStorage
+    try {
+      const savedChecklist = localStorage.getItem(STORAGE_KEY);
+      if (savedChecklist) {
+        setChecklist(JSON.parse(savedChecklist));
+        setHasUserChecklist(localStorage.getItem(HAS_CHECKLIST_KEY) === 'true');
+      }
+    } catch (e) {
+      console.warn('Storage read failed:', e);
+    }
   }, []);
 
+  // Sync theme changes with DOM and localStorage
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, theme);
-    } catch {}
+    if (isMountedRef.current) {
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, theme);
+      } catch {}
+    }
   }, [theme]);
 
   const toggleTheme = () => {
     setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  // Active Tab state with localStorage and hash synchronization
-  const [activeTab, setActiveTabState] = useState<TabKey>(() => {
-    if (typeof window === 'undefined') return 'services';
-    try {
-      const hash = window.location.hash.replace('#', '') as TabKey;
-      if (VALID_TABS.includes(hash)) return hash;
-      const saved = localStorage.getItem(TAB_STORAGE_KEY) as TabKey;
-      if (VALID_TABS.includes(saved)) return saved;
-    } catch {}
-    return 'services';
-  });
-
   const setActiveTab = (tab: TabKey) => {
     setActiveTabState(tab);
     try {
       localStorage.setItem(TAB_STORAGE_KEY, tab);
-      if (window.location.hash !== `#${tab}`) {
+      if (typeof window !== 'undefined' && window.location.hash !== `#${tab}`) {
         window.history.replaceState(null, '', `#${tab}`);
       }
     } catch {}
@@ -177,50 +207,20 @@ function CitizenEaseMain() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  const [activeServiceSlug, setActiveServiceSlug] = useState<ServiceSlug>('domicile_prc');
-
-  // Modals state
-  const [detailModalSlug, setDetailModalSlug] = useState<ServiceSlug | null>(null);
-  const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
-  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
-  const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
-  const [assistantInitialPrompt, setAssistantInitialPrompt] = useState<string | undefined>(undefined);
-
-  // Track if user has actively completed or selected a checklist
-  const [hasUserChecklist, setHasUserChecklist] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return false;
-    try {
-      return localStorage.getItem(HAS_CHECKLIST_KEY) === 'true';
-    } catch {
-      return false;
-    }
-  });
-
-  // Active checklist state
-  const [checklist, setChecklist] = useState<GeneratedChecklist | null>(() => {
-    if (typeof window === 'undefined') return null;
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        return JSON.parse(saved);
-      }
-    } catch (e) {
-      console.warn('Storage read failed:', e);
-    }
-    return null;
-  });
-
   // Sync RTL and language attributes with document root
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ur' ? 'rtl' : 'ltr';
-    try {
-      localStorage.setItem(LANG_STORAGE_KEY, language);
-    } catch {}
+    if (isMountedRef.current) {
+      try {
+        localStorage.setItem(LANG_STORAGE_KEY, language);
+      } catch {}
+    }
   }, [language]);
 
   // Persist active checklist to localStorage
   useEffect(() => {
+    if (!isMountedRef.current) return;
     if (checklist) {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(checklist));
