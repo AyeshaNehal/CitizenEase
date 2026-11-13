@@ -85,6 +85,7 @@ Enforces strict verification and presentation rules:
 ```text
 CitizenEase/
 ├── docker-compose.yml              # Production multi-container stack (Postgres 16, Backend, Frontend)
+├── render.yaml                     # Render Infrastructure-as-Code Blueprint (Free Tier)
 ├── backend/
 │   ├── Dockerfile                  # Multi-stage Python 3.11-slim container
 │   ├── requirements.txt            # FastAPI, Uvicorn, SQLAlchemy, Psycopg, Pytest
@@ -174,6 +175,65 @@ npm run dev
 # Starts PostgreSQL 16, FastAPI backend, and Next.js frontend
 docker compose up --build
 ```
+
+---
+
+## 🌐 100% Free Production Cloud Deployment
+
+Deploy CitizenEase for **$0/month** using free-tier cloud infrastructure:
+- **Frontend:** [Vercel](https://vercel.com) (Hobby Tier — Global Edge CDN)
+- **Backend:** [Render](https://render.com) (Free Web Service) or [Koyeb](https://koyeb.com)
+- **Database & Auth:** [Supabase](https://supabase.com) (Free Tier — PostgreSQL 16)
+- **Uptime Monitor:** [Cron-job.org](https://cron-job.org) or [UptimeRobot](https://uptimerobot.com) (Eliminates Render cold starts)
+
+```
+[Citizen Browser] ──HTTPS──> [Vercel: Next.js 14] ──REST API──> [Render: FastAPI] ──SQL──> [Supabase: PostgreSQL]
+                                                                        ▲
+                                      [Cron-Job.org (10m /health ping)] ─┘
+```
+
+### Step 1: Database Setup (Supabase)
+1. In your [Supabase Dashboard](https://supabase.com/dashboard), open the **SQL Editor**.
+2. Run [`backend/app/db/migrations/001_initial.sql`](backend/app/db/migrations/001_initial.sql) to initialize tables and indexes.
+3. Under **Project Settings** > **Database** > **Connection Pooling**, copy the transaction/session pooler connection string (port `6543`).
+
+### Step 2: Backend API Deployment (Render)
+1. Go to [Render Dashboard](https://dashboard.render.com) > **New +** > **Web Service**.
+2. Select your repository `AyeshaNehal/CitizenEase`.
+3. Set configuration:
+   - **Environment:** `Python 3`
+   - **Root Directory:** *(Leave blank to run from repository root)*
+   - **Build Command:** `pip install --upgrade pip && pip install -r backend/requirements.txt`
+   - **Start Command:** `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
+   - **Plan:** `Free`
+4. Add **Environment Variables** in Render:
+   - `ENV`: `production`
+   - `PYTHONUNBUFFERED`: `1`
+   - `DATABASE_URL`: *(Your Supabase pooled PostgreSQL URL)*
+   - `SUPABASE_URL`: `https://[your-project].supabase.co`
+   - `SUPABASE_SERVICE_KEY`: `[your-service-role-key]`
+   - `ALLOWED_ORIGINS`: `https://[your-app].vercel.app,http://localhost:3000`
+5. Click **Create Web Service** and note your public URL (e.g. `https://citizenease-backend.onrender.com`).
+6. Verify: `https://citizenease-backend.onrender.com/health` returns `{"ok": true}`.
+
+### Step 3: Frontend Deployment (Vercel)
+1. Go to [Vercel Dashboard](https://vercel.com) > **Add New...** > **Project**.
+2. Import the `AyeshaNehal/CitizenEase` repository.
+3. Configure project:
+   - **Framework Preset:** `Next.js`
+   - **Root Directory:** `frontend`
+4. Add **Environment Variables** in Vercel:
+   - `NEXT_PUBLIC_API_BASE_URL`: `https://citizenease-backend.onrender.com/api/v1`
+   - `NEXT_PUBLIC_SUPABASE_URL`: `https://[your-project].supabase.co`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: `[your-supabase-anon-key]`
+   - `NEXT_PUBLIC_USE_MOCKS`: `false`
+5. Click **Deploy**. Vercel will output your live URL (e.g. `https://citizenease.vercel.app`).
+6. *(Important)* Add your live Vercel URL to `ALLOWED_ORIGINS` in your Render backend settings.
+
+### Step 4: Prevent Cold Starts (Keep Backend Awake)
+Render free instances sleep after 15 minutes of inactivity. To keep your API hot 24/7 for free:
+- Register at [cron-job.org](https://cron-job.org) or [UptimeRobot](https://uptimerobot.com).
+- Schedule an HTTP `GET` ping to `https://citizenease-backend.onrender.com/health` every **10 minutes**.
 
 ---
 
