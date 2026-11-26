@@ -8,7 +8,7 @@ export const I18N = {
     persistent_disclaimer: 'Guidance & preparation only. Not an official government portal, legal authority, or data store for CNICs.',
     nav_services: 'Services',
     nav_how_it_works: 'How It Works',
-    nav_offices: 'DC & NADRA Offices',
+    nav_offices: 'Offices',
     nav_sources: 'Verified Sources',
     nav_saved: 'Saved Checklist',
     
@@ -107,7 +107,7 @@ export const I18N = {
     persistent_disclaimer: 'صرف رہنمائی اور پیشگی تیاری کے لیے۔ یہ کوئی سرکاری ادارہ، قانونی عدالت یا شناختی کارڈ کا ڈیٹا بیس نہیں ہے۔',
     nav_services: 'خدمات',
     nav_how_it_works: 'طریقہ کار',
-    nav_offices: 'ڈی سی و نادرا دفاتر',
+    nav_offices: 'دفاتر',
     nav_sources: 'تصدیق شدہ ذرائع',
     nav_saved: 'محفوظ چیک لسٹ',
 
