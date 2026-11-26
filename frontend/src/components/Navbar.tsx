@@ -5,19 +5,21 @@ import { I18N, Language } from '../lib/i18n';
 import { supabase } from '../lib/supabaseClient';
 import { AuthModal } from './AuthModal';
 import {
-  ShieldCheck,
-  MapPin,
-  FileCheck2,
-  BookOpen,
-  Sparkles,
-  Layers,
   Sun,
   Moon,
-  Calculator,
   User,
   LogOut,
   LogIn
 } from 'lucide-react';
+import {
+  IconPackShield,
+  IconPackLayers,
+  IconPackChecklist,
+  IconPackCalculator,
+  IconPackOffices,
+  IconPackAssistant,
+  IconPackSources
+} from './ui/IconPacks';
 
 export type ActiveNavView = 'all' | 'home' | 'services' | 'checklist' | 'cost' | 'offices' | 'assistant' | 'sources';
 
@@ -95,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           className="flex items-center gap-2.5 text-left focus:outline-none group shrink-0 cursor-pointer"
         >
           <div className="w-9 h-9 rounded-lg bg-[#0C3E2E] dark:bg-emerald-900 border border-emerald-700/40 flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
-            <ShieldCheck className="w-5 h-5 text-emerald-300" />
+            <IconPackShield className="w-5 h-5 text-emerald-300" />
           </div>
           <div className="flex flex-col">
             <span className="text-xl font-bold tracking-tight text-[#0C3E2E] dark:text-emerald-400 whitespace-nowrap">
@@ -117,7 +119,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'border-transparent'
             }`}
           >
-            <Layers className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+            <IconPackLayers className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>{isUrdu ? 'تمام فیچرز (یکجا)' : 'All Features (Combined)'}</span>
           </button>
 
@@ -140,7 +142,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'border-transparent'
             }`}
           >
-            <FileCheck2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+            <IconPackChecklist className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>{t.nav_saved}</span>
           </button>
 
@@ -152,7 +154,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'border-transparent'
             }`}
           >
-            <Calculator className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
+            <IconPackCalculator className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
             <span>{isUrdu ? 'لاگت کیلکولیٹر' : 'Cost Calculator'}</span>
           </button>
 
@@ -164,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'border-transparent'
             }`}
           >
-            <MapPin className="w-4 h-4 text-stone-500 dark:text-stone-400" />
+            <IconPackOffices className="w-4 h-4 text-stone-500 dark:text-stone-400" />
             <span>{t.nav_offices}</span>
           </button>
 
@@ -176,7 +178,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'border-transparent'
             }`}
           >
-            <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <IconPackAssistant className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>{isUrdu ? 'اے آئی گائیڈ' : 'AI Assistant'}</span>
           </button>
 
@@ -188,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'border-transparent'
             }`}
           >
-            <BookOpen className="w-4 h-4 text-stone-500 dark:text-stone-400" />
+            <IconPackSources className="w-4 h-4 text-stone-500 dark:text-stone-400" />
             <span>{t.nav_sources}</span>
           </button>
         </nav>
@@ -227,7 +229,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#0C3E2E] dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/70 hover:bg-emerald-100/80 dark:hover:bg-emerald-900/60 border border-emerald-200/80 dark:border-emerald-700/50 rounded-xl transition-colors whitespace-nowrap shadow-xs cursor-pointer"
             title="Ask Grounded CitizenEase AI Drawer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+            <IconPackAssistant className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
             <span className="hidden sm:inline">{isUrdu ? 'چیٹ ڈراور' : 'Chat Drawer'}</span>
           </button>
 

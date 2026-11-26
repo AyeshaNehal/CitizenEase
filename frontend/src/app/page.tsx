@@ -23,20 +23,21 @@ import {
   UserItemStatus
 } from '@/lib/rulesEngine';
 import {
-  Layers,
-  Sparkles,
-  ShieldCheck,
-  FileCheck2,
-  MapPin,
-  BookOpen,
   ArrowRight,
   CheckCircle2,
-  Calculator,
   HelpCircle,
   FileQuestion,
   ChevronRight,
   Building2
 } from 'lucide-react';
+import {
+  IconPackServices,
+  IconPackChecklist,
+  IconPackCalculator,
+  IconPackOffices,
+  IconPackAssistant,
+  IconPackSources
+} from '@/components/ui/IconPacks';
 
 const STORAGE_KEY = 'citizenease_saved_checklist_v2';
 const HAS_CHECKLIST_KEY = 'citizenease_has_generated_checklist';
@@ -328,39 +329,39 @@ function CitizenEaseMain() {
       id: 'services' as TabKey,
       label_en: 'Services',
       label_ur: 'سروسز',
-      icon: Layers,
+      icon: IconPackServices,
       count: 7
     },
     {
       id: 'checklist' as TabKey,
       label_en: 'My Checklist',
       label_ur: 'میری چیک لسٹ',
-      icon: FileCheck2,
+      icon: IconPackChecklist,
       badge: checklist ? `${checklist.readiness.ready_count}/${checklist.readiness.total_count}` : null
     },
     {
       id: 'cost' as TabKey,
       label_en: 'Cost Calculator',
       label_ur: 'لاگت کیلکولیٹر',
-      icon: Calculator
+      icon: IconPackCalculator
     },
     {
       id: 'offices' as TabKey,
       label_en: 'Offices',
       label_ur: 'کراچی دفاتر',
-      icon: MapPin
+      icon: IconPackOffices
     },
     {
       id: 'assistant' as TabKey,
       label_en: 'Assistant',
       label_ur: 'سٹیزن گائیڈ',
-      icon: Sparkles
+      icon: IconPackAssistant
     },
     {
       id: 'sources' as TabKey,
       label_en: 'Sources',
       label_ur: 'قانونی ثبوت',
-      icon: BookOpen
+      icon: IconPackSources
     }
   ];
 
@@ -508,7 +509,7 @@ function CitizenEaseMain() {
           {/* Quick Service Switcher Bar */}
           <div className="bg-white dark:bg-[#11221b] rounded-2xl p-4 border border-stone-200/80 dark:border-stone-800 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-colors">
             <div className="flex items-center gap-2">
-              <FileCheck2 className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
+              <IconPackChecklist className="w-5 h-5 text-emerald-700 dark:text-emerald-400 shrink-0" />
               <div>
                 <h3 className="text-sm font-bold text-stone-900 dark:text-stone-100">
                   {isUrdu ? 'سروس کا انتخاب کریں اور فوری چیک لسٹ دیکھیں:' : 'Select Service for Interactive Checklist:'}
@@ -573,7 +574,7 @@ function CitizenEaseMain() {
                 onClick={() => setActiveTab('services')}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0C3E2E] dark:bg-emerald-600 text-white font-bold text-sm shadow-sm hover:bg-[#0A3426] dark:hover:bg-emerald-500 transition-all cursor-pointer min-h-[44px]"
               >
-                <Layers className="w-4 h-4" />
+                <IconPackServices className="w-4 h-4" />
                 <span>{isUrdu ? 'سروسز ٹیب پر جائیں' : 'Browse Services & Start'}</span>
               </button>
             </div>
