@@ -1,6 +1,7 @@
 import React from 'react';
 import { I18N, Language } from '../lib/i18n';
-import { ShieldCheck, Scale, ExternalLink } from 'lucide-react';
+import { Scale, ExternalLink } from 'lucide-react';
+import { CitizenEaseLogo } from './ui/CitizenEaseLogo';
 
 interface FooterProps {
   language: Language;
@@ -42,8 +43,11 @@ export const Footer: React.FC<FooterProps> = ({ language, onOpenSources }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-xs text-stone-400">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <img src="/images/logo-emblem.png" alt="CitizenEase Logo" className="w-5 h-5 object-contain" />
-              <span className="font-bold text-white text-sm">{t.app_name}</span>
+              <CitizenEaseLogo className="w-5 h-5" />
+              <div className="flex items-center text-sm font-bold tracking-tight">
+                <span className="text-white">Citizen</span>
+                <span className="text-emerald-400">Ease</span>
+              </div>
             </div>
             <p className="leading-relaxed">
               {isUrdu

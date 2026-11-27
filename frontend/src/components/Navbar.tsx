@@ -20,6 +20,7 @@ import {
   IconPackAssistant,
   IconPackSources
 } from './ui/IconPacks';
+import { CitizenEaseLogo } from './ui/CitizenEaseLogo';
 
 export type ActiveNavView = 'all' | 'home' | 'services' | 'checklist' | 'cost' | 'offices' | 'assistant' | 'sources';
 
@@ -97,19 +98,16 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={() => scrollToSection('services', 'all')}
           className="flex items-center gap-2.5 text-left focus:outline-none group shrink-0 cursor-pointer"
         >
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white dark:bg-[#11221b] border border-stone-200/90 dark:border-emerald-800/40 flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 p-1">
-            <img
-              src="/images/logo-emblem.png"
-              alt="CitizenEase Logo"
-              className="w-full h-full object-contain"
-            />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white dark:bg-[#11221b] border border-stone-200/90 dark:border-emerald-800/40 flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 p-1 shrink-0">
+            <CitizenEaseLogo className="w-full h-full" />
           </div>
           <div className="flex flex-col">
-            <span className="text-lg sm:text-xl font-bold tracking-tight text-[#0C3E2E] dark:text-emerald-400 whitespace-nowrap">
-              {t.app_name}
-            </span>
-            <span className="hidden xl:inline text-[11px] font-medium text-stone-500 dark:text-stone-400 tracking-tight whitespace-nowrap -mt-0.5">
-              {isUrdu ? 'کراچی شہری رہنمائی · یکجا لنک' : 'Karachi Unified Hub'}
+            <div className="flex items-center text-lg sm:text-xl font-bold tracking-tight whitespace-nowrap leading-none">
+              <span className="text-[#0C3E2E] dark:text-emerald-400">Citizen</span>
+              <span className="text-[#10B981] dark:text-emerald-300">Ease</span>
+            </div>
+            <span className="hidden xl:inline text-[9px] font-bold text-stone-500 dark:text-stone-400 tracking-wider uppercase mt-1">
+              {isUrdu ? 'کراچی شہری رہنمائی · یکجا لنک' : 'Civil Service Guidance Hub'}
             </span>
           </div>
         </button>
