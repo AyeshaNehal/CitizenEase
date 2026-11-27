@@ -30,8 +30,9 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        nastaliq: ["Noto Nastaliq Urdu", "serif"],
+        sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
+        nastaliq: ["'Jameel Noori Nastaleeq'", "'Noori Nastaleeq'", "'Noto Nastaliq Urdu'", "serif"],
+        urdu: ["'Jameel Noori Nastaleeq'", "'Noori Nastaleeq'", "'Noto Nastaliq Urdu'", "serif"],
       }
     },
   },
