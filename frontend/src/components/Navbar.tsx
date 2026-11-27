@@ -106,29 +106,29 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="text-[#0C3E2E] dark:text-emerald-400">Citizen</span>
               <span className="text-[#10B981] dark:text-emerald-300">Ease</span>
             </div>
-            <span className="hidden xl:inline text-[9px] font-bold text-stone-500 dark:text-stone-400 tracking-wider uppercase mt-1">
+            <span className="hidden 2xl:inline text-[9px] font-bold text-stone-500 dark:text-stone-400 tracking-wider uppercase mt-1">
               {isUrdu ? 'کراچی شہری رہنمائی · یکجا لنک' : 'Civil Service Guidance Hub'}
             </span>
           </div>
         </button>
 
         {/* Zone 2: All Features Nav Links */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2.5 2xl:gap-3.5 text-xs xl:text-sm font-medium text-stone-600 dark:text-stone-300 min-w-0 shrink">
+        <nav className="hidden xl:flex items-center gap-1 xl:gap-1.5 2xl:gap-3 text-xs 2xl:text-sm font-medium text-stone-600 dark:text-stone-300">
           <button
             onClick={() => scrollToSection('services', 'all')}
-            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1 xl:px-1.5 ${
+            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1.5 2xl:px-2 py-0.5 ${
               activeView === 'all'
                 ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-bold'
                 : 'border-transparent'
             }`}
           >
-            <IconPackLayers className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
+            <IconPackLayers className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
             <span>{isUrdu ? 'تمام فیچرز' : 'All Features'}</span>
           </button>
 
           <button
             onClick={() => scrollToSection('services', 'services')}
-            className={`whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1 xl:px-1.5 ${
+            className={`whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1.5 2xl:px-2 py-0.5 ${
               activeView === 'services' || activeView === 'home'
                 ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-semibold'
                 : 'border-transparent'
@@ -139,61 +139,61 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <button
             onClick={() => scrollToSection('checklist', 'checklist')}
-            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1 xl:px-1.5 ${
+            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1.5 2xl:px-2 py-0.5 ${
               activeView === 'checklist'
                 ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-semibold'
                 : 'border-transparent'
             }`}
           >
-            <IconPackChecklist className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
+            <IconPackChecklist className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
             <span>{isUrdu ? 'چیک لسٹ' : 'Checklist'}</span>
           </button>
 
           <button
             onClick={() => scrollToSection('cost', 'cost')}
-            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1 xl:px-1.5 ${
+            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1.5 2xl:px-2 py-0.5 ${
               activeView === 'cost'
                 ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-semibold'
                 : 'border-transparent'
             }`}
           >
-            <IconPackCalculator className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
+            <IconPackCalculator className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 text-emerald-700 dark:text-emerald-400 shrink-0" />
             <span>{isUrdu ? 'لاگت' : 'Calculator'}</span>
           </button>
 
           <button
             onClick={() => scrollToSection('offices', 'offices')}
-            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1 xl:px-1.5 ${
+            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1.5 2xl:px-2 py-0.5 ${
               activeView === 'offices'
                 ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-semibold'
                 : 'border-transparent'
             }`}
           >
-            <IconPackOffices className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-stone-500 dark:text-stone-400 shrink-0" />
+            <IconPackOffices className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 text-stone-500 dark:text-stone-400 shrink-0" />
             <span>{isUrdu ? 'دفاتر' : 'Offices'}</span>
           </button>
 
           <button
             onClick={() => scrollToSection('assistant', 'assistant')}
-            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1 xl:px-1.5 ${
+            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1.5 2xl:px-2 py-0.5 ${
               activeView === 'assistant'
                 ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-semibold'
                 : 'border-transparent'
             }`}
           >
-            <IconPackAssistant className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <IconPackAssistant className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <span>{isUrdu ? 'اے آئی' : 'Assistant'}</span>
           </button>
 
           <button
             onClick={() => scrollToSection('sources', 'sources')}
-            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1 xl:px-1.5 ${
+            className={`flex items-center gap-1 xl:gap-1.5 whitespace-nowrap transition-colors hover:text-[#0C3E2E] dark:hover:text-emerald-400 pb-0.5 border-b-2 cursor-pointer px-1.5 2xl:px-2 py-0.5 ${
               activeView === 'sources'
                 ? 'border-[#0C3E2E] dark:border-emerald-400 text-[#0C3E2E] dark:text-emerald-400 font-semibold'
                 : 'border-transparent'
             }`}
           >
-            <IconPackSources className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-stone-500 dark:text-stone-400 shrink-0" />
+            <IconPackSources className="w-3.5 h-3.5 2xl:w-4 2xl:h-4 text-stone-500 dark:text-stone-400 shrink-0" />
             <span>{isUrdu ? 'ذرائع' : 'Sources'}</span>
           </button>
         </nav>
@@ -233,7 +233,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             title="Ask Grounded CitizenEase AI Drawer"
           >
             <IconPackAssistant className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
-            <span className="hidden xl:inline">{isUrdu ? 'چیٹ ڈراور' : 'Chat Drawer'}</span>
+            <span className="hidden 2xl:inline">{isUrdu ? 'چیٹ ڈراور' : 'Chat Drawer'}</span>
           </button>
 
           {/* Dark / Light Mode Switcher */}
