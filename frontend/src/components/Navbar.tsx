@@ -95,10 +95,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Zone 1: Brand Wordmark */}
         <button
           onClick={() => scrollToSection('services', 'all')}
-          className="flex items-center gap-2 text-left focus:outline-none group shrink-0 cursor-pointer"
+          className="flex items-center gap-2.5 text-left focus:outline-none group shrink-0 cursor-pointer"
         >
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#0C3E2E] dark:bg-emerald-900 border border-emerald-700/40 flex items-center justify-center text-white shadow-sm transition-transform group-hover:scale-105">
-            <IconPackShield className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300" />
+          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white dark:bg-[#11221b] border border-stone-200/90 dark:border-emerald-800/40 flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 p-1">
+            <img
+              src="/images/logo-emblem.png"
+              alt="CitizenEase Logo"
+              className="w-full h-full object-contain"
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-lg sm:text-xl font-bold tracking-tight text-[#0C3E2E] dark:text-emerald-400 whitespace-nowrap">
