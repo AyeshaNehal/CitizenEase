@@ -423,16 +423,16 @@ function CitizenEaseMain() {
         </div>
       </div>
 
-      {/* Main Tab Bar (Mobile-first, horizontally scrollable, 44px min touch target, logical CSS, tablist role) */}
+      {/* Main Tab Bar (Centered in bar, single line, properly aligned) */}
       <nav
         aria-label="CitizenEase Hub Navigation"
         className="sticky top-16 z-30 bg-white/95 dark:bg-[#0d1c16]/95 backdrop-blur-md border-b border-stone-200/90 dark:border-stone-800 shadow-xs"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 flex items-center justify-center">
           <div
             role="tablist"
             aria-label="CitizenEase Primary Tabs"
-            className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-2.5 scrollbar-thin scroll-smooth focus:outline-none"
+            className="flex items-center justify-center gap-2 sm:gap-2.5 md:gap-3 overflow-x-auto py-2.5 scrollbar-thin scroll-smooth focus:outline-none mx-auto"
           >
             {tabs.map((tab) => {
               const Icon = tab.icon;
@@ -448,7 +448,7 @@ function CitizenEaseMain() {
                   tabIndex={isSelected ? 0 : -1}
                   onClick={() => setActiveTab(tab.id)}
                   onKeyDown={(e) => handleTabKeyDown(e, tab.id)}
-                  className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 ${
+                  className={`flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 ${
                     isSelected
                       ? 'bg-[#0C3E2E] dark:bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-600/30'
                       : 'bg-stone-100/80 dark:bg-stone-900/80 text-stone-700 dark:text-stone-300 hover:bg-stone-200/80 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
